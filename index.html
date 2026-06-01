@@ -2,8 +2,14 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="WK 2026">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="manifest" href="manifest.json">
 <title>WK 2026 · 1-3-2-6 Strategie</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -17,10 +23,10 @@
   --r:4px;--rm:6px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:var(--wh2);color:var(--bk);font-family:'Barlow',sans-serif;font-size:15px;min-height:100vh;padding-bottom:40px}
+body{background:var(--wh2);color:var(--bk);font-family:'Barlow',sans-serif;font-size:15px;min-height:100vh;padding-bottom:calc(40px + env(safe-area-inset-bottom))}
 
 /* ── Header ── */
-header{background:var(--wh);border-bottom:3px solid var(--or);padding:0 18px;position:sticky;top:0;z-index:10;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+header{background:var(--wh);border-bottom:3px solid var(--or);padding:0 18px;padding-top:env(safe-area-inset-top);position:sticky;top:0;z-index:10;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .hinner{display:flex;justify-content:space-between;align-items:center;height:54px}
 .logo{font-family:'Barlow Condensed',sans-serif;font-size:23px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--bk)}
 .logo span{color:var(--or)}
