@@ -1,0 +1,18 @@
+{
+  "name": "WK 2026 · 1-3-2-6 Strategie",
+  "short_name": "WK 2026",
+  "description": "1-3-2-6 wedstrategie tracker voor WK voetbal 2026",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#E85D04",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
