@@ -117,6 +117,56 @@ main{padding:0;max-width:480px;margin:0 auto}
 .toast{background:var(--bk);color:var(--wh);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.04em;padding:10px 22px;text-transform:uppercase;white-space:nowrap;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s;border-radius:var(--r);border-top:2px solid var(--or)}
 .toast.show{opacity:1;transform:translateY(0)}
 .toast.win{border-top-color:var(--gr)}.toast.loss{border-top-color:var(--re)}
+
+/* ── Train animation overlay ── */
+.train-anim-overlay{position:fixed;inset:0;background:rgba(0,0,0,0);z-index:100;pointer-events:none;overflow:hidden;display:none}
+.train-anim-overlay.active{display:block}
+.train-anim-overlay.dark{background:rgba(0,0,0,0.75);transition:background .3s}
+.anim-sky{position:absolute;inset:0;background:linear-gradient(180deg,#1a3a5c 0%,#2d6aa0 50%,#4a9fd4 100%);opacity:0;transition:opacity .4s}
+.anim-sky.show{opacity:1}
+/* Ground */
+.anim-ground{position:absolute;bottom:0;left:0;right:0;height:35%;background:#2d5016;opacity:0;transition:opacity .4s}
+.anim-ground.show{opacity:1}
+/* Rails */
+.anim-rails{position:absolute;bottom:28%;left:0;right:0;height:14px;opacity:0;transition:opacity .4s}
+.anim-rails.show{opacity:1}
+.rail-top,.rail-bot{position:absolute;left:0;right:0;height:4px;background:#888;border-radius:2px}
+.rail-top{top:0}.rail-bot{bottom:0}
+.sleepers{position:absolute;inset:0;display:flex;gap:0}
+.sleeper{width:18px;height:100%;background:#5a3a1a;border-radius:1px;flex-shrink:0}
+/* Moving background elements */
+.bg-scroll{position:absolute;bottom:28%;width:200%;height:60%;display:flex;gap:0}
+.bg-tree{position:absolute;bottom:100%;font-size:32px;animation:none}
+.bg-pole{position:absolute;bottom:0;width:4px;background:#555;border-radius:2px}
+.bg-pole:before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:20px;height:3px;background:#555;border-radius:2px}
+/* Train SVG */
+.anim-train{position:absolute;bottom:calc(28% + 10px);left:50%;transform:translateX(-50%);opacity:0;transition:opacity .5s}
+.anim-train.show{opacity:1}
+.anim-train svg{filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4))}
+/* Wheels spin */
+@keyframes spin{from{transform-origin:center;transform:rotate(0deg)}to{transform-origin:center;transform:rotate(360deg)}}
+.wheel-anim{animation:spin .4s linear infinite}
+/* Train shake while moving */
+@keyframes trainShake{0%,100%{transform:translateX(-50%) translateY(0)}25%{transform:translateX(-50%) translateY(-2px)}75%{transform:translateX(-50%) translateY(1px)}}
+.anim-train.moving{animation:trainShake .15s ease-in-out infinite}
+/* Steam puffs */
+.steam{position:absolute;border-radius:50%;background:rgba(255,255,255,0.8);animation:steamUp 1s ease-out forwards}
+@keyframes steamUp{0%{opacity:.8;transform:scale(1) translateY(0)}100%{opacity:0;transform:scale(3) translateY(-60px)}}
+/* Scenery scroll */
+@keyframes scrollLeft{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.scroll-layer{animation:scrollLeft linear infinite}
+/* Win particles */
+.particle{position:absolute;border-radius:50%;animation:particleFly 1.2s ease-out forwards}
+@keyframes particleFly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0)}}
+/* Text overlay */
+.anim-text{position:absolute;top:15%;left:50%;transform:translateX(-50%);text-align:center;opacity:0;transition:opacity .5s;white-space:nowrap}
+.anim-text.show{opacity:1}
+.anim-title{font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.anim-title span{color:#f97316}
+.anim-subtitle{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:rgba(255,255,255,.85);margin-top:4px}
+/* Stars */
+.star{position:absolute;color:#ffd700;animation:starTwinkle 1.5s ease-in-out infinite}
+@keyframes starTwinkle{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
 </style>
 </head>
 <body>
@@ -222,6 +272,59 @@ main{padding:0;max-width:480px;margin:0 auto}
 
 </main>
 
+
+<!-- Train animation overlay -->
+<div class="train-anim-overlay" id="train-overlay">
+  <div class="anim-sky" id="anim-sky"></div>
+  <div id="anim-stars"></div>
+  <div class="bg-scroll scroll-layer" id="bg-scroll" style="animation-duration:3s"></div>
+  <div class="anim-ground" id="anim-ground"></div>
+  <div class="anim-rails" id="anim-rails">
+    <div class="rail-top"></div>
+    <div class="rail-bot"></div>
+    <div class="sleepers" id="sleepers"></div>
+  </div>
+  <div class="anim-train" id="anim-train">
+    <svg width="280" height="90" viewBox="0 0 280 90" xmlns="http://www.w3.org/2000/svg">
+      <!-- Body -->
+      <rect x="20" y="18" width="220" height="52" rx="8" fill="#E85D04"/>
+      <!-- Nose -->
+      <path d="M240 18 L268 28 L268 60 L240 70 Z" fill="#cc5000"/>
+      <!-- Windows -->
+      <rect x="35" y="26" width="28" height="20" rx="3" fill="#dbeafe" opacity=".9"/>
+      <rect x="75" y="26" width="28" height="20" rx="3" fill="#dbeafe" opacity=".9"/>
+      <rect x="115" y="26" width="28" height="20" rx="3" fill="#dbeafe" opacity=".9"/>
+      <rect x="155" y="26" width="28" height="20" rx="3" fill="#dbeafe" opacity=".9"/>
+      <rect x="195" y="26" width="28" height="20" rx="3" fill="#dbeafe" opacity=".9"/>
+      <!-- Stripe -->
+      <rect x="20" y="52" width="220" height="6" rx="0" fill="#cc5000"/>
+      <!-- Undercarriage -->
+      <rect x="25" y="68" width="210" height="8" rx="3" fill="#333"/>
+      <!-- Wheels -->
+      <circle cx="55" cy="78" r="12" fill="#222" class="wheel-anim" id="w1"/>
+      <circle cx="55" cy="78" r="5" fill="#888"/>
+      <circle cx="110" cy="78" r="12" fill="#222" class="wheel-anim" id="w2"/>
+      <circle cx="110" cy="78" r="5" fill="#888"/>
+      <circle cx="165" cy="78" r="12" fill="#222" class="wheel-anim" id="w3"/>
+      <circle cx="165" cy="78" r="5" fill="#888"/>
+      <circle cx="220" cy="78" r="12" fill="#222" class="wheel-anim" id="w4"/>
+      <circle cx="220" cy="78" r="5" fill="#888"/>
+      <!-- Front light -->
+      <circle cx="264" cy="38" r="6" fill="#ffd700" opacity=".9"/>
+      <circle cx="264" cy="52" r="4" fill="#ff4444" opacity=".8"/>
+      <!-- KNVB logo area -->
+      <rect x="88" y="30" width="44" height="12" rx="2" fill="#fff" opacity=".2"/>
+      <text x="110" y="41" font-family="Arial Black" font-size="9" fill="#fff" text-anchor="middle" font-weight="900">WK 2026</text>
+    </svg>
+    <!-- Steam -->
+    <div id="steam-container" style="position:absolute;top:-10px;left:20px;width:40px;height:40px"></div>
+  </div>
+  <div class="anim-text" id="anim-text">
+    <div class="anim-title" id="anim-title">Halte <span id="anim-halte-num">1</span> ✓</div>
+    <div class="anim-subtitle" id="anim-subtitle">+€27.00 winst!</div>
+  </div>
+  <div id="particles-container"></div>
+</div>
 <div class="toast-wrap"><div class="toast" id="toast"></div></div>
 
 <script>
@@ -286,8 +389,7 @@ function startTrain(){
 function recordResult(won){
   const halteNum = J.current + 1;
   const inzet = J.inzet;
-  // Ask for odds
-  const oddsStr = prompt(`Halte ${halteNum}: vul de odds in waarop je hebt gewonnen (bijv. 2.00)`);
+  const oddsStr = prompt(`Halte ${halteNum}: vul de odds in (bijv. 2.00)`);
   const odds = parseFloat(oddsStr);
   if(isNaN(odds)||odds<1.01){toast('Ongeldige odds','loss');return;}
 
@@ -297,34 +399,209 @@ function recordResult(won){
   J.current++;
 
   if(!won){
-    // Derailed
-    J.finished = true;
-    J.result = 'lost';
-    J.finalProfit = -J.budget;
-    saveState();
-    showResult();
+    playDerailAnimation(halteNum, ()=>{
+      J.finished = true; J.result = 'lost'; J.finalProfit = -J.budget;
+      saveState(); showResult();
+    });
     return;
   }
 
   if(J.current >= J.haltes){
-    // Reached final station
     const totalWinst = J.stops.reduce((a,s)=>a+s.winst,0);
-    J.finished = true;
-    J.result = 'won';
-    J.finalProfit = totalWinst;
-    saveState();
-    showResult();
+    J.finished = true; J.result = 'won'; J.finalProfit = totalWinst;
+    playTrainAnimation(halteNum, winst, true, ()=>{ saveState(); showResult(); });
     return;
   }
 
-  // Next stop: inzet = winst from this stop
   J.inzet = parseFloat(winst.toFixed(2));
   saveState();
-  renderTrack();
-  renderStats();
-  renderHistory();
-  renderTip();
-  toast(`Halte ${halteNum} ✓ — +€${winst.toFixed(2)}`,'win');
+  playTrainAnimation(halteNum, winst, false, ()=>{
+    renderTrack(); renderStats(); renderHistory(); renderTip();
+  });
+}
+
+function playTrainAnimation(halteNum, winst, isFinal, callback){
+  const overlay = document.getElementById('train-overlay');
+  const sky = document.getElementById('anim-sky');
+  const ground = document.getElementById('anim-ground');
+  const rails = document.getElementById('anim-rails');
+  const train = document.getElementById('anim-train');
+  const text = document.getElementById('anim-text');
+  const bgScroll = document.getElementById('bg-scroll');
+
+  // Build scenery
+  buildScenery();
+  buildSleepers();
+  buildStars();
+
+  // Set text
+  document.getElementById('anim-halte-num').textContent = halteNum;
+  document.getElementById('anim-subtitle').textContent = isFinal
+    ? `🏆 Eindstation bereikt! +€${winst.toFixed(2)}`
+    : `+€${winst.toFixed(2)} winst — volgende halte!`;
+
+  // Show overlay
+  overlay.classList.add('active');
+  requestAnimationFrame(()=>{
+    sky.classList.add('show');
+    ground.classList.add('show');
+    rails.classList.add('show');
+  });
+
+  // Show train after short delay
+  setTimeout(()=>{
+    train.classList.add('show');
+    train.classList.add('moving');
+    bgScroll.style.animationPlayState = 'running';
+    startSteam();
+    spawnParticles();
+  }, 300);
+
+  // Show text
+  setTimeout(()=>text.classList.add('show'), 600);
+
+  // Stop movement, show final state
+  setTimeout(()=>{
+    train.classList.remove('moving');
+    bgScroll.style.animationPlayState = 'paused';
+  }, 2200);
+
+  // Fade out and callback
+  setTimeout(()=>{
+    text.classList.remove('show');
+    train.classList.remove('show');
+  }, 3000);
+
+  setTimeout(()=>{
+    sky.classList.remove('show');
+    ground.classList.remove('show');
+    rails.classList.remove('show');
+    overlay.classList.remove('active','dark');
+    clearSteam();
+    callback();
+  }, 3500);
+}
+
+function playDerailAnimation(halteNum, callback){
+  const overlay = document.getElementById('train-overlay');
+  const sky = document.getElementById('anim-sky');
+  const ground = document.getElementById('anim-ground');
+  const rails = document.getElementById('anim-rails');
+  const train = document.getElementById('anim-train');
+  const text = document.getElementById('anim-text');
+
+  buildScenery(); buildSleepers();
+
+  document.getElementById('anim-halte-num').textContent = halteNum;
+  document.getElementById('anim-subtitle').textContent = '💥 Ontspoord!';
+  document.getElementById('anim-title').innerHTML = 'Halte <span id="anim-halte-num">'+halteNum+'</span> ✕';
+
+  overlay.classList.add('active');
+  overlay.style.background = 'rgba(0,0,0,0)';
+  requestAnimationFrame(()=>{ sky.classList.add('show'); ground.classList.add('show'); rails.classList.add('show'); });
+
+  setTimeout(()=>{
+    train.classList.add('show','moving');
+    startSteam();
+  }, 300);
+
+  // Derail: rotate and shake
+  setTimeout(()=>{
+    train.classList.remove('moving');
+    train.querySelector('svg').style.transition = 'transform .5s ease';
+    train.querySelector('svg').style.transform = 'rotate(15deg) translateY(-10px)';
+    overlay.classList.add('dark');
+    spawnParticles('#dc2626');
+  }, 1500);
+
+  setTimeout(()=>text.classList.add('show'), 1800);
+
+  setTimeout(()=>{
+    text.classList.remove('show');
+    train.classList.remove('show');
+    train.querySelector('svg').style.transform = '';
+  }, 3200);
+
+  setTimeout(()=>{
+    sky.classList.remove('show'); ground.classList.remove('show'); rails.classList.remove('show');
+    overlay.classList.remove('active','dark');
+    overlay.style.background = '';
+    clearSteam();
+    callback();
+  }, 3700);
+}
+
+function buildScenery(){
+  const bg = document.getElementById('bg-scroll');
+  bg.style.animationDuration = '2.5s';
+  bg.style.animationPlayState = 'paused';
+  const W = window.innerWidth;
+  let html = '';
+  const treeTypes = ['🌲','🌳','🌴','🏠','🏡','⛪'];
+  // Build 2 full widths of scenery
+  for(let i=0;i<40;i++){
+    const x = (i/40)*200;
+    const type = treeTypes[Math.floor(Math.random()*treeTypes.length)];
+    const size = 20 + Math.random()*18;
+    const bot = 14 + Math.random()*30;
+    html += `<span style="position:absolute;left:${x}%;bottom:${bot}px;font-size:${size}px;opacity:${0.6+Math.random()*.4}">${type}</span>`;
+  }
+  // Add some mountain shapes
+  html += `<svg style="position:absolute;bottom:0;left:0;width:200%;height:100px" viewBox="0 0 800 100" preserveAspectRatio="none"><path d="M0 100 L80 20 L160 60 L240 10 L320 50 L400 15 L480 55 L560 25 L640 65 L720 30 L800 60 L800 100Z" fill="rgba(255,255,255,0.08)"/></svg>`;
+  bg.innerHTML = html;
+}
+
+function buildSleepers(){
+  const el = document.getElementById('sleepers');
+  let html = '';
+  for(let i=0;i<60;i++) html += '<div class="sleeper"></div>';
+  el.innerHTML = html;
+}
+
+function buildStars(){
+  const el = document.getElementById('anim-stars');
+  let html = '';
+  for(let i=0;i<20;i++){
+    const x = Math.random()*100, y = Math.random()*40;
+    const delay = Math.random()*2, dur = 1+Math.random();
+    html += `<span class="star" style="left:${x}%;top:${y}%;font-size:${8+Math.random()*10}px;animation-delay:${delay}s;animation-duration:${dur}s">★</span>`;
+  }
+  el.innerHTML = html;
+}
+
+let steamInterval = null;
+function startSteam(){
+  const container = document.getElementById('steam-container');
+  steamInterval = setInterval(()=>{
+    const puff = document.createElement('div');
+    puff.className = 'steam';
+    const size = 8 + Math.random()*12;
+    puff.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*30}px;top:0;position:absolute`;
+    container.appendChild(puff);
+    setTimeout(()=>puff.remove(), 1000);
+  }, 150);
+}
+function clearSteam(){
+  clearInterval(steamInterval);
+  const c = document.getElementById('steam-container');
+  if(c) c.innerHTML='';
+}
+
+function spawnParticles(color){
+  const container = document.getElementById('particles-container');
+  const colors = color ? [color] : ['#f97316','#fbbf24','#34d399','#60a5fa','#f472b6'];
+  for(let i=0;i<30;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const c = colors[Math.floor(Math.random()*colors.length)];
+    const size = 6+Math.random()*10;
+    const x = 20+Math.random()*60, y = 20+Math.random()*60;
+    const dx = (Math.random()-0.5)*200, dy = (Math.random()-1)*200;
+    const delay = Math.random()*0.5;
+    p.style.cssText = `left:${x}%;top:${y}%;width:${size}px;height:${size}px;background:${c};--dx:${dx}px;--dy:${dy}px;animation-delay:${delay}s;position:absolute`;
+    container.appendChild(p);
+    setTimeout(()=>p.remove(), 1500);
+  }
 }
 
 function showResult(){
