@@ -105,54 +105,7 @@ input::placeholder{color:var(--text3)}
 </head>
 <body>
 
-<div class="setup-overlay" id="setup-overlay">
-  <div class="setup-card">
-    <div class="setup-title">WK <span>2026</span> Setup</div>
-    <div class="setup-sub">Vul je Supabase credentials in. Deze worden veilig opgeslagen in je browser.</div>
 
-    <div class="info-box">
-      Vind je credentials in Supabase onder<br>
-      <code>Project Settings</code> → <code>API</code><br><br>
-      Kopieer de <code>Project URL</code> en de <code>anon public</code> key.
-    </div>
-
-    <div class="setup-field">
-      <label>Supabase Project URL</label>
-      <input type="text" id="sb-url" placeholder="https://xxxxxxxxxxxx.supabase.co" autocomplete="off" autocorrect="off" spellcheck="false">
-    </div>
-    <div class="setup-field">
-      <label>Anon Public Key</label>
-      <input type="password" id="sb-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
-    </div>
-
-    <div class="conn-err" id="conn-err"></div>
-    <button class="btn-primary" id="connect-btn" onclick="connectSupabase()">Verbinden →</button>
-    <button class="btn-secondary" id="skip-btn" onclick="skipSetup()" style="display:none">Overslaan (geen database)</button>
-  </div>
-</div>
-
-<header>
-  <div class="header-top">
-    <div>
-      <div class="logo">WK <span>2026</span> · 1-3-2-6</div>
-      <div class="header-sub">Wedstrategie tracker</div>
-    </div>
-    <div class="save-row">
-      <div class="save-dot" id="save-dot"></div>
-      <span id="save-txt">laden...</span>
-      <span style="color:var(--border2);margin:0 3px">·</span>
-      <span style="cursor:pointer;font-size:13px" onclick="showSetup()" title="Database instellingen">⚙</span>
-    </div>
-  </div>
-</header>
-
-<main>
-  <div class="metrics">
-    <div class="metric"><div class="metric-label">Bankroll</div><div class="metric-value" id="m-bank">€200</div></div>
-    <div class="metric"><div class="metric-label">Winst / verlies</div><div class="metric-value" id="m-pnl">€0</div></div>
-    <div class="metric"><div class="metric-label">Weddenschappen</div><div class="metric-value" id="m-count">0</div></div>
-    <div class="metric"><div class="metric-label">Win %</div><div class="metric-value" id="m-pct">—</div></div>
-  </div>
 
   <div class="card">
     <div class="card-title">Cyclus voortgang</div>
@@ -229,7 +182,7 @@ const DEFAULT_MATCHES = [
 ];
 
 let allMatches = [...DEFAULT_MATCHES];
-let sbUrl = '', sbKey = '';
+let sbUrl = "https://qulpykjmpeqezumaewva.supabase.co", sbKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF1bHB5a2ptcGVxZXp1bWFld3ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyOTc4ODUsImV4cCI6MjA5NTg3Mzg4NX0.wcclN2WyvPWa4pMM4qPKL2i0nAR-9Vw_5TuAg9w-_K8";
 let useDb = false;
 let toastTimer = null;
 
@@ -573,18 +526,8 @@ function toast(msg, type) {
 // ── Init ──────────────────────────────────────────────────────
 
 (function init() {
-  const creds = JSON.parse(localStorage.getItem(LS_CREDS) || 'null');
-  if (creds && creds.url && creds.key) {
-    sbUrl = creds.url; sbKey = creds.key;
-    document.getElementById('sb-url').value = creds.url;
-    document.getElementById('sb-key').value = creds.key;
-    document.getElementById('setup-overlay').style.display = 'none';
-    useDb = true;
-    loadFromDb();
-  } else {
-    document.getElementById('setup-overlay').style.display = 'flex';
-    render();
-  }
+  useDb = true;
+  loadFromDb();
 })();
 </script>
 </body>
