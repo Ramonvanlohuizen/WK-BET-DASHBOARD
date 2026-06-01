@@ -15,21 +15,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
 :root{
-  --or:#E85D04;--or2:#FF6B1A;--or3:rgba(232,93,4,0.12);
-  --bk:#111111;--wh:#ffffff;--wh2:#f5f5f5;
-  --g1:#222;--g2:#555;--g3:#888;--g4:#bbb;--g5:#e0e0e0;--g6:#f2f2f2;
+  --or:#E85D04;--or3:rgba(232,93,4,0.12);
+  --bk:#111;--wh:#fff;--wh2:#f5f5f5;
+  --g2:#555;--g3:#888;--g4:#bbb;--g5:#e0e0e0;--g6:#f2f2f2;
   --gr:#16a34a;--gr2:rgba(22,163,74,0.12);--gr3:rgba(22,163,74,0.35);
   --re:#dc2626;--re2:rgba(220,38,38,0.12);--re3:rgba(220,38,38,0.35);
   --r:4px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:var(--wh2);color:var(--bk);font-family:'Barlow',sans-serif;font-size:15px;min-height:100vh;padding-bottom:calc(50px + env(safe-area-inset-bottom))}
+body{background:var(--wh2);color:var(--bk);font-family:'Barlow',sans-serif;font-size:15px;min-height:100vh;padding-bottom:calc(40px + env(safe-area-inset-bottom))}
 header{background:var(--wh);border-bottom:3px solid var(--or);padding:0 18px;padding-top:env(safe-area-inset-top);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .hinner{display:flex;justify-content:space-between;align-items:center;height:50px}
 .logo{font-family:'Barlow Condensed',sans-serif;font-size:23px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--bk)}
 .logo span{color:var(--or)}
 .nav-tabs{display:flex;border-top:1px solid var(--g5)}
-.nav-tab{flex:1;text-align:center;padding:10px 0;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--g3);border-bottom:3px solid transparent;transition:all .15s}
+.nav-tab{flex:1;text-align:center;padding:10px 0;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--g3);border-bottom:3px solid transparent}
 .nav-tab.active{color:var(--or);border-bottom-color:var(--or)}
 main{padding:0;max-width:480px;margin:0 auto}
 .sec-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--or);padding:16px 18px 8px;display:flex;align-items:center;gap:7px}
@@ -38,11 +38,12 @@ main{padding:0;max-width:480px;margin:0 auto}
 
 /* Setup */
 .setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.setup-field label{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g3);margin-bottom:5px}
-.setup-field input[type=number]{width:100%;background:var(--wh);border:1.5px solid var(--g5);border-radius:var(--r);color:var(--bk);font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;padding:10px 12px;outline:none;text-align:center;transition:border-color .15s}
-.setup-field input[type=number]:focus{border-color:var(--or)}
-.btn-start{width:100%;background:var(--or);border:none;border-radius:var(--r);color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.06em;padding:14px;text-transform:uppercase;transition:opacity .15s}
-.btn-start:active{opacity:.85}
+.field-label{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g3);margin-bottom:5px}
+.num-inp{width:100%;background:var(--wh);border:1.5px solid var(--g5);border-radius:var(--r);color:var(--bk);font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;padding:10px 12px;outline:none;text-align:center;transition:border-color .15s;-moz-appearance:textfield}
+.num-inp:focus{border-color:var(--or)}
+.num-inp::-webkit-inner-spin-button,.num-inp::-webkit-outer-spin-button{-webkit-appearance:none}
+.btn-primary{width:100%;background:var(--or);border:none;border-radius:var(--r);color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.06em;padding:14px;text-transform:uppercase}
+.btn-primary:active{opacity:.85}
 
 /* Stats */
 .stats-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:2px}
@@ -52,146 +53,155 @@ main{padding:0;max-width:480px;margin:0 auto}
 .stat-val.or{color:var(--or)}.stat-val.pos{color:var(--gr)}.stat-val.neg{color:var(--re)}
 
 /* Map */
-#routemap{width:100%;height:320px;z-index:1}
-.map-card{background:var(--wh);margin-bottom:2px;overflow:hidden}
+#routemap{width:100%;height:300px}
+.map-wrap{background:var(--wh);margin-bottom:2px;overflow:hidden}
 
 /* Track */
-.track-section{background:var(--wh);padding:16px 18px;margin-bottom:2px}
-.track-title{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--g3);margin-bottom:14px}
-.track-scroll{overflow-x:auto;padding-bottom:4px}
-.track-inner{position:relative;min-width:max-content;padding:0 14px}
-.track-row{display:flex;align-items:center;position:relative;padding:20px 0 36px}
-.track-rail-bg{position:absolute;top:50%;left:0;right:0;height:5px;background:var(--g5);border-radius:3px;transform:translateY(-50%);margin-top:-8px}
-.track-rail-done{position:absolute;top:50%;left:0;height:5px;background:var(--or);border-radius:3px;transform:translateY(-50%);margin-top:-8px;transition:width .6s cubic-bezier(.4,0,.2,1)}
-.stations-flex{display:flex;align-items:center;position:relative;z-index:2;gap:0}
-.st-wrap{display:flex;flex-direction:column;align-items:center;width:52px}
-.st-dot{width:30px;height:30px;border-radius:50%;border:3px solid var(--g5);background:var(--wh);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;color:var(--g4);transition:all .4s;position:relative}
+.track-wrap{background:var(--wh);padding:14px 18px;margin-bottom:2px}
+.track-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.track-row{display:flex;align-items:flex-start;position:relative;padding:10px 0 8px;gap:0}
+.track-line{position:absolute;top:24px;left:15px;right:15px;height:4px;background:var(--g5);border-radius:2px;z-index:0}
+.track-done{position:absolute;top:24px;left:15px;height:4px;background:var(--or);border-radius:2px;z-index:1;transition:width .5s ease}
+.st{display:flex;flex-direction:column;align-items:center;width:56px;flex-shrink:0;position:relative;z-index:2}
+.st-dot{width:30px;height:30px;border-radius:50%;border:3px solid var(--g5);background:var(--wh);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;color:var(--g4);transition:all .3s}
 .st-dot.done{background:var(--gr);border-color:var(--gr);color:var(--wh)}
 .st-dot.active{background:var(--or);border-color:var(--or);color:var(--wh);box-shadow:0 0 0 5px var(--or3)}
 .st-dot.failed{background:var(--re);border-color:var(--re);color:var(--wh)}
-.st-dot.end{width:36px;height:36px;font-size:15px;background:var(--bk);border-color:var(--bk);color:var(--wh)}
+.st-dot.end{background:var(--bk);border-color:var(--bk);color:var(--wh);font-size:14px}
 .st-dot.end.done{background:var(--gr);border-color:var(--gr)}
-.st-name{font-size:8px;font-weight:700;color:var(--g3);margin-top:5px;text-align:center;max-width:52px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.02em}
-.st-amount{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;margin-top:1px;text-align:center}
-.st-amount.won{color:var(--gr)}.st-amount.lost{color:var(--re)}.st-amount.cur{color:var(--or)}
-.train-ico{position:absolute;top:50%;font-size:22px;transform:translate(-50%,-115%);transition:left .6s cubic-bezier(.4,0,.2,1);z-index:10}
+.st-name{font-size:8px;font-weight:700;color:var(--g3);margin-top:4px;text-align:center;max-width:56px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.st-amt{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;margin-top:1px;text-align:center;white-space:nowrap}
+.st-amt.won{color:var(--gr)}.st-amt.lost{color:var(--re)}.st-amt.cur{color:var(--or)}
+.train-pos{position:absolute;top:6px;font-size:20px;transform:translateX(-50%);transition:left .5s ease;z-index:3;pointer-events:none}
 
-/* Bet */
-.inzet-bar{background:var(--or);padding:13px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
+/* Odds + bet */
+.odds-row{background:var(--wh);padding:12px 18px;margin-bottom:2px;display:flex;align-items:center;gap:12px}
+.odds-lbl{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g3);white-space:nowrap}
+.odds-inp{background:var(--wh);border:1.5px solid var(--g5);border-radius:var(--r);color:var(--bk);font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;padding:8px 12px;outline:none;width:130px;text-align:center;transition:border-color .15s;-moz-appearance:textfield}
+.odds-inp:focus{border-color:var(--or)}
+.odds-inp::-webkit-inner-spin-button,.odds-inp::-webkit-outer-spin-button{-webkit-appearance:none}
+.inzet-bar{background:var(--or);padding:12px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
 .inzet-lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.75)}
 .inzet-amt{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:900;color:var(--wh)}
 .action-row{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px}
-.btn-win{background:var(--gr);border:none;color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.06em;padding:15px;text-transform:uppercase;transition:opacity .15s}
+.btn-win{background:var(--gr);border:none;color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;padding:15px;text-transform:uppercase}
 .btn-win:active{opacity:.85}
-.btn-loss{background:var(--re);border:none;color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.06em;padding:15px;text-transform:uppercase;transition:opacity .15s}
+.btn-loss{background:var(--re);border:none;color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;padding:15px;text-transform:uppercase}
 .btn-loss:active{opacity:.85}
-.tip-bar{background:var(--wh);border-left:3px solid var(--or);padding:11px 14px;font-size:13px;color:var(--g2);margin-bottom:2px}
+.tip-bar{background:var(--wh);border-left:3px solid var(--or);padding:10px 14px;font-size:13px;color:var(--g2);margin-bottom:2px}
 .tip-bar strong{color:var(--or)}
-
-/* Odds input */
-.odds-card{background:var(--wh);padding:13px 18px;margin-bottom:2px;display:flex;align-items:center;gap:12px}
-.odds-lbl{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g3);white-space:nowrap}
-input[type=number].odds-inp{background:var(--wh);border:1.5px solid var(--g5);border-radius:var(--r);color:var(--bk);font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;padding:8px 12px;outline:none;width:120px;text-align:center;transition:border-color .15s}
-input[type=number].odds-inp:focus{border-color:var(--or)}
 
 /* History */
 .hi-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--g6)}
 .hi-row:last-child{border-bottom:none}
 .hi-left{flex:1;min-width:0}
 .hi-match{font-size:13px;font-weight:600;color:var(--bk)}
-.hi-meta{font-size:11px;color:var(--g3);margin-top:2px}
-.badge{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;padding:3px 9px;border-radius:2px}
+.hi-meta{font-size:11px;color:var(--g3);margin-top:1px}
+.badge{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;padding:3px 9px;border-radius:2px;flex-shrink:0;margin-left:8px}
 .bwin{background:var(--gr2);color:var(--gr);border:1px solid var(--gr3)}
 .blos{background:var(--re2);color:var(--re);border:1px solid var(--re3)}
 .empty{font-size:13px;color:var(--g3);text-align:center;padding:16px 0}
 
-/* Saved */
-.saved-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--g6)}
-.saved-item:last-child{border-bottom:none}
-
 /* Result */
 .result-card{background:var(--wh);padding:28px 18px;text-align:center;margin-bottom:2px}
 .res-icon{font-size:52px;margin-bottom:10px}
-.res-title{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+.res-title{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:900;text-transform:uppercase;margin-bottom:4px}
 .res-title.won{color:var(--gr)}.res-title.lost{color:var(--re)}
 .res-amt{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;margin-bottom:8px}
 .res-amt.won{color:var(--gr)}.res-amt.lost{color:var(--re)}
 .res-sub{font-size:13px;color:var(--g2);margin-bottom:22px;line-height:1.6}
-.btn-new{background:var(--or);border:none;border-radius:var(--r);color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.06em;padding:14px 28px;text-transform:uppercase}
+.btn-new{background:var(--or);border:none;border-radius:var(--r);color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;padding:13px 28px;text-transform:uppercase}
 
-/* ── WK ANIMATION OVERLAY ── */
-.wk-overlay{position:fixed;inset:0;z-index:999;display:none;overflow:hidden;background:#0a1628}
-.wk-overlay.active{display:flex;flex-direction:column;align-items:center;justify-content:center}
+/* WK Train Animation overlay */
+.wk-overlay{position:fixed;inset:0;z-index:999;display:none;overflow:hidden;background:#87CEEB}
+.wk-overlay.active{display:block}
 
-/* Pitch */
-.pitch-wrap{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
-.pitch{width:130%;height:45%;background:linear-gradient(180deg,#1a5c2a 0%,#1e6b30 25%,#1a5c2a 50%,#1e6b30 75%,#1a5c2a 100%);position:relative;transform:perspective(400px) rotateX(25deg);transform-origin:bottom center;border-top:3px solid rgba(255,255,255,.15)}
-.pitch-lines{position:absolute;inset:0}
-.pitch-line{position:absolute;background:rgba(255,255,255,.12)}
-/* Crowd */
-.crowd{position:absolute;bottom:45%;left:0;right:0;height:120px;background:linear-gradient(180deg,#1a1a2e 0%,#16213e 60%,#0f3460 100%)}
-.crowd-dots{position:absolute;inset:0}
-
-/* Stadium lights */
-.stadium-light{position:absolute;top:0;width:6px;background:linear-gradient(180deg,#fff8e1 0%,rgba(255,248,225,0) 100%);transform-origin:top center;opacity:.7}
-.light-beam{position:absolute;top:0;left:-20px;width:40px;height:180px;background:linear-gradient(180deg,rgba(255,255,200,.15) 0%,rgba(255,255,200,0) 100%);transform-origin:top center}
-
-/* Ball animation */
-@keyframes ballArc{0%{transform:translate(-120px,60px) scale(.8);opacity:0}15%{opacity:1}50%{transform:translate(0,-80px) scale(1.1)}85%{opacity:1}100%{transform:translate(120px,60px) scale(.8);opacity:0}}
-@keyframes ballSpin{from{transform:rotate(0deg)}to{transform:rotate(720deg)}}
-.ball-wrap{position:absolute;top:35%;left:50%;transform:translate(-50%,-50%);z-index:10;animation:ballArc 1.8s ease-in-out forwards}
-.ball{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff 0%,#e0e0e0 60%,#aaa 100%);box-shadow:0 4px 20px rgba(0,0,0,.5),inset -4px -4px 8px rgba(0,0,0,.2);position:relative;animation:ballSpin 1.8s linear forwards}
-.ball:before{content:'';position:absolute;inset:4px;border-radius:50%;background:conic-gradient(transparent 0deg,rgba(0,0,0,.1) 60deg,transparent 120deg,rgba(0,0,0,.1) 180deg,transparent 240deg,rgba(0,0,0,.1) 300deg,transparent 360deg)}
-
-/* Goal net */
-@keyframes netShake{0%,100%{transform:scaleY(1)}20%{transform:scaleY(1.08)}60%{transform:scaleY(.97)}}
-.goal{position:absolute;bottom:45%;left:50%;transform:translateX(-50%);width:90px;height:60px;border:3px solid rgba(255,255,255,.7);border-bottom:none;z-index:5}
-.goal-net{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 9px,rgba(255,255,255,.15) 9px,rgba(255,255,255,.15) 10px),repeating-linear-gradient(90deg,transparent,transparent 9px,rgba(255,255,255,.15) 9px,rgba(255,255,255,.15) 10px);display:none}
-.goal-net.hit{display:block;animation:netShake .4s ease}
-
+/* Sky */
+.sky-layer{position:absolute;inset:0;background:linear-gradient(180deg,#5ba3d4 0%,#87CEEB 60%,#a8d8ea 100%)}
+/* Clouds */
+.cloud{position:absolute;background:#fff;border-radius:50px;opacity:.85}
+@keyframes cloudMove{from{transform:translateX(110vw)}to{transform:translateX(-300px)}}
+/* Sun */
+.sun{position:absolute;top:8%;right:15%;width:52px;height:52px;background:radial-gradient(circle,#fffde7,#ffd54f);border-radius:50%;box-shadow:0 0 30px rgba(255,213,79,.6)}
+/* Dutch polder landscape */
+.landscape{position:absolute;bottom:0;left:0;right:0;height:42%}
+.grass{position:absolute;bottom:0;left:0;right:0;height:100%;background:linear-gradient(180deg,#5a9e3a 0%,#4a8a2a 100%)}
+/* Water canal */
+.canal{position:absolute;bottom:35%;left:0;right:0;height:18px;background:linear-gradient(180deg,#6ab4d8,#4a9ac0)}
+/* Road */
+.road{position:absolute;bottom:28%;left:0;right:0;height:10px;background:#888}
+.road:after{content:'';position:absolute;top:50%;left:0;right:0;height:2px;background:repeating-linear-gradient(90deg,#fff 0,#fff 20px,transparent 20px,transparent 40px)}
+/* Windmill */
+.windmill{position:absolute;bottom:calc(42% - 2px)}
+.wm-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:22px;height:60px;background:#c8a876;clip-path:polygon(30% 0%,70% 0%,85% 100%,15% 100%)}
+.wm-cap{position:absolute;bottom:58px;left:50%;transform:translateX(-50%);width:26px;height:14px;background:#7a5c3a;border-radius:3px 3px 0 0}
+@keyframes spinBlade{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.wm-blades{position:absolute;bottom:62px;left:50%;width:50px;height:50px;animation:spinBlade 3s linear infinite}
+.wm-blade{position:absolute;top:50%;left:50%;width:22px;height:5px;background:#5a3e1e;border-radius:2px;transform-origin:0 50%}
+/* Houses */
+.house{position:absolute;bottom:calc(42% - 2px)}
+.h-body{position:absolute;bottom:0;background:#c8826a}
+.h-roof{position:absolute;background:#8b4513}
+/* Cows */
+.cow{position:absolute;font-size:16px}
+/* Scroll layers */
+@keyframes scrollFar{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes scrollMid{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes scrollNear{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.scroll-far{animation:scrollFar 12s linear infinite}
+.scroll-mid{animation:scrollMid 7s linear infinite}
+.scroll-near{animation:scrollNear 4s linear infinite}
+/* Rail */
+.rail-layer{position:absolute;bottom:18%;left:0;right:0;height:24px}
+.rail-top,.rail-bot{position:absolute;left:0;right:0;height:5px;background:#6b6b6b;border-radius:2px}
+.rail-top{top:0}.rail-bot{bottom:0}
+.sleeper-row{position:absolute;inset:0;overflow:hidden}
+@keyframes sleepersMove{from{background-position:0 0}to{background-position:-60px 0}}
+.sleeper-row{background:repeating-linear-gradient(90deg,#5a3e1e 0px,#5a3e1e 18px,transparent 18px,transparent 60px);background-size:60px 100%;animation:sleepersMove .4s linear infinite}
+/* TRAIN */
+.train-scene{position:absolute;bottom:calc(18% + 20px);left:0;right:100%;width:100vw;transition:none}
+@keyframes trainEnter{0%{left:-100vw}100%{left:50%;transform:translateX(-50%)}}
+@keyframes trainLeave{0%{left:50%;transform:translateX(-50%)}100%{left:110vw;transform:none}}
+.train-scene.entering{animation:trainEnter .9s cubic-bezier(.2,0,.4,1) forwards}
+.train-scene.leaving{animation:trainLeave .7s cubic-bezier(.6,0,1,1) forwards}
+.train-scene.stopped{left:50%;transform:translateX(-50%)}
+/* Overhead wires */
+.wire-layer{position:absolute;bottom:calc(18% + 80px);left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,rgba(100,100,100,.5) 0,rgba(100,100,100,.5) 1px,transparent 1px,transparent 120px)}
+.pole{position:absolute;bottom:18%;width:3px;background:#666}
 /* Scoreboard */
-.scoreboard{position:absolute;top:6%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.85);border:2px solid rgba(255,165,0,.6);border-radius:8px;padding:10px 20px;text-align:center;opacity:0;transition:opacity .4s;z-index:20;min-width:200px}
-.scoreboard.show{opacity:1}
-.sb-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,165,0,.8);margin-bottom:4px}
-.sb-score{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:#fff;line-height:1}
-.sb-score span{color:#f97316}
-.sb-sub{font-family:'Barlow Condensed',sans-serif;font-size:14px;color:rgba(255,255,255,.7);margin-top:3px}
-
-/* Flags */
-.flag-strip{position:absolute;bottom:calc(45% + 2px);left:0;right:0;display:flex;justify-content:space-around;padding:0 10px;font-size:22px;opacity:0;transition:opacity .5s}
-.flag-strip.show{opacity:1}
-
+.anim-board{position:absolute;top:6%;left:50%;transform:translateX(-50%);background:rgba(0,0,20,.88);border:2px solid rgba(255,165,0,.6);border-radius:8px;padding:10px 22px;text-align:center;opacity:0;transition:opacity .4s;min-width:200px;z-index:20}
+.anim-board.show{opacity:1}
+.ab-top{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,165,0,.9);margin-bottom:3px}
+.ab-score{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:#fff;line-height:1}
+.ab-score span{color:#f97316}
+.ab-bottom{font-family:'Barlow Condensed',sans-serif;font-size:14px;color:rgba(255,255,255,.75);margin-top:3px}
 /* Confetti */
-.conf{position:absolute;border-radius:2px;animation:confFall linear forwards}
-@keyframes confFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(110vh) rotate(720deg)}}
-
-/* Crowd cheer text */
-.cheer{position:absolute;font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5);letter-spacing:.04em;text-transform:uppercase;opacity:0;animation:cheerPop .6s ease forwards}
-@keyframes cheerPop{0%{opacity:0;transform:scale(.5)}60%{opacity:1;transform:scale(1.15)}100%{opacity:1;transform:scale(1)}}
-
+@keyframes confFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(540deg);opacity:0}}
+.conf{position:absolute;top:-10px;border-radius:2px;animation:confFall linear forwards}
+/* Flag wavers on roadside */
+.flagwaver{position:absolute;bottom:calc(28% + 2px);font-size:18px}
+@keyframes wave{0%,100%{transform:rotate(-20deg)}50%{transform:rotate(20deg)}}
+.flagwaver span{display:inline-block;animation:wave .5s ease-in-out infinite}
 /* Derail */
-@keyframes derailShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
-.derail-wrap{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:30;opacity:0;transition:opacity .3s}
-.derail-wrap.show{opacity:1}
-.derail-icon{font-size:64px;animation:derailShake .4s ease 0.3s}
-.derail-title{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--re);text-transform:uppercase;margin-top:8px;text-shadow:0 2px 12px rgba(0,0,0,.5)}
-.derail-sub{font-family:'Barlow Condensed',sans-serif;font-size:18px;color:rgba(255,255,255,.7);margin-top:4px}
+.derail-screen{position:absolute;inset:0;background:rgba(0,0,0,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:30}
+.derail-screen.show{opacity:1}
+.derail-icon{font-size:64px;margin-bottom:10px}
+.derail-title{font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:900;color:var(--re);text-transform:uppercase}
+.derail-sub{font-family:'Barlow Condensed',sans-serif;font-size:18px;color:rgba(255,255,255,.6);margin-top:6px}
+.overlay-skip{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.3);border-radius:20px;color:rgba(255,255,255,.8);cursor:pointer;font-family:'Barlow',sans-serif;font-size:12px;padding:7px 18px;z-index:40}
 
-/* Close btn */
-.overlay-skip{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:20px;color:rgba(255,255,255,.7);cursor:pointer;font-family:'Barlow',sans-serif;font-size:12px;padding:7px 18px}
+/* Saved */
+.saved-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--g6)}
+.saved-row:last-child{border-bottom:none}
 
 /* Toast */
 .toast-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:1000;pointer-events:none}
-.toast{background:var(--bk);color:var(--wh);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.04em;padding:10px 22px;text-transform:uppercase;white-space:nowrap;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s;border-radius:var(--r);border-top:2px solid var(--or)}
+.toast{background:var(--bk);color:var(--wh);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;padding:10px 22px;text-transform:uppercase;white-space:nowrap;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s;border-radius:var(--r);border-top:2px solid var(--or)}
 .toast.show{opacity:1;transform:translateY(0)}.toast.win{border-top-color:var(--gr)}.toast.loss{border-top-color:var(--re)}
-
-/* Leaflet overrides */
-.leaflet-container{font-family:'Barlow',sans-serif}
-.station-marker-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;background:#fff;border:2px solid var(--or);border-radius:3px;padding:2px 6px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.station-lbl{background:#fff;border:2px solid #E85D04;border-radius:3px;padding:2px 6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.15);pointer-events:none}
 </style>
 </head>
 <body>
-
 <header>
   <div class="hinner">
     <div class="logo">WK <span>2026</span></div>
@@ -204,24 +214,22 @@ input[type=number].odds-inp:focus{border-color:var(--or)}
 </header>
 
 <main>
-
   <!-- SETUP -->
   <div id="view-setup">
-    <div class="sec-label">Nieuwe treinrit instellen</div>
+    <div class="sec-label">Nieuwe treinrit</div>
     <div class="card">
       <div class="setup-grid">
-        <div class="setup-field">
-          <label>Startbudget (€)</label>
-          <input type="number" id="cfg-budget" value="30" min="1" step="1">
+        <div>
+          <label class="field-label">Startbudget (€)</label>
+          <input type="number" class="num-inp" id="cfg-budget" value="30" min="1" max="9999">
         </div>
-        <div class="setup-field">
-          <label>Aantal haltes</label>
-          <input type="number" id="cfg-haltes" value="10" min="2" max="20" step="1">
+        <div>
+          <label class="field-label">Aantal haltes</label>
+          <input type="number" class="num-inp" id="cfg-haltes" value="10" min="2" max="11">
         </div>
       </div>
-      <button class="btn-start" onclick="startTrain()">🚂 Trein vertrekken</button>
+      <button class="btn-primary" onclick="startTrain()">🚂 Trein vertrekken</button>
     </div>
-
     <div id="saved-section" style="display:none">
       <div class="sec-label">Eerdere ritten</div>
       <div class="card" id="saved-list"></div>
@@ -230,59 +238,62 @@ input[type=number].odds-inp:focus{border-color:var(--or)}
 
   <!-- ACTIVE -->
   <div id="view-active" style="display:none">
-
     <div class="stats-strip">
       <div class="stat-tile"><div class="stat-lbl">Inzet</div><div class="stat-val or" id="s-inzet">€30</div></div>
       <div class="stat-tile"><div class="stat-lbl">Halte</div><div class="stat-val" id="s-halte">1/10</div></div>
-      <div class="stat-tile"><div class="stat-lbl">Totaal winst</div><div class="stat-val pos" id="s-tot">€0</div></div>
+      <div class="stat-tile"><div class="stat-lbl">Winst</div><div class="stat-val pos" id="s-winst">€0</div></div>
     </div>
 
-    <!-- Map -->
-    <div class="sec-label">Route kaart</div>
-    <div class="map-card">
-      <div id="routemap"></div>
-    </div>
+    <div class="sec-label">Route — Wezep naar Rotterdam</div>
+    <div class="map-wrap"><div id="routemap"></div></div>
 
-    <!-- Track -->
-    <div class="track-section">
-      <div class="track-title">Spoor overzicht</div>
+    <div class="track-wrap">
       <div class="track-scroll">
-        <div class="track-inner">
+        <div style="position:relative" id="track-container">
           <div class="track-row" id="track-row">
-            <div class="track-rail-bg"></div>
-            <div class="track-rail-done" id="rail-done" style="width:0"></div>
-            <div class="stations-flex" id="stations-flex"></div>
-            <div class="train-ico" id="train-ico">🚂</div>
+            <div class="track-line" id="track-line-bg"></div>
+            <div class="track-done" id="track-done"></div>
+            <div id="track-stations" style="display:flex;gap:0;position:relative;z-index:2"></div>
+            <div class="train-pos" id="train-pos">🚂</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Odds input -->
-    <div class="odds-card">
-      <span class="odds-lbl">Odds halte <span id="cur-h">1</span></span>
-      <input type="number" class="odds-inp" id="odds-inp" placeholder="2.00" min="1.01" step="0.01" value="">
+    <div class="odds-row">
+      <span class="odds-lbl">Odds halte <span id="cur-h-num">1</span></span>
+      <input type="number" class="odds-inp" id="odds-inp" placeholder="2.00" min="1.01" step="0.01">
     </div>
-
     <div class="inzet-bar">
       <div class="inzet-lbl">Inzet deze halte</div>
       <div class="inzet-amt" id="betdisp">€30</div>
     </div>
-
     <div class="action-row">
       <button class="btn-win" onclick="recordResult(true)">✓ Gewonnen</button>
       <button class="btn-loss" onclick="recordResult(false)">✕ Verloren</button>
     </div>
-
     <div class="tip-bar" id="tipbar"></div>
 
-    <div class="sec-label">Haltes afgelegd · <span id="hcount">0</span></div>
-    <div class="card">
-      <div id="hlist"><div class="empty">Nog geen haltes afgelegd</div></div>
-    </div>
+    <div class="sec-label">Haltes · <span id="hcount">0</span></div>
+    <div class="card"><div id="hlist"><div class="empty">Nog geen haltes</div></div></div>
 
-    <div style="text-align:center;padding:28px 18px 8px">
-      <button onclick="abandonJourney()" style="background:none;border:none;color:var(--g4);font-family:'Barlow',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:8px">Rit afbreken</button>
+    <!-- Uitstappen card -->
+    <div class="sec-label">Uitstappen</div>
+    <div class="card" id="uitstap-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g3);margin-bottom:2px">Huidige pot</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--gr)" id="cash-out-amt">€30</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g3);margin-bottom:2px">Winst t.o.v. start</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--gr)" id="cash-out-profit">€0</div>
+        </div>
+      </div>
+      <button onclick="cashOut()" style="width:100%;background:var(--gr);border:none;border-radius:var(--r);color:#fff;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:.06em;padding:13px;text-transform:uppercase;margin-bottom:8px">💰 Uitstappen & cashen</button>
+      <div style="text-align:center">
+        <button onclick="abandonJourney()" style="background:none;border:none;color:var(--g4);font-family:'Barlow',sans-serif;font-size:11px;cursor:pointer;text-decoration:underline;text-underline-offset:3px">Rit afbreken (zonder cashen)</button>
+      </div>
     </div>
   </div>
 
@@ -296,475 +307,627 @@ input[type=number].odds-inp:focus{border-color:var(--or)}
       <button class="btn-new" onclick="newJourney()">🚂 Nieuwe rit</button>
     </div>
     <div class="sec-label">Rit overzicht</div>
-    <div class="card" id="result-history"></div>
+    <div class="card" id="result-hist"></div>
   </div>
-
 </main>
 
-<!-- WK Animation overlay -->
+<!-- WK Train Animation Overlay -->
 <div class="wk-overlay" id="wk-overlay">
-  <div class="crowd" id="anim-crowd"><div class="crowd-dots" id="crowd-dots"></div></div>
-  <div class="pitch-wrap">
-    <div class="pitch"><div class="pitch-lines" id="pitch-lines"></div></div>
+  <!-- Sky -->
+  <div class="sky-layer"></div>
+  <div class="sun"></div>
+  <!-- Clouds (built by JS) -->
+  <div id="cloud-layer" style="position:absolute;inset:0;pointer-events:none"></div>
+  <!-- Far background (windmills, houses) -->
+  <div style="position:absolute;bottom:42%;left:0;width:200%;height:120px;overflow:hidden">
+    <div class="scroll-far" id="bg-far" style="width:200%;height:100%;position:relative"></div>
   </div>
-  <div style="position:absolute;left:8%;top:5%;font-size:18px" class="stadium-light"><div class="light-beam" style="transform:rotate(25deg)"></div></div>
-  <div style="position:absolute;right:8%;top:5%;font-size:18px" class="stadium-light"><div class="light-beam" style="transform:rotate(-25deg)"></div></div>
-  <div class="goal" id="anim-goal"><div class="goal-net" id="goal-net"></div></div>
-  <div class="flag-strip" id="flag-strip">🇳🇱🏆⚽🇳🇱🏆⚽🇳🇱🏆⚽🇳🇱</div>
-  <div class="ball-wrap" id="ball-wrap" style="display:none"><div class="ball"></div></div>
-  <div class="scoreboard" id="scoreboard">
-    <div class="sb-label" id="sb-label">Halte 1 ✓</div>
-    <div class="sb-score" id="sb-score"><span>+€0</span></div>
-    <div class="sb-sub" id="sb-sub">Volgende halte!</div>
+  <!-- Mid layer cows + road features -->
+  <div style="position:absolute;bottom:28%;left:0;width:200%;height:60px;overflow:hidden">
+    <div class="scroll-mid" id="bg-mid" style="width:200%;height:100%;position:relative"></div>
   </div>
-  <div class="derail-wrap" id="derail-wrap">
+  <!-- Flag wavers near road -->
+  <div id="flag-wavers" style="position:absolute;bottom:0;left:0;right:0;height:50%"></div>
+  <!-- Ground -->
+  <div class="landscape">
+    <div class="grass"></div>
+    <div class="canal"></div>
+    <div class="road"></div>
+  </div>
+  <!-- Overhead wire poles -->
+  <div class="wire-layer"></div>
+  <!-- Rail -->
+  <div class="rail-layer">
+    <div class="sleeper-row"></div>
+    <div class="rail-top"></div>
+    <div class="rail-bot"></div>
+  </div>
+  <!-- THE TRAIN -->
+  <div class="train-scene" id="train-scene">
+    <svg id="train-svg" width="380" height="80" viewBox="0 0 380 80" xmlns="http://www.w3.org/2000/svg">
+      <!-- Loco -->
+      <rect x="2" y="12" width="95" height="50" rx="6" fill="#E85D04"/>
+      <path d="M97 12 L115 20 L115 55 L97 62 Z" fill="#cc5000"/>
+      <!-- Loco windows -->
+      <rect x="12" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".9"/>
+      <rect x="40" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".9"/>
+      <rect x="68" y="20" width="18" height="16" rx="2" fill="#fff" opacity=".9"/>
+      <!-- KNVB lion area -->
+      <rect x="30" y="38" width="50" height="14" rx="2" fill="rgba(255,255,255,.15)"/>
+      <text x="55" y="49" font-family="Arial Black,Arial" font-size="8" font-weight="900" fill="#fff" text-anchor="middle">KNVB</text>
+      <!-- Loco stripe -->
+      <rect x="2" y="52" width="95" height="5" rx="0" fill="#003da5"/>
+      <rect x="2" y="57" width="95" height="3" rx="0" fill="#fff"/>
+      <!-- Loco undercarriage -->
+      <rect x="4" y="62" width="91" height="8" rx="2" fill="#333"/>
+      <!-- Front bumper -->
+      <rect x="110" y="40" width="8" height="15" rx="2" fill="#cc5000"/>
+      <!-- Front light -->
+      <circle cx="112" cy="30" r="5" fill="#fffde7" opacity=".95"/>
+      <circle cx="112" cy="44" r="3.5" fill="#ff4444" opacity=".8"/>
+      <!-- NL flags on loco -->
+      <rect x="15" y="10" width="2" height="10" fill="#888"/>
+      <rect x="17" y="10" width="12" height="4" fill="#ae1c28"/>
+      <rect x="17" y="14" width="12" height="4" fill="#fff"/>
+      <rect x="17" y="18" width="12" height="4" fill="#21468b"/>
+      <rect x="50" y="10" width="2" height="10" fill="#888"/>
+      <rect x="52" y="10" width="12" height="4" fill="#ae1c28"/>
+      <rect x="52" y="14" width="12" height="4" fill="#fff"/>
+      <rect x="52" y="18" width="12" height="4" fill="#21468b"/>
+      <!-- WK TREIN text -->
+      <rect x="118" y="12" width="260" height="50" rx="4" fill="#E85D04"/>
+      <!-- Wagon stripes -->
+      <rect x="118" y="48" width="260" height="6" rx="0" fill="#003da5"/>
+      <rect x="118" y="54" width="260" height="3" rx="0" fill="#fff"/>
+      <!-- Wagon windows -->
+      <rect x="126" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
+      <rect x="154" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
+      <rect x="182" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
+      <rect x="210" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
+      <rect x="238" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
+      <rect x="266" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
+      <rect x="294" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
+      <rect x="322" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
+      <!-- People in windows (orange shirts) -->
+      <circle cx="137" cy="24" r="4" fill="#E85D04"/><circle cx="165" cy="24" r="4" fill="#E85D04"/>
+      <circle cx="193" cy="24" r="4" fill="#E85D04"/><circle cx="221" cy="24" r="4" fill="#E85D04"/>
+      <circle cx="249" cy="24" r="4" fill="#E85D04"/><circle cx="277" cy="24" r="4" fill="#E85D04"/>
+      <!-- WK TREIN label on wagon -->
+      <rect x="140" y="38" width="80" height="10" rx="2" fill="rgba(255,255,255,.2)"/>
+      <text x="180" y="46" font-family="Arial Black,Arial" font-size="7" font-weight="900" fill="#fff" text-anchor="middle" letter-spacing="1">WK TREIN</text>
+      <text x="240" y="46" font-family="Arial Black,Arial" font-size="7" font-weight="900" fill="#fff" text-anchor="middle">NEDERLAND</text>
+      <!-- Wagon undercarriage -->
+      <rect x="120" y="62" width="256" height="8" rx="2" fill="#333"/>
+      <!-- Wheels loco -->
+      <circle cx="25" cy="74" r="8" fill="#222"/><circle cx="25" cy="74" r="3.5" fill="#777"/>
+      <circle cx="55" cy="74" r="8" fill="#222"/><circle cx="55" cy="74" r="3.5" fill="#777"/>
+      <circle cx="85" cy="74" r="8" fill="#222"/><circle cx="85" cy="74" r="3.5" fill="#777"/>
+      <!-- Wheels wagons -->
+      <circle cx="148" cy="74" r="7" fill="#222"/><circle cx="148" cy="74" r="3" fill="#777"/>
+      <circle cx="178" cy="74" r="7" fill="#222"/><circle cx="178" cy="74" r="3" fill="#777"/>
+      <circle cx="218" cy="74" r="7" fill="#222"/><circle cx="218" cy="74" r="3" fill="#777"/>
+      <circle cx="248" cy="74" r="7" fill="#222"/><circle cx="248" cy="74" r="3" fill="#777"/>
+      <circle cx="288" cy="74" r="7" fill="#222"/><circle cx="288" cy="74" r="3" fill="#777"/>
+      <circle cx="318" cy="74" r="7" fill="#222"/><circle cx="318" cy="74" r="3" fill="#777"/>
+      <circle cx="358" cy="74" r="7" fill="#222"/><circle cx="358" cy="74" r="3" fill="#777"/>
+      <!-- Steam puffs placeholder -->
+      <g id="steam-group" opacity=".7">
+        <circle cx="5" cy="10" r="6" fill="white" opacity=".0" id="st1"/>
+        <circle cx="18" cy="4" r="8" fill="white" opacity=".0" id="st2"/>
+        <circle cx="30" cy="-2" r="7" fill="white" opacity=".0" id="st3"/>
+      </g>
+    </svg>
+  </div>
+  <!-- Scoreboard -->
+  <div class="anim-board" id="anim-board">
+    <div class="ab-top" id="ab-top">Halte 1 ✓</div>
+    <div class="ab-score" id="ab-score"><span>+€0</span></div>
+    <div class="ab-bottom" id="ab-bottom">Volgende halte!</div>
+  </div>
+  <!-- Derail -->
+  <div class="derail-screen" id="derail-screen">
     <div class="derail-icon">💥</div>
     <div class="derail-title">Ontspoord!</div>
-    <div class="derail-sub" id="derail-sub">Verlies bij halte 1</div>
+    <div class="derail-sub" id="derail-sub">Halte 1</div>
   </div>
-  <div id="confetti-layer"></div>
-  <div id="cheer-layer"></div>
-  <button class="overlay-skip" onclick="skipAnimation()">Overslaan</button>
+  <div id="conf-layer"></div>
+  <button class="overlay-skip" onclick="closeOverlay()">Overslaan</button>
 </div>
 
 <div class="toast-wrap"><div class="toast" id="toast"></div></div>
 
 <script>
-// ── Stations along Amersfoort–Zwolle near Wezep ──
-// Intercity route: Wezep → Rotterdam Centraal (real NS stops)
-const ALL_STATIONS = [
-  {name:'Wezep',           short:'Wezep',    lat:52.4538, lng:6.0017},
-  {name:'Zwolle',          short:'Zwolle',   lat:52.5053, lng:6.0906},
-  {name:'Nijkerk',         short:'Nijkerk',  lat:52.2167, lng:5.4897},
-  {name:'Amersfoort',      short:'Amersft',  lat:52.1531, lng:5.3764},
-  {name:'Hilversum',       short:'Hilvers',  lat:52.2281, lng:5.1800},
-  {name:'Utrecht C.',      short:'Utrecht',  lat:52.0894, lng:5.1108},
-  {name:'Gouda',           short:'Gouda',    lat:52.0178, lng:4.7058},
-  {name:'Den Haag C.',     short:'Den Haag', lat:52.0808, lng:4.3244},
-  {name:'Delft',           short:'Delft',    lat:52.0064, lng:4.3558},
-  {name:'Schiedam',        short:'Schiedam', lat:51.9167, lng:4.4000},
-  {name:'Rotterdam C.',    short:'R'dam',   lat:51.9225, lng:4.4689},
+// Real NS intercity route Wezep → Rotterdam
+var ROUTE = [
+  {name:'Wezep',        short:'Wezep',    lat:52.4538, lng:6.0017},
+  {name:'Zwolle',       short:'Zwolle',   lat:52.5053, lng:6.0906},
+  {name:'Amersfoort',   short:'Amersft.', lat:52.1531, lng:5.3764},
+  {name:'Hilversum',    short:'Hilvers.', lat:52.2281, lng:5.1800},
+  {name:'Utrecht C.',   short:'Utrecht',  lat:52.0894, lng:5.1108},
+  {name:'Woerden',      short:'Woerden',  lat:52.0842, lng:4.8869},
+  {name:'Gouda',        short:'Gouda',    lat:52.0178, lng:4.7058},
+  {name:'Den Haag C.',  short:'Den Haag', lat:52.0808, lng:4.3244},
+  {name:'Delft',        short:'Delft',    lat:52.0064, lng:4.3558},
+  {name:'Schiedam C.',  short:'Schiedam', lat:51.9167, lng:4.4000},
+  {name:'Rotterdam C.', short:"R'dam C.", lat:51.9225, lng:4.4689}
 ];
 
-const LS_J = 'wk2026_trein_v2';
-const LS_S = 'wk2026_trein_saved';
-let J = null, tt = null, map = null, mapInited = false;
-let skipAnim = false;
+var LS_J = 'wk2026_trein_v3';
+var LS_S = 'wk2026_trein_saved_v2';
+var J = null, tt = null, leafMap = null, animTimeout = null;
 
-function getState(){return JSON.parse(localStorage.getItem(LS_J)||'null');}
-function saveState(){localStorage.setItem(LS_J,JSON.stringify(J));}
-function getSaved(){return JSON.parse(localStorage.getItem(LS_S)||'[]');}
-function saveSaved(a){localStorage.setItem(LS_S,JSON.stringify(a));}
+function loadJ(){return JSON.parse(localStorage.getItem(LS_J)||'null');}
+function saveJ(){localStorage.setItem(LS_J, JSON.stringify(J));}
+function loadSaved(){return JSON.parse(localStorage.getItem(LS_S)||'[]');}
+function saveSaved(a){localStorage.setItem(LS_S, JSON.stringify(a));}
 
-function pickStations(n){
-  // Pick evenly spaced stations from the Wezep→Rotterdam route
-  const total = ALL_STATIONS.length;
-  if(n >= total) return [...ALL_STATIONS];
-  const result = [ALL_STATIONS[0]]; // always start Wezep
-  const step = (total - 1) / (n - 1);
-  for(let i = 1; i < n - 1; i++){
-    result.push(ALL_STATIONS[Math.round(i * step)]);
+function pickRoute(n){
+  var total = ROUTE.length; // 11 stations = 10 possible haltes
+  var count = Math.min(n + 1, total); // n haltes = n+1 stations
+  if(count >= total) return ROUTE.slice();
+  var result = [ROUTE[0]];
+  var step = (total - 1) / (count - 1);
+  for(var i = 1; i < count - 1; i++){
+    result.push(ROUTE[Math.round(i * step)]);
   }
-  result.push(ALL_STATIONS[total - 1]); // always end Rotterdam
-  // Remove duplicates
-  return result.filter((s,i,a) => a.findIndex(x=>x.name===s.name)===i);
+  result.push(ROUTE[total - 1]);
+  return result;
 }
 
 function init(){
-  const active = getState();
-  if(active && !active.finished){
-    J = active;
-    showView('active');
+  J = loadJ();
+  if(J && !J.finished){
+    show('active');
     initMap();
     renderTrack();
     renderStats();
-    renderHistory();
     renderTip();
+    renderHistory();
   } else {
-    showView('setup');
+    show('setup');
     renderSaved();
   }
 }
 
-function showView(v){
-  ['setup','active','result'].forEach(x=>document.getElementById('view-'+x).style.display=x===v?'block':'none');
+function show(v){
+  ['setup','active','result'].forEach(function(x){
+    document.getElementById('view-'+x).style.display = x===v ? 'block' : 'none';
+  });
 }
 
 function startTrain(){
-  const budget = parseFloat(document.getElementById('cfg-budget').value);
-  const haltes = parseInt(document.getElementById('cfg-haltes').value);
-  if(!budget||budget<1){toast('Vul geldig budget in','loss');return;}
-  if(!haltes||haltes<2||haltes>20){toast('2 tot 20 haltes','loss');return;}
+  var budget = parseFloat(document.getElementById('cfg-budget').value);
+  var haltes = parseInt(document.getElementById('cfg-haltes').value);
+  if(!budget || budget < 1){ toast('Vul geldig budget in','loss'); return; }
+  if(!haltes || haltes < 2 || haltes > 11){ toast('2 tot 11 haltes','loss'); return; }
   J = {
-    id:Date.now(), budget, haltes,
-    stations: pickStations(haltes+1),
-    current:0, inzet:budget, stops:[],
-    finished:false,
-    startedAt:new Date().toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})
+    id: Date.now(),
+    budget: budget,
+    haltes: haltes,
+    stations: pickRoute(haltes),
+    current: 0,
+    inzet: budget,
+    stops: [],
+    finished: false,
+    startedAt: new Date().toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})
   };
-  saveState();
-  showView('active');
-  mapInited = false;
+  saveJ();
+  show('active');
+  leafMap = null;
   initMap();
   renderTrack();
   renderStats();
-  renderHistory();
   renderTip();
+  renderHistory();
   toast('🚂 Wezep → Rotterdam!','');
 }
 
-// ── Map ──
 function initMap(){
-  if(map){map.remove();map=null;}
-  setTimeout(()=>{
-    const el = document.getElementById('routemap');
-    if(!el||!J) return;
-    const stations = J.stations;
-    const centerLat = stations.reduce((a,s)=>a+s.lat,0)/stations.length;
-    const centerLng = stations.reduce((a,s)=>a+s.lng,0)/stations.length;
-    map = L.map('routemap',{zoomControl:true,attributionControl:true,zoomControlOptions:{position:'bottomright'}}).setView([centerLat,centerLng],10);
-    // Real OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '© OpenStreetMap'
-    }).addTo(map);
+  setTimeout(function(){
+    var el = document.getElementById('routemap');
+    if(!el || !J) return;
+    if(leafMap){ leafMap.remove(); leafMap = null; }
+    var stations = J.stations;
+    var lats = stations.map(function(s){return s.lat;});
+    var lngs = stations.map(function(s){return s.lng;});
+    var centerLat = lats.reduce(function(a,b){return a+b;},0)/lats.length;
+    var centerLng = lngs.reduce(function(a,b){return a+b;},0)/lngs.length;
 
-    // Attribution small
-    L.control.attribution({prefix:false}).addTo(map);
+    leafMap = L.map('routemap',{zoomControl:false,attributionControl:false}).setView([centerLat, centerLng], 8);
 
-    // Draw full route line (grey)
-    const allCoords = stations.map(s=>[s.lat,s.lng]);
-    L.polyline(allCoords,{color:'#ccc',weight:4,dashArray:'6 4'}).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18}).addTo(leafMap);
 
-    // Draw done route (orange)
+    // Grey full route
+    var allCoords = stations.map(function(s){return [s.lat, s.lng];});
+    L.polyline(allCoords, {color:'#ccc', weight:4, dashArray:'6 5'}).addTo(leafMap);
+
+    // Orange done route
     if(J.current > 0){
-      const doneCoords = stations.slice(0, J.current+1).map(s=>[s.lat,s.lng]);
-      L.polyline(doneCoords,{color:'#E85D04',weight:5}).addTo(map);
+      var doneCoords = stations.slice(0, J.current+1).map(function(s){return [s.lat, s.lng];});
+      L.polyline(doneCoords, {color:'#E85D04', weight:5}).addTo(leafMap);
     }
 
-    // Station markers
-    stations.forEach((s,i)=>{
-      const isDone = i < J.current;
-      const isActive = i === J.current;
-      const isEnd = i === stations.length-1;
-      const color = isDone ? '#16a34a' : isActive ? '#E85D04' : '#999';
-      const size = isEnd ? 16 : 12;
-      const marker = L.circleMarker([s.lat,s.lng],{
-        radius: size/2+4,
+    // Markers
+    stations.forEach(function(s, i){
+      var isDone = i < J.current;
+      var isActive = i === J.current && !J.finished;
+      var isEnd = i === stations.length - 1;
+      var color = isDone ? '#16a34a' : isActive ? '#E85D04' : '#aaa';
+      var r = isEnd ? 10 : isActive ? 9 : 7;
+
+      L.circleMarker([s.lat, s.lng], {
+        radius: r,
         fillColor: color,
         color: '#fff',
-        weight: 2.5,
+        weight: 2,
         fillOpacity: 1
-      }).addTo(map);
+      }).addTo(leafMap);
 
-      // Label
-      L.marker([s.lat,s.lng],{
+      // Label above marker
+      L.marker([s.lat, s.lng], {
         icon: L.divIcon({
-          className:'',
-          html:`<div class="station-marker-label" style="border-color:${color};margin-top:-32px;margin-left:6px">${isEnd?'🏁 ':''}${s.short}</div>`,
-          iconAnchor:[0,0]
+          className: '',
+          html: '<div class="station-lbl" style="border-color:'+color+';margin-left:10px;margin-top:-24px">'+(isEnd?'🏁 ':'')+s.short+'</div>',
+          iconSize: [0,0],
+          iconAnchor: [0,0]
         })
-      }).addTo(map);
+      }).addTo(leafMap);
     });
 
-    // Train marker at current position
+    // Train at current position
     if(J.current < stations.length){
-      const cur = stations[J.current];
-      L.marker([cur.lat,cur.lng],{
-        icon:L.divIcon({
+      var cur = stations[J.current];
+      L.marker([cur.lat, cur.lng], {
+        icon: L.divIcon({
           className:'',
-          html:'<div style="font-size:24px;margin-top:-24px;margin-left:-12px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))">🚂</div>',
-          iconAnchor:[0,0]
+          html:'<div style="font-size:22px;margin-left:-11px;margin-top:-30px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))">🚂</div>',
+          iconSize:[0,0],iconAnchor:[0,0]
         })
-      }).addTo(map);
+      }).addTo(leafMap);
     }
 
-    // Fit bounds
-    const bounds = L.latLngBounds(allCoords);
-    map.fitBounds(bounds,{padding:[30,30]});
-    mapInited = true;
+    leafMap.fitBounds(L.latLngBounds(allCoords), {padding:[28,28]});
   }, 100);
 }
 
-// ── Track ──
 function renderTrack(){
-  const flex = document.getElementById('stations-flex');
-  const railDone = document.getElementById('rail-done');
-  const trainIco = document.getElementById('train-ico');
-  const total = J.haltes;
-  const done = J.current;
-  const stationW = 52;
-  const gapW = 32;
-  const totalW = (total+1)*stationW + total*gapW;
+  var stations = J.stations;
+  var total = J.haltes;
+  var done = J.current;
+  var SW = 56, GAP = 28;
+  var totalW = stations.length * SW + (stations.length-1) * GAP;
 
-  let html = '';
-  for(let i=0;i<=total;i++){
-    const s = J.stations[i] || {short:'H'+i,emoji:'📍'};
-    const isEnd = i===total;
-    const isDone = i<done;
-    const isActive = i===done && !J.finished;
-    const stop = J.stops[i-1];
-    const isFailed = stop && !stop.won;
-    let dotClass='st-dot'+(isEnd?' end':'')+(isDone&&!isFailed?' done':'')+(isActive?' active':'')+(isFailed?' failed':'')+(isEnd&&J.result==='won'?' done':'');
-    let label = isEnd?'🏁':i===0?'🚉':i;
-    let amtHtml='';
+  var html = '';
+  stations.forEach(function(s, i){
+    var isEnd = i === stations.length-1;
+    var isDone = i < done;
+    var isActive = i === done && !J.finished;
+    var stop = J.stops[i-1];
+    var isFailed = stop && !stop.won;
+
+    var cls = 'st-dot';
+    if(isEnd) cls += ' end';
+    if(isDone && !isFailed) cls += ' done';
+    if(isFailed) cls += ' failed';
+    if(isActive) cls += ' active';
+    if(isEnd && J.result === 'won') cls = 'st-dot end done';
+
+    var label = isEnd ? '🏁' : i === 0 ? '🚉' : i;
+    var amtHtml = '';
     if(stop){
-      const cls=stop.won?'won':'lost';
-      amtHtml=`<div class="st-amount ${cls}">${stop.won?'+€'+stop.winst.toFixed(0):'✕'}</div>`;
+      amtHtml = '<div class="st-amt '+(stop.won?'won':'lost')+'">'+(stop.won?'+€'+stop.winst.toFixed(0):'✕')+'</div>';
     } else if(isActive){
-      amtHtml=`<div class="st-amount cur">€${J.inzet.toFixed(0)}</div>`;
+      amtHtml = '<div class="st-amt cur">€'+J.inzet.toFixed(0)+'</div>';
     }
-    const spacer = i<total?`<div style="width:${gapW}px;flex-shrink:0"></div>`:'';
-    html+=`<div class="st-wrap"><div class="${dotClass}">${label}</div><div class="st-name">${isEnd?'Eind':s.short}</div>${amtHtml}</div>${spacer}`;
-  }
-  flex.innerHTML=html;
-  flex.style.width=totalW+'px';
+    var spacer = i < stations.length-1 ? '<div style="width:'+GAP+'px;flex-shrink:0"></div>' : '';
+    html += '<div class="st"><div class="'+cls+'">'+label+'</div><div class="st-name">'+(isEnd?'Eind':s.short)+'</div>'+amtHtml+'</div>'+spacer;
+  });
 
-  // Rail width
-  const pct = total>0?(done/total)*100:0;
-  const railW = (totalW-stationW)*(done/total);
-  railDone.style.width=railW+'px';
+  document.getElementById('track-stations').innerHTML = html;
+  document.getElementById('track-stations').style.width = totalW+'px';
+  document.getElementById('track-row').style.minWidth = totalW+'px';
 
-  // Train position
-  const trainLeft = done*(stationW+gapW)+(stationW/2);
-  trainIco.style.left=trainLeft+'px';
-  document.getElementById('track-row').style.minWidth=totalW+'px';
+  // Rail
+  var railTotal = totalW - SW;
+  document.getElementById('track-line-bg').style.left = (SW/2)+'px';
+  document.getElementById('track-line-bg').style.right = (SW/2)+'px';
+  document.getElementById('track-done').style.left = (SW/2)+'px';
+  document.getElementById('track-done').style.width = (railTotal * done / (stations.length-1))+'px';
+
+  // Train icon
+  var trainLeft = done * (SW + GAP) + SW/2;
+  document.getElementById('train-pos').style.left = trainLeft+'px';
 }
 
 function renderStats(){
-  document.getElementById('s-inzet').textContent='€'+J.inzet.toFixed(2);
-  document.getElementById('s-halte').textContent=(J.current+1)+'/'+J.haltes;
-  document.getElementById('cur-h').textContent=J.current+1;
-  document.getElementById('betdisp').textContent='€'+J.inzet.toFixed(2);
-  const totWinst=J.stops.filter(s=>s.won).reduce((a,s)=>a+s.winst,0);
-  document.getElementById('s-tot').textContent=(totWinst>0?'+':'')+'€'+totWinst.toFixed(0);
+  document.getElementById('s-inzet').textContent = '€'+J.inzet.toFixed(2);
+  document.getElementById('s-halte').textContent = (J.current+1)+'/'+J.haltes;
+  document.getElementById('cur-h-num').textContent = J.current+1;
+  document.getElementById('betdisp').textContent = '€'+J.inzet.toFixed(2);
+  var profit = J.inzet - J.budget;
+  var el = document.getElementById('s-winst');
+  el.textContent = (profit>=0?'+':'')+'€'+profit.toFixed(0);
+  el.className = 'stat-val'+(profit>0?' pos':profit<0?' neg':'');
+  // Update uitstap card
+  var cao = document.getElementById('cash-out-amt');
+  var cap = document.getElementById('cash-out-profit');
+  if(cao){
+    cao.textContent = '€'+J.inzet.toFixed(2);
+    var p = J.inzet - J.budget;
+    cap.textContent = (p>=0?'+':'')+'€'+p.toFixed(2);
+    cap.style.color = p>=0?'var(--gr)':'var(--re)';
+    // Only show uitstap if we've won at least one halte
+    document.getElementById('uitstap-card').style.display = J.current > 0 ? 'block' : 'none';
+  }
 }
 
 function renderTip(){
-  const remaining=J.haltes-J.current;
-  const s=J.stations[J.current]||{name:'Halte '+(J.current+1)};
-  const next=J.stations[J.current+1];
-  document.getElementById('tipbar').innerHTML=`Halte <strong>${J.current+1}</strong> — <strong>${s.name}</strong>. Inzet: <strong>€${J.inzet.toFixed(2)}</strong>. ${next?`Bij winst → ${next.name}.`:''} Nog <strong>${remaining}</strong> haltes te gaan.`;
+  var s = J.stations[J.current];
+  var next = J.stations[J.current+1];
+  var potText = J.current > 0 ? ' · Pot tot nu: <strong>€'+J.inzet.toFixed(2)+'</strong>' : '';
+  document.getElementById('tipbar').innerHTML =
+    'Halte <strong>'+(J.current+1)+'</strong> — <strong>'+(s?s.name:'')+'</strong>. Inzet: <strong>€'+J.inzet.toFixed(2)+'</strong>.'+(next?' Bij winst totale pot → <strong>€'+(J.inzet * 2).toFixed(0)+'</strong> (bij @2.00).':'')+'<br><span style="color:var(--or);font-size:12px">💡 Je kunt op elk moment uitstappen en je pot cashen via de uitstap-knop.</span>';
 }
 
 function renderHistory(){
-  document.getElementById('hcount').textContent=J.stops.length;
-  const el=document.getElementById('hlist');
-  if(!J.stops.length){el.innerHTML='<div class="empty">Nog geen haltes afgelegd</div>';return;}
-  el.innerHTML=[...J.stops].reverse().map(s=>`
-    <div class="hi-row">
-      <div class="hi-left"><div class="hi-match">${s.station} <span style="color:var(--g3);font-weight:400">@${s.odds}</span></div><div class="hi-meta">Inzet €${s.inzet.toFixed(2)} · ${s.ts}</div></div>
-      <div style="flex-shrink:0;margin-left:8px"><span class="badge ${s.won?'bwin':'blos'}">${s.won?'+€'+s.winst.toFixed(2):'Verloren'}</span></div>
-    </div>`).join('');
-}
-
-function renderSaved(){
-  const saved=getSaved();
-  const sec=document.getElementById('saved-section');
-  if(!saved.length){sec.style.display='none';return;}
-  sec.style.display='block';
-  document.getElementById('saved-list').innerHTML=saved.map(j=>{
-    const won=j.result==='won';
-    const profit=won?j.finalProfit:-j.budget;
-    return`<div class="saved-item"><div><div style="font-size:13px;font-weight:600">${j.haltes} haltes · €${j.budget} start</div><div style="font-size:11px;color:var(--g3);margin-top:2px">${j.startedAt} · ${j.stops.length} haltes afgelegd</div></div><span class="badge ${won?'bwin':'blos'}">${(profit>=0?'+':'')+'€'+profit.toFixed(2)}</span></div>`;
+  document.getElementById('hcount').textContent = J.stops.length;
+  var el = document.getElementById('hlist');
+  if(!J.stops.length){ el.innerHTML='<div class="empty">Nog geen haltes</div>'; return; }
+  el.innerHTML = J.stops.slice().reverse().map(function(s){
+    var potStr = s.won ? '→ €'+(s.pot||0).toFixed(2) : '';
+    return '<div class="hi-row"><div class="hi-left"><div class="hi-match">'+s.station+' <span style="color:var(--g3);font-weight:400">@'+s.odds+'</span></div><div class="hi-meta">Halte '+s.halte+' · €'+s.inzet.toFixed(2)+' inzet '+potStr+' · '+s.ts+'</div></div><span class="badge '+(s.won?'bwin':'blos')+'">'+(s.won?'€'+(s.pot||0).toFixed(2):'Verloren')+'</span></div>';
   }).join('');
 }
 
-// ── Record ──
+function renderSaved(){
+  var saved = loadSaved();
+  var sec = document.getElementById('saved-section');
+  if(!saved.length){ sec.style.display='none'; return; }
+  sec.style.display='block';
+  document.getElementById('saved-list').innerHTML = saved.map(function(j){
+    var won = j.result==='won';
+    var profit = won ? j.finalProfit : -j.budget;
+    return '<div class="saved-row"><div><div style="font-size:13px;font-weight:600">'+j.haltes+' haltes · €'+j.budget+' start</div><div style="font-size:11px;color:var(--g3);margin-top:2px">'+j.startedAt+'</div></div><span class="badge '+(won?'bwin':'blos')+'">'+(profit>=0?'+':'')+'€'+profit.toFixed(2)+'</span></div>';
+  }).join('');
+}
+
 function recordResult(won){
-  const odds=parseFloat(document.getElementById('odds-inp').value);
-  if(isNaN(odds)||odds<1.01){toast('Vul geldige odds in','loss');return;}
-  const halteNum=J.current+1;
-  const inzet=J.inzet;
-  const station=J.stations[J.current]||{name:'Halte '+halteNum};
-  const winst=won?parseFloat((inzet*(odds-1)).toFixed(2)):0;
-  const stop={halte:halteNum,station:station.name,inzet,odds,won,winst,ts:new Date().toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})};
-  J.stops.push(stop);
+  var odds = parseFloat(document.getElementById('odds-inp').value);
+  if(isNaN(odds)||odds<1.01){ toast('Vul geldige odds in','loss'); return; }
+  var halteNum = J.current+1;
+  var inzet = J.inzet;
+  var station = J.stations[J.current] || {name:'Halte '+halteNum};
+  // Totale pot = inzet * odds (niet alleen winst)
+  var potNaWinst = won ? parseFloat((inzet * odds).toFixed(2)) : 0;
+  var winst = won ? parseFloat((inzet * (odds-1)).toFixed(2)) : 0;
+  J.stops.push({halte:halteNum, station:station.name, inzet:inzet, odds:odds, won:won, winst:winst, pot:potNaWinst,
+    ts:new Date().toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})});
   J.current++;
 
   if(!won){
-    J.finished=true;J.result='lost';J.finalProfit=-J.budget;
-    saveState();
-    playDerailAnim(halteNum,station.name,()=>showResult());
+    J.finished=true; J.result='lost'; J.finalProfit=-J.budget;
+    saveJ();
+    playDerail(station.name, function(){ showResult(); });
     return;
   }
-
-  if(J.current>=J.haltes){
-    const totalWinst=J.stops.reduce((a,s)=>a+s.winst,0);
-    J.finished=true;J.result='won';J.finalProfit=totalWinst;
-    saveState();
-    playGoalAnim(halteNum,winst,true,()=>showResult());
+  if(J.current >= J.haltes){
+    J.finished=true; J.result='won'; J.finalProfit=potNaWinst - J.budget;
+    J.finalPot=potNaWinst;
+    saveJ();
+    playGoal(halteNum, potNaWinst, true, function(){ showResult(); });
     return;
   }
-
-  J.inzet=parseFloat(winst.toFixed(2));
-  saveState();
+  // Volgende inzet = totale pot na winst
+  J.inzet = potNaWinst;
+  saveJ();
   document.getElementById('odds-inp').value='';
-  playGoalAnim(halteNum,winst,false,()=>{
-    initMap();renderTrack();renderStats();renderHistory();renderTip();
+  playGoal(halteNum, potNaWinst, false, function(){
+    initMap(); renderTrack(); renderStats(); renderTip(); renderHistory();
   });
 }
 
-// ── WK GOAL ANIMATION ──
-function playGoalAnim(halteNum,winst,isFinal,callback){
-  skipAnim=false;
-  const overlay=document.getElementById('wk-overlay');
-  const scoreboard=document.getElementById('scoreboard');
-  const ballWrap=document.getElementById('ball-wrap');
-  const flagStrip=document.getElementById('flag-strip');
-  const goalNet=document.getElementById('goal-net');
-  const derail=document.getElementById('derail-wrap');
+// ── TRAIN ANIMATIONS ──
+function buildScene(){
+  // Clouds
+  var cl = document.getElementById('cloud-layer');
+  cl.innerHTML='';
+  var clouds=[{w:80,h:30,t:'12%',d:'18s'},{w:120,h:40,t:'8%',d:'26s'},{w:60,h:22,t:'18%',d:'14s'},{w:100,h:35,t:'6%',d:'22s'}];
+  clouds.forEach(function(c,i){
+    var div=document.createElement('div');
+    div.className='cloud';
+    div.style.cssText='width:'+c.w+'px;height:'+c.h+'px;top:'+c.t+';left:'+(10+i*25)+'%;animation:cloudMove '+c.d+' linear infinite;animation-delay:'+(i*-4)+'s';
+    cl.appendChild(div);
+  });
+  // Far bg: windmills + houses
+  var far=document.getElementById('bg-far');
+  far.innerHTML='';
+  var items='';
+  for(var i=0;i<8;i++){
+    var left=(i/8)*100+'%';
+    if(i%3===0){
+      // windmill
+      items+='<div style="position:absolute;left:'+left+';bottom:0;width:50px;height:100px"><div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:16px;height:55px;background:#c8a876;clip-path:polygon(30% 0%,70% 0%,85% 100%,15% 100%)"></div><div style="position:absolute;bottom:53px;left:50%;transform:translateX(-50%);width:20px;height:10px;background:#7a5c3a;border-radius:2px 2px 0 0"></div><div style="position:absolute;bottom:55px;left:50%;width:44px;height:44px;animation:spinBlade '+(2+Math.random())+'s linear infinite;transform-origin:0 50%;margin-left:-22px"><div style="position:absolute;top:50%;left:50%;width:20px;height:4px;background:#5a3e1e;border-radius:1px;transform-origin:0 50%;transform:translate(0,-50%) rotate(0deg)"></div><div style="position:absolute;top:50%;left:50%;width:20px;height:4px;background:#5a3e1e;border-radius:1px;transform-origin:0 50%;transform:translate(0,-50%) rotate(90deg)"></div><div style="position:absolute;top:50%;left:50%;width:20px;height:4px;background:#5a3e1e;border-radius:1px;transform-origin:0 50%;transform:translate(0,-50%) rotate(180deg)"></div><div style="position:absolute;top:50%;left:50%;width:20px;height:4px;background:#5a3e1e;border-radius:1px;transform-origin:0 50%;transform:translate(0,-50%) rotate(270deg)"></div></div></div>';
+    } else {
+      // house
+      var hw=30+Math.random()*20,hh=35+Math.random()*15;
+      items+='<div style="position:absolute;left:'+left+';bottom:0;width:'+hw+'px"><div style="position:absolute;bottom:0;width:100%;height:'+hh+'px;background:#c8826a"></div><div style="position:absolute;bottom:'+hh+'px;left:-4px;right:-4px;height:'+(hh*0.5)+'px;background:#8b4513;clip-path:polygon(50% 0%,100% 100%,0% 100%)"></div><div style="position:absolute;bottom:4px;left:30%;width:35%;height:40%;background:#ffd54f;opacity:.5"></div></div>';
+    }
+  }
+  far.innerHTML = items+items; // doubled for seamless loop
+
+  // Flag wavers
+  var fw=document.getElementById('flag-wavers');
+  fw.innerHTML='';
+  for(var j=0;j<6;j++){
+    var x=5+j*16;
+    fw.innerHTML+='<div class="flagwaver" style="left:'+x+'%"><span>🏳️</span></div>'.replace('🏳️','🇳🇱');
+  }
+}
+
+function playGoal(halteNum, winst, isFinal, cb){
+  var overlay=document.getElementById('wk-overlay');
+  var board=document.getElementById('anim-board');
+  var trainScene=document.getElementById('train-scene');
+  var derail=document.getElementById('derail-screen');
   derail.classList.remove('show');
 
-  // Set scoreboard
-  document.getElementById('sb-label').textContent=`Halte ${halteNum} ✓ ${isFinal?'🏆':''}`;
-  document.getElementById('sb-score').innerHTML=`<span>+€${winst.toFixed(2)}</span>`;
-  document.getElementById('sb-sub').textContent=isFinal?'🏆 Eindstation bereikt!':'Volgende halte!';
+  document.getElementById('ab-top').textContent='Halte '+halteNum+(isFinal?' 🏆':'')+' ✓';
+  document.getElementById('ab-score').innerHTML='<span>+€'+winst.toFixed(2)+'</span>';
+  document.getElementById('ab-bottom').textContent=isFinal?'🏆 Rotterdam bereikt!':'Volgende halte!';
 
-  buildCrowd();buildPitchLines();spawnConfetti();
-
+  buildScene();
+  spawnConfetti();
   overlay.classList.add('active');
-  ballWrap.style.display='block';
-  ballWrap.style.animation='none';
-  ballWrap.offsetHeight; // reflow
-  ballWrap.style.animation='ballArc 1.8s ease-in-out forwards';
 
-  setTimeout(()=>{goalNet.classList.add('hit');flagStrip.classList.add('show');},900);
-  setTimeout(()=>{scoreboard.classList.add('show');addCheerTexts();},1100);
-  setTimeout(()=>{scoreboard.classList.remove('show');flagStrip.classList.remove('show');goalNet.classList.remove('hit');},3000);
-  setTimeout(()=>{
-    if(!skipAnim){
-      overlay.classList.remove('active');
-      ballWrap.style.display='none';
-      callback();
-    }
-  },3600);
+  // Train enters from left
+  trainScene.className='train-scene entering';
+
+  // Train stops, show scoreboard
+  setTimeout(function(){
+    trainScene.className='train-scene stopped';
+    board.classList.add('show');
+    animateSteam();
+  }, 950);
+
+  // After pause, train leaves to right
+  setTimeout(function(){
+    board.classList.remove('show');
+    trainScene.className='train-scene leaving';
+  }, 2600);
+
+  var t=setTimeout(function(){
+    overlay.classList.remove('active');
+    trainScene.className='train-scene';
+    cb();
+  }, 3400);
+  animTimeout=t;
 }
 
-function playDerailAnim(halteNum,stationName,callback){
-  skipAnim=false;
-  const overlay=document.getElementById('wk-overlay');
-  const derail=document.getElementById('derail-wrap');
-  const scoreboard=document.getElementById('scoreboard');
-  scoreboard.classList.remove('show');
-  document.getElementById('flag-strip').classList.remove('show');
-  document.getElementById('ball-wrap').style.display='none';
-  document.getElementById('derail-sub').textContent=`Verlies bij ${stationName}`;
-  buildCrowd();buildPitchLines();
-
-  overlay.classList.add('active');
-  overlay.style.background='#0a0a0a';
-  setTimeout(()=>derail.classList.add('show'),400);
-  setTimeout(()=>{
-    if(!skipAnim){
-      overlay.classList.remove('active');
-      overlay.style.background='';
-      derail.classList.remove('show');
-      callback();
-    }
-  },3200);
-}
-
-function skipAnimation(){
-  skipAnim=true;
-  const overlay=document.getElementById('wk-overlay');
-  overlay.classList.remove('active');
-  overlay.style.background='';
-  document.getElementById('derail-wrap').classList.remove('show');
-  document.getElementById('scoreboard').classList.remove('show');
-  document.getElementById('flag-strip').classList.remove('show');
-  document.getElementById('ball-wrap').style.display='none';
-}
-
-function buildCrowd(){
-  const el=document.getElementById('crowd-dots');
-  let html='';
-  const nationColors=['#ff6b00','#003da5','#dc143c','#009246','#002395','#cc0001'];
-  for(let i=0;i<120;i++){
-    const x=Math.random()*100,y=Math.random()*100;
-    const c=nationColors[Math.floor(Math.random()*nationColors.length)];
-    const s=3+Math.random()*4;
-    html+=`<div style="position:absolute;left:${x}%;top:${y}%;width:${s}px;height:${s*1.6}px;background:${c};border-radius:50% 50% 0 0;opacity:${.4+Math.random()*.6}"></div>`;
+function animateSteam(){
+  var st1=document.getElementById('st1');
+  var st2=document.getElementById('st2');
+  var st3=document.getElementById('st3');
+  if(!st1) return;
+  var t=0;
+  function puff(){
+    st1.style.opacity='.6'; st2.style.opacity='.4'; st3.style.opacity='.3';
+    setTimeout(function(){st1.style.opacity='0';st2.style.opacity='0';st3.style.opacity='0';},400);
   }
-  el.innerHTML=html;
+  var iv=setInterval(puff,500);
+  setTimeout(function(){clearInterval(iv);},2000);
 }
 
-function buildPitchLines(){
-  const el=document.getElementById('pitch-lines');
-  el.innerHTML=`
-    <div class="pitch-line" style="left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:rgba(255,255,255,.15)"></div>
-    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:80px;height:80px;border:2px solid rgba(255,255,255,.15);border-radius:50%"></div>
-    <div class="pitch-line" style="left:15%;top:20%;width:2px;height:60%;background:rgba(255,255,255,.1)"></div>
-    <div class="pitch-line" style="right:15%;top:20%;width:2px;height:60%;background:rgba(255,255,255,.1)"></div>
-    <div class="pitch-line" style="left:15%;top:20%;height:2px;width:70%;background:rgba(255,255,255,.1)"></div>
-    <div class="pitch-line" style="left:15%;bottom:20%;height:2px;width:70%;background:rgba(255,255,255,.1)"></div>`;
+function playDerail(stationName, cb){
+  var overlay=document.getElementById('wk-overlay');
+  var derail=document.getElementById('derail-screen');
+  var board=document.getElementById('anim-board');
+  var trainScene=document.getElementById('train-scene');
+  board.classList.remove('show');
+  document.getElementById('derail-sub').textContent='Verlies bij '+stationName;
+
+  buildScene();
+  overlay.classList.add('active');
+  overlay.style.filter='grayscale(80%) brightness(.6)';
+  trainScene.className='train-scene entering';
+
+  setTimeout(function(){
+    trainScene.className='train-scene stopped';
+    trainScene.style.transform='translateX(-50%) rotate(3deg) translateY(6px)';
+    derail.classList.add('show');
+  }, 900);
+
+  var t=setTimeout(function(){
+    derail.classList.remove('show');
+    overlay.classList.remove('active');
+    overlay.style.filter='';
+    trainScene.style.transform='';
+    trainScene.className='train-scene';
+    cb();
+  }, 3400);
+  animTimeout=t;
+}
+
+function closeOverlay(){
+  clearTimeout(animTimeout);
+  var overlay=document.getElementById('wk-overlay');
+  overlay.classList.remove('active');
+  overlay.style.filter='';
+  document.getElementById('derail-screen').classList.remove('show');
+  document.getElementById('anim-board').classList.remove('show');
+  document.getElementById('train-scene').className='train-scene';
+  document.getElementById('train-scene').style.transform='';
 }
 
 function spawnConfetti(){
-  const el=document.getElementById('confetti-layer');
+  var el=document.getElementById('conf-layer');
   el.innerHTML='';
-  const colors=['#E85D04','#fbbf24','#ff6b00','#fff','#003da5','#22c55e'];
-  for(let i=0;i<60;i++){
-    const c=colors[Math.floor(Math.random()*colors.length)];
-    const x=Math.random()*100,w=4+Math.random()*8,h=8+Math.random()*14;
-    const dur=1.5+Math.random()*2,delay=Math.random()*1.5;
-    const el2=document.createElement('div');
-    el2.className='conf';
-    el2.style.cssText=`left:${x}%;top:-20px;width:${w}px;height:${h}px;background:${c};animation-duration:${dur}s;animation-delay:${delay}s;transform:rotate(${Math.random()*360}deg)`;
-    el.appendChild(el2);
+  var colors=['#E85D04','#fbbf24','#fff','#003da5','#22c55e','#ae1c28'];
+  for(var i=0;i<55;i++){
+    var d=document.createElement('div');
+    d.className='conf';
+    var c=colors[Math.floor(Math.random()*colors.length)];
+    d.style.cssText='left:'+Math.random()*100+'%;width:'+(4+Math.random()*7)+'px;height:'+(8+Math.random()*14)+'px;background:'+c+';animation-duration:'+(1.4+Math.random()*2)+'s;animation-delay:'+(Math.random()*1.2)+'s;transform:rotate('+(Math.random()*360)+'deg)';
+    el.appendChild(d);
   }
 }
 
-function addCheerTexts(){
-  const cheers=['GOAL!','🇳🇱 ORANJE!','WK 2026!','💰 WINST!','🏆'];
-  const el=document.getElementById('cheer-layer');
-  el.innerHTML='';
-  cheers.slice(0,3).forEach((txt,i)=>{
-    const div=document.createElement('div');
-    div.className='cheer';
-    div.textContent=txt;
-    div.style.cssText=`left:${10+i*30}%;top:${30+i*10}%;animation-delay:${i*.15}s`;
-    el.appendChild(div);
-    setTimeout(()=>div.remove(),2000);
-  });
-}
-
 function showResult(){
-  const won=J.result==='won';
-  const saved=getSaved();
-  saved.unshift({...J});
-  if(saved.length>10)saved.pop();
+  var won = J.result==='won';
+  var saved = loadSaved();
+  saved.unshift({haltes:J.haltes,budget:J.budget,result:J.result,finalProfit:J.finalProfit,stops:J.stops,startedAt:J.startedAt});
+  if(saved.length>10) saved.pop();
   saveSaved(saved);
   localStorage.removeItem(LS_J);
-  showView('result');
-  document.getElementById('res-icon').textContent=won?'🏆':'💥';
-  document.getElementById('res-title').textContent=won?'Eindstation!':'Ontspoord!';
-  document.getElementById('res-title').className='res-title '+(won?'won':'lost');
-  const profit=won?J.finalProfit:-J.budget;
+  show('result');
+  document.getElementById('res-icon').textContent = won?'🏆':'💥';
+  document.getElementById('res-title').textContent = won?'Rotterdam bereikt!':'Ontspoord!';
+  document.getElementById('res-title').className = 'res-title '+(won?'won':'lost');
+  var profit = won?J.finalProfit:-J.budget;
   document.getElementById('res-amt').textContent=(profit>=0?'+':'')+'€'+profit.toFixed(2);
   document.getElementById('res-amt').className='res-amt '+(won?'won':'lost');
-  document.getElementById('res-sub').textContent=won
-    ?`Je trein reed van Wezep via ${J.stops.length} haltes naar het eindstation. Startinzet: €${J.budget}.`
-    :`Ontspoord bij ${J.stops[J.stops.length-1]?.station||'halte '+J.current} (halte ${J.current} van ${J.haltes}).`;
-  document.getElementById('result-history').innerHTML=J.stops.map(s=>`
-    <div class="hi-row">
-      <div class="hi-left"><div class="hi-match">${s.station}</div><div class="hi-meta">Halte ${s.halte} · @${s.odds} · inzet €${s.inzet.toFixed(2)}</div></div>
-      <div style="flex-shrink:0;margin-left:8px"><span class="badge ${s.won?'bwin':'blos'}">${s.won?'+€'+s.winst.toFixed(2):'Verloren'}</span></div>
-    </div>`).join('');
+  document.getElementById('res-sub').textContent = won
+    ? 'Trein reed van Wezep naar '+J.stations[J.stations.length-1].name+' via '+J.stops.length+' haltes. Start: €'+J.budget+'.'
+    : 'Ontspoord bij '+J.stops[J.stops.length-1].station+' (halte '+J.current+' van '+J.haltes+').';
+  document.getElementById('result-hist').innerHTML = J.stops.map(function(s){
+    return '<div class="hi-row"><div class="hi-left"><div class="hi-match">'+s.station+'</div><div class="hi-meta">Halte '+s.halte+' · @'+s.odds+' · €'+s.inzet.toFixed(2)+'</div></div><span class="badge '+(s.won?'bwin':'blos')+'">'+(s.won?'+€'+s.winst.toFixed(2):'Verloren')+'</span></div>';
+  }).join('');
 }
 
-function newJourney(){J=null;showView('setup');renderSaved();}
+function newJourney(){ J=null; show('setup'); renderSaved(); }
+
+function cashOut(){
+  if(!confirm('Uitstappen en €'+J.inzet.toFixed(2)+' cashen?')) return;
+  // Save as won at current halte
+  J.finished=true; J.result='won'; J.finalProfit=J.inzet - J.budget; J.finalPot=J.inzet;
+  J.cashedOut=true; J.cashedAtHalte=J.current;
+  var saved=loadSaved();
+  saved.unshift({haltes:J.haltes,budget:J.budget,result:J.result,finalProfit:J.finalProfit,finalPot:J.inzet,stops:J.stops,startedAt:J.startedAt,cashedOut:true,cashedAtHalte:J.current});
+  if(saved.length>10) saved.pop();
+  saveSaved(saved);
+  localStorage.removeItem(LS_J);
+  show('result');
+  document.getElementById('res-icon').textContent='💰';
+  document.getElementById('res-title').textContent='Uitgestapt!';
+  document.getElementById('res-title').className='res-title won';
+  document.getElementById('res-amt').textContent='+€'+J.finalProfit.toFixed(2);
+  document.getElementById('res-amt').className='res-amt won';
+  document.getElementById('res-sub').textContent='Je stapte uit bij halte '+J.current+' van de '+J.haltes+' met een pot van €'+J.inzet.toFixed(2)+'. Start was €'+J.budget+'.';
+  document.getElementById('result-hist').innerHTML = J.stops.map(function(s){
+    return '<div class="hi-row"><div class="hi-left"><div class="hi-match">'+s.station+'</div><div class="hi-meta">Halte '+s.halte+' · @'+s.odds+' · €'+s.inzet.toFixed(2)+' → €'+(s.pot||0).toFixed(2)+'</div></div><span class="badge '+(s.won?'bwin':'blos')+'">'+(s.won?'€'+s.pot.toFixed(2):'Verloren')+'</span></div>';
+  }).join('');
+  toast('💰 Gecasht: €'+J.inzet.toFixed(2),'win');
+}
 
 function abandonJourney(){
-  if(!confirm('Rit afbreken?'))return;
-  J=null;localStorage.removeItem(LS_J);
-  showView('setup');renderSaved();toast('Rit afgebroken','');
+  if(!confirm('Rit afbreken zonder te cashen?')) return;
+  J=null; localStorage.removeItem(LS_J);
+  show('setup'); renderSaved(); toast('Rit afgebroken','');
 }
 
 function toast(msg,type){
-  const el=document.getElementById('toast');
-  el.textContent=msg;el.className='toast show'+(type?' '+type:'');
-  clearTimeout(tt);tt=setTimeout(()=>el.classList.remove('show'),2800);
+  var el=document.getElementById('toast');
+  el.textContent=msg; el.className='toast show'+(type?' '+type:'');
+  clearTimeout(tt); tt=setTimeout(function(){el.classList.remove('show');},2800);
 }
 
 init();
