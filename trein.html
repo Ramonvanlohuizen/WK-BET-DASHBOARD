@@ -13,15 +13,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --or:#E85D04;--or2:#FF6B1A;--or3:rgba(232,93,4,0.10);
+  --or:#E85D04;--or2:#FF6B1A;--or3:rgba(232,93,4,0.10);--or4:rgba(232,93,4,0.06);
   --bk:#111111;--wh:#ffffff;--wh2:#f5f5f5;
   --g1:#333333;--g2:#666666;--g3:#999999;--g4:#cccccc;--g5:#e8e8e8;--g6:#f2f2f2;
   --gr:#16a34a;--gr2:rgba(22,163,74,0.10);--gr3:rgba(22,163,74,0.30);
   --re:#dc2626;--re2:rgba(220,38,38,0.10);--re3:rgba(220,38,38,0.30);
-  --r:4px;
+  --r:4px;--rm:8px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:var(--wh2);color:var(--bk);font-family:'Barlow',sans-serif;font-size:15px;min-height:100vh;padding-bottom:calc(40px + env(safe-area-inset-bottom))}
+body{background:var(--wh2);color:var(--bk);font-family:'Barlow',sans-serif;font-size:15px;min-height:100vh;padding-bottom:calc(60px + env(safe-area-inset-bottom))}
 header{background:var(--wh);border-bottom:3px solid var(--or);padding:0 18px;padding-top:env(safe-area-inset-top);position:sticky;top:0;z-index:10;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .hinner{display:flex;justify-content:space-between;align-items:center;height:50px}
 .logo{font-family:'Barlow Condensed',sans-serif;font-size:23px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--bk)}
@@ -29,18 +29,98 @@ header{background:var(--wh);border-bottom:3px solid var(--or);padding:0 18px;pad
 .nav-tabs{display:flex;border-top:1px solid var(--g5)}
 .nav-tab{flex:1;text-align:center;padding:10px 0;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--g3);border-bottom:3px solid transparent;transition:all .15s}
 .nav-tab.active{color:var(--or);border-bottom-color:var(--or)}
-.nav-tab:hover{color:var(--bk)}
 main{padding:0;max-width:480px;margin:0 auto}
-.sec-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--or);padding:18px 18px 8px;display:flex;align-items:center;gap:7px}
+.sec-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--or);padding:16px 18px 8px;display:flex;align-items:center;gap:7px}
 .sec-label:before{content:'';display:block;width:3px;height:13px;background:var(--or);border-radius:2px;flex-shrink:0}
 .card{background:var(--wh);padding:14px 18px;margin-bottom:2px}
-.coming-soon{text-align:center;padding:60px 20px}
-.cs-icon{font-size:48px;margin-bottom:16px}
-.cs-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--bk);margin-bottom:8px}
-.cs-sub{font-size:14px;color:var(--g3);line-height:1.6}
+
+/* ── Setup card ── */
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.setup-field label{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g3);margin-bottom:5px}
+.setup-field input{width:100%;background:var(--wh);border:1.5px solid var(--g5);border-radius:var(--r);color:var(--bk);font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;padding:10px 12px;outline:none;text-align:center;transition:border-color .15s}
+.setup-field input:focus{border-color:var(--or)}
+.btn-start{width:100%;background:var(--or);border:none;border-radius:var(--r);color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.06em;padding:14px;text-transform:uppercase;transition:opacity .15s}
+.btn-start:active{opacity:.85}
+
+/* ── Stats strip ── */
+.stats-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:2px}
+.stat-tile{background:var(--wh);padding:12px 14px}
+.stat-lbl{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g3);margin-bottom:3px}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--bk)}
+.stat-val.or{color:var(--or)}.stat-val.pos{color:var(--gr)}.stat-val.neg{color:var(--re)}
+
+/* ── Train visualization ── */
+.train-section{background:var(--wh);padding:18px;margin-bottom:2px;overflow:hidden}
+.train-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--g3);margin-bottom:16px;display:flex;align-items:center;gap:7px}
+.train-title:before{content:'';display:block;width:3px;height:12px;background:var(--or);border-radius:2px;flex-shrink:0}
+
+/* Track */
+.track-container{position:relative;width:100%;overflow-x:auto;padding-bottom:8px}
+.track-inner{position:relative;min-width:100%}
+.track-line{position:relative;display:flex;align-items:center;padding:0 0 0 0}
+.track-rail{position:absolute;top:50%;left:0;right:0;height:4px;background:var(--g5);border-radius:2px;transform:translateY(-50%);z-index:0}
+.track-rail-done{position:absolute;top:50%;left:0;height:4px;background:var(--or);border-radius:2px;transform:translateY(-50%);z-index:1;transition:width .5s ease}
+.stations-row{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;width:100%}
+
+/* Station */
+.station{display:flex;flex-direction:column;align-items:center;flex:0 0 auto}
+.station-dot{width:28px;height:28px;border-radius:50%;border:3px solid var(--g5);background:var(--wh);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;color:var(--g4);transition:all .3s;position:relative;z-index:3}
+.station-dot.done{background:var(--gr);border-color:var(--gr);color:var(--wh)}
+.station-dot.active{background:var(--or);border-color:var(--or);color:var(--wh);box-shadow:0 0 0 4px var(--or3)}
+.station-dot.failed{background:var(--re);border-color:var(--re);color:var(--wh)}
+.station-dot.end{background:var(--bk);border-color:var(--bk);color:var(--wh);width:34px;height:34px;font-size:16px}
+.station-dot.end.done{background:var(--gr);border-color:var(--gr)}
+.station-label{font-size:9px;font-weight:700;color:var(--g3);margin-top:5px;letter-spacing:.04em;text-align:center;white-space:nowrap;max-width:40px;overflow:hidden;text-overflow:ellipsis}
+.station-amount{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--g3);margin-top:1px}
+.station-amount.won{color:var(--gr)}.station-amount.lost{color:var(--re)}.station-amount.cur{color:var(--or)}
+
+/* Train emoji */
+.train-emoji{position:absolute;top:50%;font-size:24px;transform:translate(-50%,-70%);transition:left .5s ease;z-index:10;filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))}
+
+/* ── Bet card ── */
+.inzet-bar{background:var(--or);padding:13px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
+.inzet-lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.75)}
+.inzet-amt{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:900;color:var(--wh)}
+.action-row{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px}
+.btn-win{background:var(--gr);border:none;color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.06em;padding:15px;text-transform:uppercase;transition:opacity .15s}
+.btn-win:active{opacity:.85}
+.btn-loss{background:var(--re);border:none;color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.06em;padding:15px;text-transform:uppercase;transition:opacity .15s}
+.btn-loss:active{opacity:.85}
+.tip-bar{background:var(--wh);border-left:3px solid var(--or);padding:11px 14px;font-size:13px;color:var(--g2);margin-bottom:2px}
+.tip-bar strong{color:var(--or)}
+
+/* ── History ── */
+.hi-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--g6)}
+.hi-row:last-child{border-bottom:none}
+.hi-left{flex:1;min-width:0}
+.hi-match{font-size:13px;font-weight:600;color:var(--bk);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hi-meta{font-size:11px;color:var(--g3);margin-top:2px}
+.hi-right{display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:8px}
+.badge{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;padding:3px 9px;border-radius:2px}
+.bwin{background:var(--gr2);color:var(--gr);border:1px solid var(--gr3)}
+.blos{background:var(--re2);color:var(--re);border:1px solid var(--re3)}
+.empty{font-size:13px;color:var(--g3);text-align:center;padding:16px 0}
+
+/* ── Result overlay ── */
+.result-overlay{background:var(--wh);padding:30px 18px;text-align:center;margin-bottom:2px}
+.result-icon{font-size:56px;margin-bottom:12px}
+.result-title{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+.result-title.won{color:var(--gr)}.result-title.lost{color:var(--re)}
+.result-sub{font-size:14px;color:var(--g2);margin-bottom:20px;line-height:1.6}
+.result-amount{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;margin-bottom:20px}
+.result-amount.won{color:var(--gr)}.result-amount.lost{color:var(--re)}
+.btn-new{background:var(--or);border:none;border-radius:var(--r);color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.06em;padding:14px 28px;text-transform:uppercase;transition:opacity .15s}
+.btn-new:active{opacity:.85}
+
+/* ── Toast ── */
+.toast-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:200;pointer-events:none}
+.toast{background:var(--bk);color:var(--wh);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.04em;padding:10px 22px;text-transform:uppercase;white-space:nowrap;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s;border-radius:var(--r);border-top:2px solid var(--or)}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.win{border-top-color:var(--gr)}.toast.loss{border-top-color:var(--re)}
 </style>
 </head>
 <body>
+
 <header>
   <div class="hinner">
     <div class="logo">WK <span>2026</span></div>
@@ -48,19 +128,363 @@ main{padding:0;max-width:480px;margin:0 auto}
   </div>
   <div class="nav-tabs">
     <a href="index.html" class="nav-tab">1·3·2·6</a>
-    <a href="trein.html" class="nav-tab active">Trein</a>
+    <a href="trein.html" class="nav-tab active">Trein 🚂</a>
   </div>
 </header>
 
-<main>
-  <div class="sec-label">Trein strategie</div>
-  <div class="card">
-    <div class="coming-soon">
-      <div class="cs-icon">🚂</div>
-      <div class="cs-title">Komt eraan</div>
-      <div class="cs-sub">Vertel wat er op deze pagina moet komen — dan bouw ik het.</div>
+<main id="main">
+
+  <!-- SETUP -->
+  <div id="view-setup">
+    <div class="sec-label">Nieuwe treinrit instellen</div>
+    <div class="card">
+      <div class="setup-grid">
+        <div class="setup-field">
+          <label>Startbudget (€)</label>
+          <input type="number" id="cfg-budget" value="30" min="1" step="1">
+        </div>
+        <div class="setup-field">
+          <label>Aantal haltes</label>
+          <input type="number" id="cfg-haltes" value="10" min="2" max="20" step="1">
+        </div>
+      </div>
+      <button class="btn-start" onclick="startTrain()">🚂 Trein vertrekken</button>
+    </div>
+
+    <!-- Saved journeys -->
+    <div id="saved-section" style="display:none">
+      <div class="sec-label">Eerdere ritten</div>
+      <div class="card" id="saved-list"></div>
     </div>
   </div>
+
+  <!-- ACTIVE JOURNEY -->
+  <div id="view-active" style="display:none">
+
+    <div class="stats-strip">
+      <div class="stat-tile"><div class="stat-lbl">Inzet</div><div class="stat-val or" id="s-inzet">€30</div></div>
+      <div class="stat-tile"><div class="stat-lbl">Halte</div><div class="stat-val" id="s-halte">1 / 10</div></div>
+      <div class="stat-tile"><div class="stat-lbl">Potentieel</div><div class="stat-val pos" id="s-pot">—</div></div>
+    </div>
+
+    <!-- Train track -->
+    <div class="train-section">
+      <div class="train-title">Route</div>
+      <div class="track-container">
+        <div class="track-inner" id="track-inner">
+          <div class="track-line">
+            <div class="track-rail"></div>
+            <div class="track-rail-done" id="rail-done" style="width:0%"></div>
+            <div class="stations-row" id="stations-row"></div>
+          </div>
+          <div class="train-emoji" id="train-emoji" style="left:0%">🚂</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Current bet -->
+    <div class="inzet-bar">
+      <div class="inzet-lbl">Inzet halte <span id="cur-halte-num">1</span></div>
+      <div class="inzet-amt" id="betdisp">€30</div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn-win" onclick="recordResult(true)">✓ Gewonnen</button>
+      <button class="btn-loss" onclick="recordResult(false)">✕ Verloren</button>
+    </div>
+
+    <div class="tip-bar" id="tipbar"></div>
+
+    <!-- History -->
+    <div class="sec-label">Haltes afgelegd · <span id="hcount">0</span></div>
+    <div class="card">
+      <div id="hlist"><div class="empty">Nog geen haltes afgelegd</div></div>
+    </div>
+
+    <div style="text-align:center;padding:28px 18px 8px">
+      <button onclick="abandonJourney()" style="background:none;border:none;color:var(--g4);font-family:'Barlow',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:8px 16px">Rit afbreken</button>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="view-result" style="display:none">
+    <div class="result-overlay">
+      <div class="result-icon" id="res-icon">🎉</div>
+      <div class="result-title" id="res-title">Eindstation!</div>
+      <div class="result-amount" id="res-amount">+€270</div>
+      <div class="result-sub" id="res-sub">Je hebt alle 10 haltes succesvol afgelegd.</div>
+      <button class="btn-new" onclick="newJourney()">🚂 Nieuwe rit</button>
+    </div>
+
+    <div class="sec-label">Rit overzicht</div>
+    <div class="card" id="result-history"></div>
+  </div>
+
 </main>
+
+<div class="toast-wrap"><div class="toast" id="toast"></div></div>
+
+<script>
+const SB_URL="https://qulpykjmpeqezumaewva.supabase.co";
+const SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF1bHB5a2ptcGVxZXp1bWFld3ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyOTc4ODUsImV4cCI6MjA5NTg3Mzg4NX0.wcclN2WyvPWa4pMM4qPKL2i0nAR-9Vw_5TuAg9w-_K8";
+const LS_JOURNEY = 'wk2026_trein_v1';
+const LS_SAVED = 'wk2026_trein_saved';
+
+let J = null; // active journey
+let tt = null;
+
+function getState(){return JSON.parse(localStorage.getItem(LS_JOURNEY)||'null');}
+function saveState(){localStorage.setItem(LS_JOURNEY,JSON.stringify(J));}
+function getSaved(){return JSON.parse(localStorage.getItem(LS_SAVED)||'[]');}
+function saveSaved(arr){localStorage.setItem(LS_SAVED,JSON.stringify(arr));}
+
+function init(){
+  const saved = getSaved();
+  const active = getState();
+  if(active && !active.finished){
+    J = active;
+    showView('active');
+    renderTrack();
+    renderStats();
+    renderHistory();
+    renderTip();
+  } else {
+    showView('setup');
+    renderSaved();
+  }
+}
+
+function showView(v){
+  ['setup','active','result'].forEach(x=>document.getElementById('view-'+x).style.display=x===v?'block':'none');
+}
+
+function startTrain(){
+  const budget = parseFloat(document.getElementById('cfg-budget').value);
+  const haltes = parseInt(document.getElementById('cfg-haltes').value);
+  if(!budget||budget<1){toast('Vul geldig budget in','loss');return;}
+  if(!haltes||haltes<2||haltes>20){toast('2 tot 20 haltes','loss');return;}
+
+  J = {
+    id: Date.now(),
+    budget,
+    haltes,
+    current: 0,
+    inzet: budget,
+    stops: [],
+    finished: false,
+    startedAt: new Date().toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})
+  };
+  saveState();
+  showView('active');
+  renderTrack();
+  renderStats();
+  renderHistory();
+  renderTip();
+  toast('Trein vertrekt!','');
+}
+
+function recordResult(won){
+  const halteNum = J.current + 1;
+  const inzet = J.inzet;
+  // Ask for odds
+  const oddsStr = prompt(`Halte ${halteNum}: vul de odds in waarop je hebt gewonnen (bijv. 2.00)`);
+  const odds = parseFloat(oddsStr);
+  if(isNaN(odds)||odds<1.01){toast('Ongeldige odds','loss');return;}
+
+  const winst = won ? parseFloat((inzet*(odds-1)).toFixed(2)) : 0;
+  const stop = {halte:halteNum, inzet, odds, won, winst, ts:new Date().toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})};
+  J.stops.push(stop);
+  J.current++;
+
+  if(!won){
+    // Derailed
+    J.finished = true;
+    J.result = 'lost';
+    J.finalProfit = -J.budget;
+    saveState();
+    showResult();
+    return;
+  }
+
+  if(J.current >= J.haltes){
+    // Reached final station
+    const totalWinst = J.stops.reduce((a,s)=>a+s.winst,0);
+    J.finished = true;
+    J.result = 'won';
+    J.finalProfit = totalWinst;
+    saveState();
+    showResult();
+    return;
+  }
+
+  // Next stop: inzet = winst from this stop
+  J.inzet = parseFloat(winst.toFixed(2));
+  saveState();
+  renderTrack();
+  renderStats();
+  renderHistory();
+  renderTip();
+  toast(`Halte ${halteNum} ✓ — +€${winst.toFixed(2)}`,'win');
+}
+
+function showResult(){
+  const won = J.result === 'won';
+  const saved = getSaved();
+  saved.unshift({...J});
+  if(saved.length>10)saved.pop();
+  saveSaved(saved);
+  localStorage.removeItem(LS_JOURNEY);
+
+  showView('result');
+  document.getElementById('res-icon').textContent = won ? '🏆' : '💥';
+  document.getElementById('res-title').textContent = won ? 'Eindstation!' : 'Ontspoord!';
+  document.getElementById('res-title').className = 'result-title '+(won?'won':'lost');
+  const profit = won ? J.finalProfit : -J.budget;
+  document.getElementById('res-amount').textContent = (profit>=0?'+':'')+'€'+profit.toFixed(2);
+  document.getElementById('res-amount').className = 'result-amount '+(won?'won':'lost');
+  document.getElementById('res-sub').textContent = won
+    ? `Je hebt alle ${J.haltes} haltes succesvol afgelegd met een startinzet van €${J.budget}.`
+    : `De trein is ontspoord bij halte ${J.current} van de ${J.haltes}.`;
+
+  // Result history
+  const el = document.getElementById('result-history');
+  el.innerHTML = J.stops.map(s=>`
+    <div class="hi-row">
+      <div class="hi-left"><div class="hi-match">Halte ${s.halte}</div><div class="hi-meta">@${s.odds} · inzet €${s.inzet.toFixed(2)} · ${s.ts}</div></div>
+      <div class="hi-right"><span class="badge ${s.won?'bwin':'blos'}">${s.won?'+€'+s.winst.toFixed(2):'Verloren'}</span></div>
+    </div>`).join('');
+}
+
+function newJourney(){
+  J = null;
+  showView('setup');
+  renderSaved();
+}
+
+function abandonJourney(){
+  if(!confirm('Rit afbreken?'))return;
+  J = null;
+  localStorage.removeItem(LS_JOURNEY);
+  showView('setup');
+  renderSaved();
+  toast('Rit afgebroken','');
+}
+
+function renderTrack(){
+  const total = J.haltes;
+  const done = J.current;
+  const row = document.getElementById('stations-row');
+  const inner = document.getElementById('track-inner');
+
+  // Calculate station positions as percentages
+  const stationPct = i => total <= 1 ? 50 : (i/(total))*100;
+
+  let html = '';
+  for(let i=0;i<=total;i++){
+    const isStart = i===0;
+    const isEnd = i===total;
+    const isDone = i < done;
+    const isActive = i === done;
+    const stop = J.stops[i-1];
+    const isFailed = stop && !stop.won;
+
+    let dotClass = 'station-dot';
+    if(isEnd) dotClass += ' end';
+    if(isDone && !isFailed) dotClass += ' done';
+    if(isActive && !J.finished) dotClass += ' active';
+    if(isFailed) dotClass += ' failed';
+    if(isEnd && isDone && J.result==='won') dotClass += ' done';
+
+    let label = isStart ? 'Start' : isEnd ? '🏁' : `H${i}`;
+    let amountHtml = '';
+    if(stop){
+      const cls = stop.won ? 'won' : 'lost';
+      amountHtml = `<div class="station-amount ${cls}">${stop.won?'+€'+stop.winst.toFixed(2):'✕'}</div>`;
+    } else if(isActive && !J.finished){
+      amountHtml = `<div class="station-amount cur">€${J.inzet.toFixed(2)}</div>`;
+    }
+
+    html += `<div class="station" style="position:relative;z-index:3">
+      <div class="${dotClass}">${isEnd?'🏁':isStart?'🚉':i}</div>
+      <div class="station-label">${label}</div>
+      ${amountHtml}
+    </div>`;
+  }
+  row.innerHTML = html;
+
+  // Rail progress
+  const pct = total > 0 ? (done/total)*100 : 0;
+  document.getElementById('rail-done').style.width = pct+'%';
+
+  // Train position
+  const trainPct = total > 0 ? (done/total)*100 : 0;
+  document.getElementById('train-emoji').style.left = trainPct+'%';
+}
+
+function renderStats(){
+  document.getElementById('s-inzet').textContent = '€'+J.inzet.toFixed(2);
+  document.getElementById('s-halte').textContent = (J.current+1)+' / '+J.haltes;
+  document.getElementById('cur-halte-num').textContent = J.current+1;
+  document.getElementById('betdisp').textContent = '€'+J.inzet.toFixed(2);
+
+  // Potential if win all remaining at 2.0 odds
+  let pot = J.inzet;
+  const remaining = J.haltes - J.current;
+  for(let i=0;i<remaining;i++) pot = pot * 2;
+  document.getElementById('s-pot').textContent = '€'+pot.toFixed(0);
+}
+
+function renderTip(){
+  const remaining = J.haltes - J.current;
+  const tb = document.getElementById('tipbar');
+  tb.innerHTML = `Halte <strong>${J.current+1}</strong> van <strong>${J.haltes}</strong> — inzet <strong>€${J.inzet.toFixed(2)}</strong>. Bij winst zet je de winst in op halte ${J.current+2}. Nog <strong>${remaining}</strong> haltes tot het eindstation.`;
+}
+
+function renderHistory(){
+  document.getElementById('hcount').textContent = J.stops.length;
+  const el = document.getElementById('hlist');
+  if(!J.stops.length){el.innerHTML='<div class="empty">Nog geen haltes afgelegd</div>';return;}
+  el.innerHTML=[...J.stops].reverse().map(s=>`
+    <div class="hi-row">
+      <div class="hi-left">
+        <div class="hi-match">Halte ${s.halte} <span style="color:var(--g3);font-weight:400">@${s.odds}</span></div>
+        <div class="hi-meta">Inzet €${s.inzet.toFixed(2)} · ${s.ts}</div>
+      </div>
+      <div class="hi-right">
+        <span class="badge ${s.won?'bwin':'blos'}">${s.won?'+€'+s.winst.toFixed(2):'Verloren'}</span>
+      </div>
+    </div>`).join('');
+}
+
+function renderSaved(){
+  const saved = getSaved();
+  const section = document.getElementById('saved-section');
+  if(!saved.length){section.style.display='none';return;}
+  section.style.display='block';
+  document.getElementById('saved-list').innerHTML = saved.map(j=>{
+    const won = j.result==='won';
+    const profit = won ? j.finalProfit : -j.budget;
+    return `<div class="hi-row">
+      <div class="hi-left">
+        <div class="hi-match">${j.haltes} haltes · €${j.budget} start</div>
+        <div class="hi-meta">${j.startedAt} · ${j.stops.length} haltes afgelegd</div>
+      </div>
+      <div class="hi-right">
+        <span class="badge ${won?'bwin':'blos'}">${(profit>=0?'+':'')+'€'+profit.toFixed(2)}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toast(msg,type){
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.className='toast show'+(type?' '+type:'');
+  clearTimeout(tt);
+  tt=setTimeout(()=>el.classList.remove('show'),2800);
+}
+
+init();
+</script>
 </body>
 </html>
