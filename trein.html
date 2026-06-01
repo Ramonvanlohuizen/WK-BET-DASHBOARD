@@ -124,7 +124,7 @@ main{padding:0;max-width:480px;margin:0 auto}
 /* Sun */
 .sun{position:absolute;top:8%;right:15%;width:52px;height:52px;background:radial-gradient(circle,#fffde7,#ffd54f);border-radius:50%;box-shadow:0 0 30px rgba(255,213,79,.6)}
 /* Dutch polder landscape */
-.landscape{position:absolute;bottom:0;left:0;right:0;height:42%}
+.landscape{position:absolute;bottom:0;left:0;right:0;height:38%}
 .grass{position:absolute;bottom:0;left:0;right:0;height:100%;background:linear-gradient(180deg,#5a9e3a 0%,#4a8a2a 100%)}
 /* Water canal */
 .canal{position:absolute;bottom:35%;left:0;right:0;height:18px;background:linear-gradient(180deg,#6ab4d8,#4a9ac0)}
@@ -152,19 +152,19 @@ main{padding:0;max-width:480px;margin:0 auto}
 .scroll-mid{animation:scrollMid 7s linear infinite}
 .scroll-near{animation:scrollNear 4s linear infinite}
 /* Rail */
-.rail-layer{position:absolute;bottom:18%;left:0;right:0;height:24px}
+.rail-layer{position:absolute;bottom:15%;left:0;right:0;height:28px}
 .rail-top,.rail-bot{position:absolute;left:0;right:0;height:5px;background:#6b6b6b;border-radius:2px}
 .rail-top{top:0}.rail-bot{bottom:0}
 .sleeper-row{position:absolute;inset:0;overflow:hidden}
 @keyframes sleepersMove{from{background-position:0 0}to{background-position:-60px 0}}
 .sleeper-row{background:repeating-linear-gradient(90deg,#5a3e1e 0px,#5a3e1e 18px,transparent 18px,transparent 60px);background-size:60px 100%;animation:sleepersMove .4s linear infinite}
 /* TRAIN */
-.train-scene{position:absolute;bottom:calc(18% + 20px);left:0;right:100%;width:100vw;transition:none}
-@keyframes trainEnter{0%{left:-100vw}100%{left:50%;transform:translateX(-50%)}}
-@keyframes trainLeave{0%{left:50%;transform:translateX(-50%)}100%{left:110vw;transform:none}}
+.train-scene{position:absolute;bottom:calc(18% + 14px);left:0;right:100%;width:640px;transition:none}
+@keyframes trainEnter{0%{left:-680px;transform:none}100%{left:50%;transform:translateX(-50%)}}
+@keyframes trainLeave{0%{left:50%;transform:translateX(-50%)}100%{left:calc(100vw + 680px);transform:none}}
 .train-scene.entering{animation:trainEnter .9s cubic-bezier(.2,0,.4,1) forwards}
 .train-scene.leaving{animation:trainLeave .7s cubic-bezier(.6,0,1,1) forwards}
-.train-scene.stopped{left:50%;transform:translateX(-50%)}
+.train-scene.stopped{left:50%;transform:translateX(-50%);transition:none}
 /* Overhead wires */
 .wire-layer{position:absolute;bottom:calc(18% + 80px);left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,rgba(100,100,100,.5) 0,rgba(100,100,100,.5) 1px,transparent 1px,transparent 120px)}
 .pole{position:absolute;bottom:18%;width:3px;background:#666}
@@ -344,79 +344,275 @@ main{padding:0;max-width:480px;margin:0 auto}
   </div>
   <!-- THE TRAIN -->
   <div class="train-scene" id="train-scene">
-    <svg id="train-svg" width="380" height="80" viewBox="0 0 380 80" xmlns="http://www.w3.org/2000/svg">
-      <!-- Loco -->
-      <rect x="2" y="12" width="95" height="50" rx="6" fill="#E85D04"/>
-      <path d="M97 12 L115 20 L115 55 L97 62 Z" fill="#cc5000"/>
-      <!-- Loco windows -->
-      <rect x="12" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".9"/>
-      <rect x="40" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".9"/>
-      <rect x="68" y="20" width="18" height="16" rx="2" fill="#fff" opacity=".9"/>
-      <!-- KNVB lion area -->
-      <rect x="30" y="38" width="50" height="14" rx="2" fill="rgba(255,255,255,.15)"/>
-      <text x="55" y="49" font-family="Arial Black,Arial" font-size="8" font-weight="900" fill="#fff" text-anchor="middle">KNVB</text>
-      <!-- Loco stripe -->
-      <rect x="2" y="52" width="95" height="5" rx="0" fill="#003da5"/>
-      <rect x="2" y="57" width="95" height="3" rx="0" fill="#fff"/>
-      <!-- Loco undercarriage -->
-      <rect x="4" y="62" width="91" height="8" rx="2" fill="#333"/>
-      <!-- Front bumper -->
-      <rect x="110" y="40" width="8" height="15" rx="2" fill="#cc5000"/>
-      <!-- Front light -->
-      <circle cx="112" cy="30" r="5" fill="#fffde7" opacity=".95"/>
-      <circle cx="112" cy="44" r="3.5" fill="#ff4444" opacity=".8"/>
-      <!-- NL flags on loco -->
-      <rect x="15" y="10" width="2" height="10" fill="#888"/>
-      <rect x="17" y="10" width="12" height="4" fill="#ae1c28"/>
-      <rect x="17" y="14" width="12" height="4" fill="#fff"/>
-      <rect x="17" y="18" width="12" height="4" fill="#21468b"/>
-      <rect x="50" y="10" width="2" height="10" fill="#888"/>
-      <rect x="52" y="10" width="12" height="4" fill="#ae1c28"/>
-      <rect x="52" y="14" width="12" height="4" fill="#fff"/>
-      <rect x="52" y="18" width="12" height="4" fill="#21468b"/>
-      <!-- WK TREIN text -->
-      <rect x="118" y="12" width="260" height="50" rx="4" fill="#E85D04"/>
-      <!-- Wagon stripes -->
-      <rect x="118" y="48" width="260" height="6" rx="0" fill="#003da5"/>
-      <rect x="118" y="54" width="260" height="3" rx="0" fill="#fff"/>
-      <!-- Wagon windows -->
-      <rect x="126" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
-      <rect x="154" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
-      <rect x="182" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
-      <rect x="210" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
-      <rect x="238" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
-      <rect x="266" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
-      <rect x="294" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
-      <rect x="322" y="20" width="22" height="16" rx="2" fill="#fff" opacity=".85"/>
-      <!-- People in windows (orange shirts) -->
-      <circle cx="137" cy="24" r="4" fill="#E85D04"/><circle cx="165" cy="24" r="4" fill="#E85D04"/>
-      <circle cx="193" cy="24" r="4" fill="#E85D04"/><circle cx="221" cy="24" r="4" fill="#E85D04"/>
-      <circle cx="249" cy="24" r="4" fill="#E85D04"/><circle cx="277" cy="24" r="4" fill="#E85D04"/>
-      <!-- WK TREIN label on wagon -->
-      <rect x="140" y="38" width="80" height="10" rx="2" fill="rgba(255,255,255,.2)"/>
-      <text x="180" y="46" font-family="Arial Black,Arial" font-size="7" font-weight="900" fill="#fff" text-anchor="middle" letter-spacing="1">WK TREIN</text>
-      <text x="240" y="46" font-family="Arial Black,Arial" font-size="7" font-weight="900" fill="#fff" text-anchor="middle">NEDERLAND</text>
-      <!-- Wagon undercarriage -->
-      <rect x="120" y="62" width="256" height="8" rx="2" fill="#333"/>
-      <!-- Wheels loco -->
-      <circle cx="25" cy="74" r="8" fill="#222"/><circle cx="25" cy="74" r="3.5" fill="#777"/>
-      <circle cx="55" cy="74" r="8" fill="#222"/><circle cx="55" cy="74" r="3.5" fill="#777"/>
-      <circle cx="85" cy="74" r="8" fill="#222"/><circle cx="85" cy="74" r="3.5" fill="#777"/>
-      <!-- Wheels wagons -->
-      <circle cx="148" cy="74" r="7" fill="#222"/><circle cx="148" cy="74" r="3" fill="#777"/>
-      <circle cx="178" cy="74" r="7" fill="#222"/><circle cx="178" cy="74" r="3" fill="#777"/>
-      <circle cx="218" cy="74" r="7" fill="#222"/><circle cx="218" cy="74" r="3" fill="#777"/>
-      <circle cx="248" cy="74" r="7" fill="#222"/><circle cx="248" cy="74" r="3" fill="#777"/>
-      <circle cx="288" cy="74" r="7" fill="#222"/><circle cx="288" cy="74" r="3" fill="#777"/>
-      <circle cx="318" cy="74" r="7" fill="#222"/><circle cx="318" cy="74" r="3" fill="#777"/>
-      <circle cx="358" cy="74" r="7" fill="#222"/><circle cx="358" cy="74" r="3" fill="#777"/>
-      <!-- Steam puffs placeholder -->
-      <g id="steam-group" opacity=".7">
-        <circle cx="5" cy="10" r="6" fill="white" opacity=".0" id="st1"/>
-        <circle cx="18" cy="4" r="8" fill="white" opacity=".0" id="st2"/>
-        <circle cx="30" cy="-2" r="7" fill="white" opacity=".0" id="st3"/>
-      </g>
-    </svg>
+    <svg id="train-svg" viewBox="0 0 640 130" width="640" height="130" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="locoGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FF7A00"/>
+      <stop offset="60%" stop-color="#E85D04"/>
+      <stop offset="100%" stop-color="#C44A00"/>
+    </linearGradient>
+    <linearGradient id="wagonGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FF7A00"/>
+      <stop offset="100%" stop-color="#E85D04"/>
+    </linearGradient>
+    <linearGradient id="wheelGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#555"/>
+      <stop offset="100%" stop-color="#222"/>
+    </linearGradient>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a90d9"/>
+      <stop offset="100%" stop-color="#87CEEB"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- === LOCOMOTIEF === -->
+  <!-- Main body -->
+  <rect x="2" y="30" width="130" height="72" rx="4" fill="url(#locoGrad)" filter="url(#shadow)"/>
+  <!-- Front nose angled -->
+  <path d="M132 30 L158 40 L158 90 L132 102 Z" fill="#C44A00"/>
+  <!-- Front face detail -->
+  <path d="M155 38 L165 42 L165 88 L155 92 Z" fill="#333"/>
+  <!-- Cab windows top large -->
+  <rect x="10" y="38" width="36" height="24" rx="3" fill="#1a3a5c" stroke="#333" stroke-width="1.5"/>
+  <rect x="52" y="38" width="36" height="24" rx="3" fill="#1a3a5c" stroke="#333" stroke-width="1.5"/>
+  <!-- Window reflections -->
+  <rect x="12" y="40" width="12" height="8" rx="1" fill="rgba(255,255,255,.18)"/>
+  <rect x="54" y="40" width="12" height="8" rx="1" fill="rgba(255,255,255,.18)"/>
+  <!-- Side cab window -->
+  <rect x="100" y="38" width="28" height="22" rx="3" fill="#1a3a5c" stroke="#333" stroke-width="1.5"/>
+  <rect x="102" y="40" width="10" height="8" rx="1" fill="rgba(255,255,255,.18)"/>
+  <!-- KNVB logo area -->
+  <rect x="10" y="68" width="50" height="28" rx="2" fill="rgba(0,0,0,.12)"/>
+  <!-- Lion head (simplified) -->
+  <ellipse cx="35" cy="80" rx="14" ry="12" fill="#FF9500"/>
+  <ellipse cx="35" cy="77" rx="10" ry="9" fill="#E85D04"/>
+  <!-- Mane spikes -->
+  <polygon points="21,72 25,68 27,74" fill="#FF9500"/>
+  <polygon points="24,68 29,64 30,70" fill="#FF9500"/>
+  <polygon points="31,65 35,62 36,68" fill="#FF9500"/>
+  <polygon points="38,65 42,63 42,69" fill="#FF9500"/>
+  <polygon points="44,68 48,66 47,72" fill="#FF9500"/>
+  <polygon points="47,73 51,71 49,77" fill="#FF9500"/>
+  <!-- Lion eyes -->
+  <circle cx="31" cy="77" r="2.5" fill="#222"/>
+  <circle cx="39" cy="77" r="2.5" fill="#222"/>
+  <circle cx="31.8" cy="76.2" r="1" fill="#fff" opacity=".6"/>
+  <circle cx="39.8" cy="76.2" r="1" fill="#fff" opacity=".6"/>
+  <!-- Lion mouth/nose -->
+  <ellipse cx="35" cy="82" rx="4" ry="2.5" fill="#C44A00"/>
+  <path d="M32 84 Q35 87 38 84" fill="none" stroke="#8B2500" stroke-width="1.2"/>
+  <!-- HUP HOLLAND text -->
+  <text x="70" y="76" font-family="Arial Black,Arial" font-size="7.5" font-weight="900" fill="#fff" text-anchor="middle">HUP</text>
+  <text x="70" y="85" font-family="Arial Black,Arial" font-size="7.5" font-weight="900" fill="#fff" text-anchor="middle">HOLLAND</text>
+  <text x="70" y="94" font-family="Arial Black,Arial" font-size="7.5" font-weight="900" fill="#fff" text-anchor="middle">HUP!</text>
+  <!-- KNVB text -->
+  <text x="112" y="98" font-family="Arial Black,Arial" font-size="8" font-weight="900" fill="#fff" text-anchor="middle">KNVB</text>
+  <!-- Bottom stripes loco (blue/white/red) -->
+  <rect x="2" y="96" width="130" height="4" fill="#003DA5"/>
+  <rect x="2" y="100" width="130" height="2.5" fill="#fff"/>
+  <rect x="2" y="102.5" width="130" height="2" fill="#AE1C28"/>
+  <!-- Roof details loco -->
+  <rect x="5" y="24" width="125" height="8" rx="2" fill="#C44A00"/>
+  <rect x="8" y="18" width="80" height="7" rx="2" fill="#555"/>
+  <!-- Pantograph (electric collector) -->
+  <line x1="30" y1="18" x2="22" y2="8" stroke="#666" stroke-width="1.5"/>
+  <line x1="22" y1="8" x2="50" y2="8" stroke="#666" stroke-width="1.5"/>
+  <line x1="50" y1="8" x2="60" y2="18" stroke="#666" stroke-width="1.5"/>
+  <line x1="22" y1="8" x2="22" y2="5" stroke="#888" stroke-width="2"/>
+  <line x1="50" y1="8" x2="50" y2="5" stroke="#888" stroke-width="2"/>
+  <line x1="22" y1="5" x2="50" y2="5" stroke="#aaa" stroke-width="1.5"/>
+  <!-- Front lights -->
+  <rect x="158" y="48" width="7" height="5" rx="1" fill="#fffde7"/>
+  <rect x="158" y="62" width="7" height="4" rx="1" fill="#ff4444" opacity=".85"/>
+  <!-- Headlight glow -->
+  <ellipse cx="162" cy="50" rx="5" ry="3" fill="#fffde7" opacity=".3"/>
+
+  <!-- NL Flag pole 1 on loco -->
+  <line x1="25" y1="24" x2="25" y2="14" stroke="#888" stroke-width="1.5"/>
+  <rect x="25" y="14" width="14" height="3.5" fill="#AE1C28"/>
+  <rect x="25" y="17.5" width="14" height="3.5" fill="#fff"/>
+  <rect x="25" y="21" width="14" height="3.5" fill="#003DA5"/>
+  <!-- NL Flag pole 2 on loco -->
+  <line x1="65" y1="24" x2="65" y2="14" stroke="#888" stroke-width="1.5"/>
+  <rect x="65" y="14" width="14" height="3.5" fill="#AE1C28"/>
+  <rect x="65" y="17.5" width="14" height="3.5" fill="#fff"/>
+  <rect x="65" y="21" width="14" height="3.5" fill="#003DA5"/>
+
+  <!-- Loco undercarriage -->
+  <rect x="4" y="104" width="126" height="10" rx="3" fill="#2a2a2a"/>
+  <!-- Loco wheels -->
+  <circle cx="22" cy="116" r="10" fill="url(#wheelGrad)" stroke="#555" stroke-width="1.5"/>
+  <circle cx="22" cy="116" r="4" fill="#888"/>
+  <circle cx="22" cy="116" r="2" fill="#aaa"/>
+  <circle cx="55" cy="116" r="10" fill="url(#wheelGrad)" stroke="#555" stroke-width="1.5"/>
+  <circle cx="55" cy="116" r="4" fill="#888"/>
+  <circle cx="55" cy="116" r="2" fill="#aaa"/>
+  <circle cx="88" cy="116" r="10" fill="url(#wheelGrad)" stroke="#555" stroke-width="1.5"/>
+  <circle cx="88" cy="116" r="4" fill="#888"/>
+  <circle cx="88" cy="116" r="2" fill="#aaa"/>
+  <circle cx="118" cy="116" r="9" fill="url(#wheelGrad)" stroke="#555" stroke-width="1.5"/>
+  <circle cx="118" cy="116" r="3.5" fill="#888"/>
+  <!-- Coupling -->
+  <rect x="128" y="108" width="36" height="6" rx="2" fill="#444"/>
+
+  <!-- === WAGON 1 (red/white/blue front) === -->
+  <rect x="164" y="30" width="148" height="74" rx="3" fill="url(#wagonGrad)" filter="url(#shadow)"/>
+  <!-- WK TREIN label area -->
+  <rect x="168" y="68" width="140" height="20" rx="2" fill="#003DA5"/>
+  <text x="238" y="82" font-family="Arial Black,Arial" font-size="13" font-weight="900" fill="#fff" text-anchor="middle" letter-spacing="1">WK TREIN</text>
+  <!-- Nederland text on top stripe -->
+  <rect x="168" y="28" width="140" height="9" rx="0" fill="#FF9500"/>
+  <text x="238" y="35" font-family="Arial Black,Arial" font-size="6.5" font-weight="900" fill="#fff" text-anchor="middle" letter-spacing="2">NEDERLAND</text>
+  <!-- Wagon stripes -->
+  <rect x="164" y="96" width="148" height="4" fill="#003DA5"/>
+  <rect x="164" y="100" width="148" height="2.5" fill="#fff"/>
+  <rect x="164" y="102.5" width="148" height="2" fill="#AE1C28"/>
+  <!-- Windows wagon 1 -->
+  <rect x="172" y="38" width="28" height="24" rx="3" fill="#1a3a5c" stroke="#2a4a6c" stroke-width="1"/>
+  <rect x="208" y="38" width="28" height="24" rx="3" fill="#1a3a5c" stroke="#2a4a6c" stroke-width="1"/>
+  <rect x="244" y="38" width="28" height="24" rx="3" fill="#1a3a5c" stroke="#2a4a6c" stroke-width="1"/>
+  <rect x="280" y="38" width="28" height="24" rx="3" fill="#1a3a5c" stroke="#2a4a6c" stroke-width="1"/>
+  <!-- Reflections -->
+  <rect x="174" y="40" width="10" height="6" rx="1" fill="rgba(255,255,255,.15)"/>
+  <rect x="210" y="40" width="10" height="6" rx="1" fill="rgba(255,255,255,.15)"/>
+  <rect x="246" y="40" width="10" height="6" rx="1" fill="rgba(255,255,255,.15)"/>
+  <rect x="282" y="40" width="10" height="6" rx="1" fill="rgba(255,255,255,.15)"/>
+  <!-- People in orange shirts window 1 -->
+  <circle cx="180" cy="48" r="5" fill="#FF7A00"/>
+  <rect x="176" y="53" width="8" height="6" rx="1" fill="#FF7A00"/>
+  <circle cx="186" cy="46" r="3.5" fill="#FFB347"/>
+  <!-- People window 2 -->
+  <circle cx="216" cy="48" r="5" fill="#FF7A00"/>
+  <rect x="212" y="53" width="8" height="6" rx="1" fill="#FF7A00"/>
+  <circle cx="222" cy="47" r="3.5" fill="#FFB347"/>
+  <!-- Flag waving out window 2 -->
+  <line x1="222" y1="42" x2="222" y2="34" stroke="#888" stroke-width="1"/>
+  <rect x="222" y="34" width="10" height="3" fill="#AE1C28"/>
+  <rect x="222" y="37" width="10" height="3" fill="#fff"/>
+  <rect x="222" y="40" width="10" height="3" fill="#003DA5"/>
+  <!-- People window 3 -->
+  <circle cx="252" cy="48" r="5" fill="#FF7A00"/>
+  <rect x="248" y="53" width="8" height="6" rx="1" fill="#FF7A00"/>
+  <!-- People window 4 -->
+  <circle cx="288" cy="48" r="5" fill="#FF7A00"/>
+  <rect x="284" y="53" width="8" height="6" rx="1" fill="#FF7A00"/>
+  <!-- Flag on wagon 1 roof -->
+  <line x1="200" y1="30" x2="200" y2="20" stroke="#888" stroke-width="1.5"/>
+  <rect x="200" y="20" width="14" height="3" fill="#AE1C28"/>
+  <rect x="200" y="23" width="14" height="3" fill="#fff"/>
+  <rect x="200" y="26" width="14" height="3" fill="#003DA5"/>
+  <line x1="270" y1="30" x2="270" y2="20" stroke="#888" stroke-width="1.5"/>
+  <rect x="270" y="20" width="14" height="3" fill="#AE1C28"/>
+  <rect x="270" y="23" width="14" height="3" fill="#fff"/>
+  <rect x="270" y="26" width="14" height="3" fill="#003DA5"/>
+  <!-- Wagon 1 roof -->
+  <rect x="164" y="24" width="148" height="7" rx="2" fill="#C44A00"/>
+  <!-- Wagon 1 undercarriage -->
+  <rect x="166" y="104" width="144" height="9" rx="2" fill="#2a2a2a"/>
+  <!-- Wagon 1 wheels -->
+  <circle cx="195" cy="116" r="9" fill="url(#wheelGrad)" stroke="#555" stroke-width="1.5"/>
+  <circle cx="195" cy="116" r="3.5" fill="#888"/>
+  <circle cx="228" cy="116" r="9" fill="url(#wheelGrad)" stroke="#555" stroke-width="1.5"/>
+  <circle cx="228" cy="116" r="3.5" fill="#888"/>
+  <circle cx="270" cy="116" r="9" fill="url(#wheelGrad)" stroke="#555" stroke-width="1.5"/>
+  <circle cx="270" cy="116" r="3.5" fill="#888"/>
+  <circle cx="300" cy="116" r="9" fill="url(#wheelGrad)" stroke="#555" stroke-width="1.5"/>
+  <circle cx="300" cy="116" r="3.5" fill="#888"/>
+
+  <!-- === WAGON 2 === -->
+  <rect x="312" y="32" width="140" height="72" rx="3" fill="url(#wagonGrad)" filter="url(#shadow)"/>
+  <!-- Wagon 2 stripes -->
+  <rect x="312" y="94" width="140" height="4" fill="#003DA5"/>
+  <rect x="312" y="98" width="140" height="2.5" fill="#fff"/>
+  <rect x="312" y="100.5" width="140" height="2" fill="#AE1C28"/>
+  <!-- Wagon 2 top text -->
+  <rect x="312" y="30" width="140" height="8" rx="0" fill="#FF9500"/>
+  <text x="382" y="37" font-family="Arial Black,Arial" font-size="6" font-weight="900" fill="#fff" text-anchor="middle" letter-spacing="1">WIJ STAAN ACHTER ONS ELFTAL</text>
+  <!-- Windows wagon 2 -->
+  <rect x="320" y="40" width="26" height="22" rx="3" fill="#1a3a5c" stroke="#2a4a6c" stroke-width="1"/>
+  <rect x="352" y="40" width="26" height="22" rx="3" fill="#1a3a5c" stroke="#2a4a6c" stroke-width="1"/>
+  <rect x="384" y="40" width="26" height="22" rx="3" fill="#1a3a5c" stroke="#2a4a6c" stroke-width="1"/>
+  <rect x="416" y="40" width="26" height="22" rx="3" fill="#1a3a5c" stroke="#2a4a6c" stroke-width="1"/>
+  <rect x="448" y="40" width="26" height="22" rx="3" fill="#1a3a5c" stroke="#2a4a6c" stroke-width="1"/>
+  <!-- Reflections -->
+  <rect x="322" y="42" width="9" height="5" rx="1" fill="rgba(255,255,255,.15)"/>
+  <rect x="354" y="42" width="9" height="5" rx="1" fill="rgba(255,255,255,.15)"/>
+  <rect x="386" y="42" width="9" height="5" rx="1" fill="rgba(255,255,255,.15)"/>
+  <rect x="418" y="42" width="9" height="5" rx="1" fill="rgba(255,255,255,.15)"/>
+  <rect x="450" y="42" width="9" height="5" rx="1" fill="rgba(255,255,255,.15)"/>
+  <!-- People in windows -->
+  <circle cx="328" cy="48" r="4.5" fill="#FF7A00"/><rect x="324" y="52" width="8" height="5" rx="1" fill="#FF7A00"/>
+  <circle cx="360" cy="49" r="4.5" fill="#FF7A00"/><rect x="356" y="53" width="8" height="5" rx="1" fill="#FF7A00"/>
+  <circle cx="365" cy="47" r="3" fill="#FFB347"/>
+  <circle cx="392" cy="48" r="4.5" fill="#FF7A00"/><rect x="388" y="52" width="8" height="5" rx="1" fill="#FF7A00"/>
+  <circle cx="424" cy="49" r="4.5" fill="#FF7A00"/><rect x="420" y="53" width="8" height="5" rx="1" fill="#FF7A00"/>
+  <circle cx="456" cy="48" r="4.5" fill="#FF7A00"/><rect x="452" y="52" width="8" height="5" rx="1" fill="#FF7A00"/>
+  <!-- Flag out window -->
+  <line x1="365" y1="44" x2="365" y2="35" stroke="#888" stroke-width="1"/>
+  <rect x="365" y="35" width="10" height="3" fill="#AE1C28"/>
+  <rect x="365" y="38" width="10" height="3" fill="#fff"/>
+  <rect x="365" y="41" width="10" height="3" fill="#003DA5"/>
+  <!-- Wagon 2 roof flags -->
+  <line x1="340" y1="32" x2="340" y2="22" stroke="#888" stroke-width="1.5"/>
+  <rect x="340" y="22" width="13" height="3" fill="#AE1C28"/>
+  <rect x="340" y="25" width="13" height="3" fill="#fff"/>
+  <rect x="340" y="28" width="13" height="3" fill="#003DA5"/>
+  <line x1="430" y1="32" x2="430" y2="22" stroke="#888" stroke-width="1.5"/>
+  <rect x="430" y="22" width="13" height="3" fill="#AE1C28"/>
+  <rect x="430" y="25" width="13" height="3" fill="#fff"/>
+  <rect x="430" y="28" width="13" height="3" fill="#003DA5"/>
+  <!-- Wagon 2 roof -->
+  <rect x="312" y="26" width="140" height="7" rx="2" fill="#C44A00"/>
+  <!-- Pantograph wagon 2 -->
+  <line x1="350" y1="26" x2="342" y2="16" stroke="#666" stroke-width="1.5"/>
+  <line x1="342" y1="16" x2="370" y2="16" stroke="#666" stroke-width="1.5"/>
+  <line x1="370" y1="16" x2="378" y2="26" stroke="#666" stroke-width="1.5"/>
+  <line x1="342" y1="16" x2="342" y2="13" stroke="#888" stroke-width="2"/>
+  <line x1="370" y1="16" x2="370" y2="13" stroke="#888" stroke-width="2"/>
+  <line x1="342" y1="13" x2="370" y2="13" stroke="#aaa" stroke-width="1.5"/>
+  <!-- Wagon 2 undercarriage -->
+  <rect x="314" y="102" width="136" height="9" rx="2" fill="#2a2a2a"/>
+  <!-- Wagon 2 wheels -->
+  <circle cx="340" cy="114" r="9" fill="url(#wheelGrad)" stroke="#555" stroke-width="1.5"/>
+  <circle cx="340" cy="114" r="3.5" fill="#888"/>
+  <circle cx="372" cy="114" r="9" fill="url(#wheelGrad)" stroke="#555" stroke-width="1.5"/>
+  <circle cx="372" cy="114" r="3.5" fill="#888"/>
+  <circle cx="415" cy="114" r="9" fill="url(#wheelGrad)" stroke="#555" stroke-width="1.5"/>
+  <circle cx="415" cy="114" r="3.5" fill="#888"/>
+  <circle cx="445" cy="114" r="9" fill="url(#wheelGrad)" stroke="#555" stroke-width="1.5"/>
+  <circle cx="445" cy="114" r="3.5" fill="#888"/>
+
+  <!-- Overhead wire (bovenleiding) -->
+  <line x1="0" y1="4" x2="640" y2="4" stroke="#aaa" stroke-width="1.5" opacity=".7"/>
+  <!-- Wire poles -->
+  <line x1="80" y1="4" x2="80" y2="130" stroke="#666" stroke-width="2.5"/>
+  <line x1="75" y1="4" x2="85" y2="4" stroke="#888" stroke-width="3"/>
+  <line x1="360" y1="4" x2="360" y2="130" stroke="#666" stroke-width="2.5"/>
+  <line x1="355" y1="4" x2="365" y2="4" stroke="#888" stroke-width="3"/>
+  <line x1="560" y1="4" x2="560" y2="130" stroke="#666" stroke-width="2.5"/>
+  <line x1="555" y1="4" x2="565" y2="4" stroke="#888" stroke-width="3"/>
+  <!-- Side wire diagonal -->
+  <line x1="80" y1="4" x2="360" y2="4" stroke="#bbb" stroke-width="1" opacity=".5"/>
+  <line x1="360" y1="4" x2="560" y2="4" stroke="#bbb" stroke-width="1" opacity=".5"/>
+
+  <!-- Rails (at very bottom) -->
+  <rect x="0" y="124" width="640" height="4" rx="1" fill="#6b6b6b"/>
+  <rect x="0" y="128" width="640" height="3" rx="1" fill="#5a5a5a"/>
+
+  <!-- Steam puffs (animated via JS) -->
+  <g id="steam-group">
+    <circle id="st1" cx="8" cy="22" r="7" fill="white" opacity="0"/>
+    <circle id="st2" cx="22" cy="14" r="9" fill="white" opacity="0"/>
+    <circle id="st3" cx="36" cy="8" r="8" fill="white" opacity="0"/>
+  </g>
+
+  <!-- Number plate loco -->
+  <rect x="4" y="92" width="26" height="10" rx="1" fill="#333"/>
+  <text x="17" y="100" font-family="Arial,sans-serif" font-size="6" fill="#ccc" text-anchor="middle">2315</text>
+</svg>
   </div>
   <!-- Scoreboard -->
   <div class="anim-board" id="anim-board">
@@ -832,7 +1028,7 @@ function playDerail(stationName, cb){
 
   setTimeout(function(){
     trainScene.className='train-scene stopped';
-    trainScene.style.transform='translateX(-50%) rotate(3deg) translateY(6px)';
+    trainScene.style.transform='translateX(-50%) rotate(4deg) translateY(10px)';trainScene.style.transition='transform .4s ease';
     derail.classList.add('show');
   }, 900);
 
