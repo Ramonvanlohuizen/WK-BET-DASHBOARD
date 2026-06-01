@@ -651,8 +651,19 @@ async function deleteEntry(idx) {
 }
 
 function recalcCumPnl() {
+  // Recalc cumulative P&L
   let cum = 0;
   S.history.forEach(h => { cum += h.profit; h.cumPnl = cum; });
+
+  // Recalc the current step by replaying the win/loss sequence
+  let step = 0;
+  S.history.forEach(h => {
+    if (h.won && step < 3) step++;
+    else if (!h.won) step = 0;
+    else step = 0; // completed full cycle (step was 3 and won)
+  });
+  S.step = step;
+  saveLocal();
 }
 
 function exportCSV() {
