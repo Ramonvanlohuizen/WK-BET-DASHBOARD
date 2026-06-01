@@ -96,6 +96,27 @@ input::placeholder{color:var(--t3)}
 .bwin{background:var(--gr2);color:var(--gr);border:1px solid var(--gr3)}
 .blos{background:var(--re2);color:var(--re);border:1px solid var(--re3)}
 .empty{font-size:13px;color:var(--t3);text-align:center;padding:14px 0}
+.hi-actions{display:flex;gap:5px;flex-shrink:0;margin-left:8px}
+.hi-btn{background:none;border:1px solid var(--bdr);border-radius:6px;color:var(--t3);cursor:pointer;font-size:11px;font-weight:600;padding:4px 8px;transition:all .15s}
+.hi-btn:hover{color:var(--t);border-color:var(--bdr2)}
+.hi-btn.edit{color:var(--bl);border-color:var(--bl3)}
+.hi-btn.del{color:var(--re);border-color:var(--re3)}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;display:flex;align-items:flex-end;justify-content:center;padding:0}
+.modal{background:var(--bg2);border:1px solid var(--bdr2);border-radius:var(--r) var(--r) 0 0;padding:20px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--t);margin-bottom:4px}
+.modal-sub{font-size:12px;color:var(--t2);margin-bottom:16px}
+.modal-field{margin-bottom:12px}
+.modal-label{font-size:11px;font-weight:600;color:var(--t2);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;display:block}
+.modal-field input{width:100%;background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rs);color:var(--t);font-family:'Barlow',sans-serif;font-size:14px;padding:9px 11px;outline:none}
+.modal-field input:focus{border-color:var(--ac)}
+.modal-field input::placeholder{color:var(--t3)}
+.modal-result-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.result-btn{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rs);color:var(--t2);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;padding:11px;text-align:center;transition:all .15s}
+.result-btn.sel-win{background:var(--gr2);border-color:var(--gr3);color:var(--gr)}
+.result-btn.sel-loss{background:var(--re2);border-color:var(--re3);color:var(--re)}
+.modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.modal-save{background:var(--ac);color:#0a0e1a;border:none;border-radius:var(--rs);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;padding:12px;text-transform:uppercase;transition:all .15s}
+.modal-cancel{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rs);color:var(--t2);cursor:pointer;font-family:'Barlow',sans-serif;font-size:14px;padding:12px;transition:all .15s}
 .tw{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:200;pointer-events:none}
 .toast{background:var(--bg2);border:1px solid var(--bdr2);border-radius:40px;color:var(--t);font-size:14px;font-weight:500;padding:9px 20px;white-space:nowrap;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s}
 .toast.show{opacity:1;transform:translateY(0)}.toast.win{border-color:var(--gr3);color:var(--gr)}.toast.loss{border-color:var(--re3);color:var(--re)}
@@ -208,6 +229,33 @@ input::placeholder{color:var(--t3)}
     <div id="hlist"><div class="empty">Nog geen weddenschappen.</div></div>
   </div>
 </main>
+
+<!-- Edit modal -->
+<div class="modal-bg" id="edit-modal" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-title">Weddenschap wijzigen</div>
+    <div class="modal-sub" id="modal-sub">Pas de gegevens aan</div>
+    <div class="modal-field">
+      <label class="modal-label">Wedstrijd / omschrijving</label>
+      <input type="text" id="modal-match" placeholder="bijv. Nederland – Japan · Thuisploeg wint">
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">Odds</label>
+      <input type="number" id="modal-odds" placeholder="2.00" min="1.01" step="0.01" style="width:120px">
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">Uitkomst</label>
+      <div class="modal-result-row">
+        <button class="result-btn" id="rbtn-win" onclick="setModalResult(true)">✓ Gewonnen</button>
+        <button class="result-btn" id="rbtn-loss" onclick="setModalResult(false)">✕ Verloren</button>
+      </div>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeModal()">Annuleren</button>
+      <button class="modal-save" onclick="saveEdit()">Opslaan</button>
+    </div>
+  </div>
+</div>
 
 <div class="tw"><div class="toast" id="toast"></div></div>
 
@@ -507,12 +555,104 @@ function renderHist() {
   document.getElementById('hcount').textContent = S.history.length;
   const el = document.getElementById('hlist');
   if (!S.history.length) { el.innerHTML='<div class="empty">Nog geen weddenschappen.</div>'; return; }
-  el.innerHTML = [...S.history].reverse().slice(0,40).map(h=>`
+  const sorted = [...S.history].reverse();
+  el.innerHTML = sorted.slice(0,40).map((h,ri)=>{
+    const realIdx = S.history.length - 1 - ri;
+    return `
     <div class="hi">
       <div class="hll"><div class="hm">${h.match}</div><div class="hme">Stap ${h.step} · @${h.odds} · ${h.ts}</div></div>
-      <div class="hr2"><span style="font-size:12px;color:var(--t2)">€${h.bet}</span>
-      <span class="badge ${h.won?'bwin':'blos'}">${h.won?'+€'+h.profit:'-€'+(-h.profit)}</span></div>
-    </div>`).join('');
+      <div class="hr2">
+        <span style="font-size:12px;color:var(--t2)">€${h.bet}</span>
+        <span class="badge ${h.won?'bwin':'blos'}">${h.won?'+€'+h.profit:'-€'+(-h.profit)}</span>
+        <div class="hi-actions">
+          <button class="hi-btn edit" onclick="openEdit(${realIdx})">✏</button>
+          <button class="hi-btn del" onclick="deleteEntry(${realIdx})">✕</button>
+        </div>
+      </div>
+    </div>`}).join('');
+}
+
+// ── Edit / Delete ─────────────────────────────────────────────
+let editIdx = null;
+let editWon = null;
+
+function openEdit(idx) {
+  editIdx = idx;
+  const h = S.history[idx];
+  editWon = h.won;
+  document.getElementById('modal-match').value = h.match;
+  document.getElementById('modal-odds').value = h.odds;
+  document.getElementById('modal-sub').textContent = `${h.ts} · Stap ${h.step} · €${h.bet}`;
+  setModalResult(h.won);
+  document.getElementById('edit-modal').style.display = 'flex';
+}
+
+function setModalResult(won) {
+  editWon = won;
+  document.getElementById('rbtn-win').className = 'result-btn'+(won?' sel-win':'');
+  document.getElementById('rbtn-loss').className = 'result-btn'+(!won?' sel-loss':'');
+}
+
+function closeModal() {
+  document.getElementById('edit-modal').style.display = 'none';
+  editIdx = null; editWon = null;
+}
+
+async function saveEdit() {
+  if (editIdx === null) return;
+  const h = S.history[editIdx];
+  const newMatch = document.getElementById('modal-match').value.trim();
+  const newOdds = parseFloat(document.getElementById('modal-odds').value);
+  if (!newMatch) { toast('Vul een wedstrijd in','loss'); return; }
+  if (isNaN(newOdds) || newOdds < 1.01) { toast('Vul geldige odds in','loss'); return; }
+  if (editWon === null) { toast('Kies uitkomst','loss'); return; }
+
+  const newProfit = editWon ? Math.round(h.bet * (newOdds - 1)) : -h.bet;
+
+  status('sp','opslaan...');
+  try {
+    await fetch(SB_URL+'/rest/v1/weddenschappen?id=eq.'+h.id, {
+      method: 'PATCH',
+      headers: {'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body: JSON.stringify({match:newMatch, odds:newOdds, gewonnen:editWon, winst:newProfit})
+    });
+    // Update local
+    const oldProfit = h.profit;
+    S.history[editIdx].match = newMatch;
+    S.history[editIdx].odds = newOdds;
+    S.history[editIdx].won = editWon;
+    S.history[editIdx].profit = newProfit;
+    // Recalc cumulative pnl from this point
+    recalcCumPnl();
+    S.pnl = S.history.length ? S.history[S.history.length-1].cumPnl : 0;
+    closeModal();
+    render();
+    status('ok','opgeslagen');
+    toast('Weddenschap bijgewerkt','win');
+  } catch(e) { status('err','fout'); toast('Opslaan mislukt','loss'); }
+}
+
+async function deleteEntry(idx) {
+  if (!confirm('Verwijder deze weddenschap?')) return;
+  const h = S.history[idx];
+  status('sp','verwijderen...');
+  try {
+    await fetch(SB_URL+'/rest/v1/weddenschappen?id=eq.'+h.id, {
+      method: 'DELETE',
+      headers: {'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+    });
+    S.history.splice(idx, 1);
+    recalcCumPnl();
+    S.pnl = S.history.length ? S.history[S.history.length-1].cumPnl : 0;
+    render();
+    status('ok','verbonden');
+    toast('Weddenschap verwijderd','');
+  } catch(e) { status('err','fout'); toast('Verwijderen mislukt','loss'); }
+}
+
+function recalcCumPnl() {
+  let cum = 0;
+  S.history.forEach(h => { cum += h.profit; h.cumPnl = cum; });
 }
 
 function exportCSV() {
