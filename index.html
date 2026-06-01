@@ -96,6 +96,21 @@ input::placeholder{color:var(--t3)}
 .bwin{background:var(--gr2);color:var(--gr);border:1px solid var(--gr3)}
 .blos{background:var(--re2);color:var(--re);border:1px solid var(--re3)}
 .empty{font-size:13px;color:var(--t3);text-align:center;padding:14px 0}
+/* Cycle history */
+.cycle-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rs);padding:12px 14px;margin-bottom:8px}
+.cycle-card:last-child{margin-bottom:0}
+.cycle-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.cycle-num{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--t2);letter-spacing:.06em;text-transform:uppercase}
+.cycle-result{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700}
+.cycle-result.pos{color:var(--gr)}.cycle-result.neg{color:var(--re)}.cycle-result.neu{color:var(--t2)}
+.cycle-steps{display:flex;gap:5px}
+.cs{flex:1;border-radius:6px;padding:7px 4px;text-align:center;border:1px solid var(--bdr)}
+.cs-mult{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700}
+.cs-match{font-size:9px;color:var(--t3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px}
+.cs-empty{background:var(--bg);border-style:dashed}.cs-empty .cs-mult{color:var(--t3)}
+.cs-win{background:var(--gr2);border-color:var(--gr3)}.cs-win .cs-mult{color:var(--gr)}
+.cs-loss{background:var(--re2);border-color:var(--re3)}.cs-loss .cs-mult{color:var(--re)}
+.cs-active{background:rgba(232,184,75,.12);border-color:var(--ac)}.cs-active .cs-mult{color:var(--ac)}
 .hi-actions{display:flex;gap:5px;flex-shrink:0;margin-left:8px}
 .hi-btn{background:none;border:1px solid var(--bdr);border-radius:6px;color:var(--t3);cursor:pointer;font-size:11px;font-weight:600;padding:4px 8px;transition:all .15s}
 .hi-btn:hover{color:var(--t);border-color:var(--bdr2)}
@@ -221,6 +236,12 @@ input::placeholder{color:var(--t3)}
   <div class="card">
     <div class="ct">Resultaten</div>
     <div class="cw" id="chartwrap"><div class="empty">Nog geen data</div></div>
+  </div>
+
+  <!-- Cycle history -->
+  <div class="card">
+    <div class="ct">Cyclus overzicht · <span id="ccount">0</span> cycli</div>
+    <div id="cyclelist"><div class="empty">Nog geen cycli afgerond.</div></div>
   </div>
 
   <!-- History -->
@@ -540,7 +561,60 @@ function render() {
     ? `Stap 4 (max!): zet <strong>€${bet}</strong> in. Daarna reset de cyclus.`
     : `Stap ${S.step+1}: zet <strong>€${bet}</strong> in. Bij winst → stap ${S.step+2} (<strong>€${next}</strong>). Bij verlies → stap 1.`;
 
-  renderChart(); renderHist();
+  renderChart(); renderCycles(); renderHist();
+}
+
+function buildCycles() {
+  // Group history into cycles: a cycle ends on loss OR after step 4 win
+  const cycles = [];
+  let current = [];
+  S.history.forEach(h => {
+    current.push(h);
+    if (!h.won || h.step === 4) {
+      cycles.push([...current]);
+      current = [];
+    }
+  });
+  if (current.length) cycles.push([...current]); // ongoing cycle
+  return cycles;
+}
+
+function renderCycles() {
+  const cycles = buildCycles();
+  document.getElementById('ccount').textContent = cycles.length;
+  const el = document.getElementById('cyclelist');
+  if (!cycles.length) { el.innerHTML = '<div class="empty">Nog geen cycli.</div>'; return; }
+
+  // Show most recent first, max 10
+  el.innerHTML = [...cycles].reverse().slice(0, 10).map((cycle, ri) => {
+    const realNum = cycles.length - ri;
+    const isOngoing = ri === 0 && S.step > 0 && cycle[cycle.length-1].won;
+    const cycleProfit = cycle.reduce((s, h) => s + h.profit, 0);
+    const profitStr = (cycleProfit >= 0 ? '+' : '') + '€' + cycleProfit;
+    const profitClass = isOngoing ? 'neu' : cycleProfit > 0 ? 'pos' : cycleProfit < 0 ? 'neg' : 'neu';
+    const statusLabel = isOngoing ? 'Bezig' : profitClass === 'pos' ? 'Gewonnen' : 'Verloren';
+
+    const steps = [1,2,3,4].map(stepN => {
+      const h = cycle.find(x => x.step === stepN);
+      if (!h) {
+        // Check if this is the next active step in ongoing cycle
+        const nextStep = isOngoing ? (cycle.length + 1) : null;
+        if (nextStep === stepN) return `<div class="cs cs-active"><div class="cs-mult">×${[1,3,2,6][stepN-1]}</div><div class="cs-match">nu</div></div>`;
+        return `<div class="cs cs-empty"><div class="cs-mult">·</div><div class="cs-match">—</div></div>`;
+      }
+      const cls = h.won ? 'cs-win' : 'cs-loss';
+      const shortMatch = h.match.length > 14 ? h.match.slice(0,13)+'…' : h.match;
+      return `<div class="cs ${cls}" title="${h.match}"><div class="cs-mult">${h.won?'+':'−'}€${Math.abs(h.profit)}</div><div class="cs-match">${shortMatch}</div></div>`;
+    });
+
+    return `<div class="cycle-card">
+      <div class="cycle-hdr">
+        <span class="cycle-num">Cyclus ${realNum}${isOngoing ? ' · lopend' : ''}</span>
+        <span class="cycle-result ${profitClass}">${isOngoing ? '…' : profitStr}</span>
+      </div>
+      <div class="cycle-steps">${steps.join('')}</div>
+    </div>`;
+  }).join('');
 }
 
 function renderChart() {
