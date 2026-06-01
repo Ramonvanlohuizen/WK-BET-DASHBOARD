@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0e1a">
+<title>WK 2026 · 1-3-2-6 Strategie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0e1a;--bg2:#111827;--bg3:#1a2235;--border:rgba(255,255,255,0.08);
+  --border2:rgba(255,255,255,0.14);--text:#f0f4ff;--text2:#8899bb;--text3:#4a5878;
+  --accent:#e8b84b;--accent2:#c9972a;
+  --green:#3ecf8e;--green-bg:rgba(62,207,142,0.12);--green-border:rgba(62,207,142,0.3);
+  --red:#f87171;--red-bg:rgba(248,113,113,0.12);--red-border:rgba(248,113,113,0.3);
+  --blue:#60a5fa;--blue-bg:rgba(96,165,250,0.12);--blue-border:rgba(96,165,250,0.3);
+  --radius:12px;--radius-sm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:15px;line-height:1.5;min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
+header{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 18px;position:sticky;top:0;z-index:10}
+.header-top{display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--text)}
+.logo span{color:var(--accent)}
+.header-sub{font-size:11px;color:var(--text2);margin-top:1px;letter-spacing:.04em}
+.save-row{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)}
+.save-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);transition:background .4s;flex-shrink:0}
+.save-dot.ok{background:var(--green)}.save-dot.err{background:var(--red)}.save-dot.spin{background:var(--accent)}
+main{padding:14px;max-width:480px;margin:0 auto}
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}
+.metric{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:13px 15px}
+.metric-label{font-size:11px;color:var(--text2);letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin-bottom:3px}
+.metric-value{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:var(--text)}
+.metric-value.pos{color:var(--green)}.metric-value.neg{color:var(--red)}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:15px;margin-bottom:12px}
+.card-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:13px}
+.seq-row{display:flex;gap:7px}
+.sb{flex:1;border-radius:var(--radius-sm);padding:9px 4px;text-align:center;border:1px solid var(--border);background:var(--bg3);transition:all .2s}
+.sb .sn{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;color:var(--text3)}
+.sb .sl{font-size:10px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:.05em}
+.sb.active{background:rgba(232,184,75,.12);border-color:var(--accent)}.sb.active .sn{color:var(--accent)}.sb.active .sl{color:var(--accent2)}
+.sb.done{background:var(--green-bg);border-color:var(--green-border)}.sb.done .sn{color:var(--green)}.sb.done .sl{color:var(--green)}
+.slider-row{margin-bottom:13px}.slider-row:last-child{margin-bottom:0}
+.slider-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.slider-label{font-size:13px;color:var(--text2)}
+.slider-val{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--accent)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:var(--bg3);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--bg2)}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:11px}
+.mb{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 11px;cursor:pointer;text-align:left;transition:all .15s;color:var(--text)}
+.mb:active{transform:scale(.97)}.mb.sel{background:var(--blue-bg);border-color:var(--blue-border)}
+.mb-teams{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.mb-meta{font-size:11px;color:var(--text2)}
+.custom-row{display:flex;gap:7px}
+input[type=text],input[type=number],input[type=password]{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;padding:9px 11px;outline:none;transition:border-color .15s}
+input[type=text]:focus,input[type=number]:focus,input[type=password]:focus{border-color:var(--accent)}
+input::placeholder{color:var(--text3)}
+.inzet-box{display:flex;justify-content:space-between;align-items:center;background:rgba(232,184,75,.08);border:1px solid rgba(232,184,75,.2);border-radius:var(--radius-sm);padding:13px 15px;margin-bottom:11px}
+.inzet-label{font-size:13px;color:var(--text2)}
+.inzet-amt{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;color:var(--accent)}
+.action-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}
+.btn{border:none;border-radius:var(--radius-sm);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;letter-spacing:.04em;padding:13px;text-transform:uppercase;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn:active{transform:scale(.97)}
+.btn-win{background:var(--green-bg);border:1px solid var(--green-border);color:var(--green)}
+.btn-loss{background:var(--red-bg);border:1px solid var(--red-border);color:var(--red)}
+.sec-row{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.btn-sm{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text2);cursor:pointer;font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;padding:9px;text-align:center;transition:all .15s}
+.btn-sm:active{transform:scale(.97)}.btn-sm.danger{color:var(--red);border-color:var(--red-border)}
+.tip-box{background:var(--bg3);border-left:3px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:9px 13px;font-size:13px;color:var(--text2);margin-top:11px}
+.tip-box strong{color:var(--accent)}
+.chart-wrap{display:flex;align-items:flex-end;gap:3px;height:75px}
+.chart-bar{flex:1;border-radius:3px 3px 0 0;min-height:3px;transition:height .3s}
+.hist-item{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border)}
+.hist-item:last-child{border-bottom:none}
+.hist-left{flex:1;min-width:0}
+.hist-match{font-size:14px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hist-meta{font-size:11px;color:var(--text2);margin-top:1px}
+.hist-right{display:flex;align-items:center;gap:7px;flex-shrink:0;margin-left:8px}
+.badge{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;padding:3px 10px;border-radius:20px}
+.badge-win{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.badge-loss{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.empty{font-size:13px;color:var(--text3);text-align:center;padding:14px 0}
+.setup-overlay{position:fixed;inset:0;background:rgba(10,14,26,.97);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.setup-card{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);padding:24px;width:100%;max-width:440px}
+.setup-title{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--text);margin-bottom:4px}
+.setup-title span{color:var(--accent)}
+.setup-sub{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.6}
+.setup-field{margin-bottom:10px}
+.setup-field label{display:block;font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
+.setup-field input{width:100%}
+.btn-primary{background:var(--accent);color:#0a0e1a;border:none;border-radius:var(--radius-sm);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:.04em;padding:13px;text-transform:uppercase;width:100%;margin-top:8px;transition:all .15s}
+.btn-primary:active{transform:scale(.98)}
+.btn-secondary{background:transparent;color:var(--text2);border:1px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;font-family:'Barlow',sans-serif;font-size:14px;padding:10px;text-align:center;width:100%;margin-top:6px;transition:all .15s}
+.conn-err{background:var(--red-bg);border:1px solid var(--red-border);border-radius:var(--radius-sm);padding:10px 13px;font-size:13px;color:var(--red);margin-top:8px;display:none}
+.info-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.7}
+.info-box code{background:var(--bg);border:1px solid var(--border2);border-radius:4px;padding:1px 6px;font-size:12px;color:var(--accent);font-family:monospace;display:inline-block;margin:1px 0}
+.toast-wrap{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:200;pointer-events:none}
+.toast{background:var(--bg2);border:1px solid var(--border2);border-radius:40px;color:var(--text);font-size:14px;font-weight:500;padding:9px 20px;white-space:nowrap;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s}
+.toast.show{opacity:1;transform:translateY(0)}.toast.win{border-color:var(--green-border);color:var(--green)}.toast.loss{border-color:var(--red-border);color:var(--red)}
+</style>
+</head>
+<body>
+
+
+
+  <div class="card">
+    <div class="card-title">Cyclus voortgang</div>
+    <div class="seq-row">
+      <div class="sb active" id="sb0"><div class="sn">×1</div><div class="sl">Stap 1</div></div>
+      <div class="sb" id="sb1"><div class="sn">×3</div><div class="sl">Stap 2</div></div>
+      <div class="sb" id="sb2"><div class="sn">×2</div><div class="sl">Stap 3</div></div>
+      <div class="sb" id="sb3"><div class="sn">×6</div><div class="sl">Stap 4</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Instellingen</div>
+    <div class="slider-row">
+      <div class="slider-hdr"><span class="slider-label">Basis unit</span><span class="slider-val" id="unit-disp">€10</span></div>
+      <input type="range" id="unit-slider" min="1" max="100" value="10" step="1" oninput="onUnit(this.value)">
+    </div>
+    <div class="slider-row">
+      <div class="slider-hdr"><span class="slider-label">Startbankroll</span><span class="slider-val" id="bank-disp">€200</span></div>
+      <input type="range" id="bank-slider" min="50" max="2000" value="200" step="10" oninput="onBank(this.value)">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Kies wedstrijd</div>
+    <div class="match-grid" id="match-grid"></div>
+    <div class="custom-row">
+      <input type="text" id="custom-name" placeholder="Eigen wedstrijd" style="flex:1">
+      <input type="number" id="custom-odds" placeholder="Odds" min="1.01" step="0.01" style="width:78px">
+      <button class="btn-sm" onclick="addCustom()" style="padding:9px 14px;font-size:16px">+</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Inzet registreren</div>
+    <div class="inzet-box">
+      <div class="inzet-label">Deze inzet</div>
+      <div class="inzet-amt" id="bet-disp">€10</div>
+    </div>
+    <div class="action-row">
+      <button class="btn btn-win" onclick="record(true)">✓ Gewonnen</button>
+      <button class="btn btn-loss" onclick="record(false)">✕ Verloren</button>
+    </div>
+    <div class="sec-row">
+      <button class="btn-sm" onclick="exportCSV()">↓ Export CSV</button>
+      <button class="btn-sm danger" onclick="resetAll()">↺ Reset alles</button>
+    </div>
+    <div class="tip-box" id="tip-box"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Resultaten per weddenschap</div>
+    <div class="chart-wrap" id="chart-wrap"><div class="empty">Nog geen data</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Geschiedenis · <span id="hist-count">0</span> weddenschappen</div>
+    <div id="hist-list"><div class="empty">Nog geen weddenschappen geregistreerd.</div></div>
+  </div>
+</main>
+
+<div class="toast-wrap"><div class="toast" id="toast"></div></div>
+
+<script>
+const SEQ = [1,3,2,6];
+const LS_CREDS = 'wk2026_sb_creds';
+const LS_STATE = 'wk2026_local_state';
+
+const DEFAULT_MATCHES = [
+  {label:'NL – Japan', odds:1.90},
+  {label:'NL – Zweden', odds:1.75},
+  {label:'NL – Tunesië', odds:1.40},
+  {label:'Andere wed.', odds:2.00}
+];
+
+let allMatches = [...DEFAULT_MATCHES];
+let sbUrl = "https://qulpykjmpeqezumaewva.supabase.co", sbKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF1bHB5a2ptcGVxZXp1bWFld3ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyOTc4ODUsImV4cCI6MjA5NTg3Mzg4NX0.wcclN2WyvPWa4pMM4qPKL2i0nAR-9Vw_5TuAg9w-_K8";
+let useDb = false;
+let toastTimer = null;
+
+let state = {
+  unit:10, startBank:200, bankroll:200,
+  step:0, pnl:0, selMatch:0,
+  history:[], customMatches:[]
+};
+
+// ── Supabase ──────────────────────────────────────────────────
+
+async function sbFetch(path, method='GET', body=null) {
+  const opts = {
+    method,
+    headers: {
+      'apikey': sbKey,
+      'Authorization': 'Bearer ' + sbKey,
+      'Content-Type': 'application/json',
+      'Prefer': method === 'POST' ? 'return=representation' : ''
+    }
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(sbUrl + '/rest/v1/' + path, opts);
+  if (!res.ok) throw new Error(await res.text());
+  const txt = await res.text();
+  return txt ? JSON.parse(txt) : [];
+}
+
+async function dbInsert(row) { return sbFetch('weddenschappen', 'POST', row); }
+async function dbLoad()      { return sbFetch('weddenschappen?order=created_at.asc&limit=500'); }
+async function dbDeleteAll() { return sbFetch('weddenschappen?id=gte.0', 'DELETE'); }
+
+// ── Setup ─────────────────────────────────────────────────────
+
+async function connectSupabase() {
+  const url = document.getElementById('sb-url').value.trim().replace(/\/$/, '');
+  const key = document.getElementById('sb-key').value.trim();
+  const errEl = document.getElementById('conn-err');
+  const btn = document.getElementById('connect-btn');
+  errEl.style.display = 'none';
+
+  if (!url.startsWith('https://') || !key) {
+    errEl.textContent = 'Vul beide velden in.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  btn.textContent = 'Verbinden...';
+  btn.disabled = true;
+  sbUrl = url; sbKey = key;
+
+  try {
+    const res = await fetch(url + '/rest/v1/weddenschappen?limit=1', {
+      headers: {'apikey': key, 'Authorization': 'Bearer ' + key}
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+  } catch(e) {
+    errEl.textContent = 'Kan niet verbinden. Controleer de URL en key, en of de tabel bestaat.';
+    errEl.style.display = 'block';
+    document.getElementById('skip-btn').style.display = 'block';
+    sbUrl = ''; sbKey = '';
+    btn.textContent = 'Opnieuw proberen →';
+    btn.disabled = false;
+    return;
+  }
+
+  localStorage.setItem(LS_CREDS, JSON.stringify({url, key}));
+  useDb = true;
+  document.getElementById('setup-overlay').style.display = 'none';
+  btn.textContent = 'Verbinden →';
+  btn.disabled = false;
+  setSaveStatus('ok', 'verbonden');
+  await loadFromDb();
+}
+
+function skipSetup() {
+  useDb = false;
+  document.getElementById('setup-overlay').style.display = 'none';
+  setSaveStatus('', 'lokaal');
+  loadLocalState();
+  render();
+}
+
+function showSetup() {
+  const creds = JSON.parse(localStorage.getItem(LS_CREDS) || 'null');
+  if (creds) {
+    document.getElementById('sb-url').value = creds.url || '';
+    document.getElementById('sb-key').value = creds.key || '';
+  }
+  document.getElementById('conn-err').style.display = 'none';
+  document.getElementById('setup-overlay').style.display = 'flex';
+}
+
+// ── Data laden ────────────────────────────────────────────────
+
+async function loadFromDb() {
+  setSaveStatus('spin', 'laden...');
+  try {
+    const rows = await dbLoad();
+    state.history = rows.map(r => ({
+      id: r.id,
+      match: r.match,
+      step: r.stap,
+      bet: r.inzet,
+      odds: r.odds,
+      won: r.gewonnen,
+      profit: r.winst,
+      cumPnl: r.cumulatief,
+      ts: new Date(r.created_at).toLocaleString('nl-NL', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})
+    }));
+    state.pnl = state.history.length ? state.history[state.history.length-1].cumPnl : 0;
+
+    loadLocalState();
+    state.bankroll = state.startBank + state.pnl;
+    render();
+    setSaveStatus('ok', 'verbonden');
+  } catch(e) {
+    setSaveStatus('err', 'fout');
+    toast('Laden mislukt: ' + e.message, 'loss');
+  }
+}
+
+function loadLocalState() {
+  const s = JSON.parse(localStorage.getItem(LS_STATE) || '{}');
+  if (s.unit)       { state.unit = s.unit; document.getElementById('unit-slider').value = s.unit; document.getElementById('unit-disp').textContent = '€'+s.unit; }
+  if (s.startBank)  { state.startBank = s.startBank; document.getElementById('bank-slider').value = s.startBank; document.getElementById('bank-disp').textContent = '€'+s.startBank; }
+  if (typeof s.step === 'number') state.step = s.step;
+  if (typeof s.selMatch === 'number') state.selMatch = s.selMatch;
+  if (s.customMatches && s.customMatches.length) {
+    state.customMatches = s.customMatches;
+    allMatches = [...DEFAULT_MATCHES, ...state.customMatches];
+  }
+  rebuildMatchGrid();
+}
+
+function saveLocal() {
+  localStorage.setItem(LS_STATE, JSON.stringify({
+    unit: state.unit,
+    startBank: state.startBank,
+    step: state.step,
+    selMatch: state.selMatch,
+    customMatches: state.customMatches
+  }));
+}
+
+// ── UI helpers ────────────────────────────────────────────────
+
+function setSaveStatus(type, txt) {
+  const dot = document.getElementById('save-dot');
+  dot.className = 'save-dot' + (type === 'ok' ? ' ok' : type === 'err' ? ' err' : type === 'spin' ? ' spin' : '');
+  document.getElementById('save-txt').textContent = txt;
+}
+
+function rebuildMatchGrid() {
+  const grid = document.getElementById('match-grid');
+  grid.innerHTML = '';
+  allMatches.forEach((m, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'mb' + (i === state.selMatch ? ' sel' : '');
+    btn.onclick = () => selMatch(i);
+    btn.innerHTML = `<div class="mb-teams">${m.label}</div><div class="mb-meta">odds: ${m.odds.toFixed(2)}</div>`;
+    grid.appendChild(btn);
+  });
+}
+
+function onUnit(v) {
+  state.unit = parseInt(v);
+  document.getElementById('unit-disp').textContent = '€' + state.unit;
+  saveLocal(); render();
+}
+
+function onBank(v) {
+  state.startBank = parseInt(v);
+  state.bankroll = state.startBank + state.pnl;
+  document.getElementById('bank-disp').textContent = '€' + state.startBank;
+  saveLocal(); render();
+}
+
+function selMatch(i) {
+  state.selMatch = i;
+  document.querySelectorAll('.mb').forEach((b, j) => b.classList.toggle('sel', i === j));
+  saveLocal(); render();
+}
+
+function addCustom() {
+  const name = document.getElementById('custom-name').value.trim();
+  const odds = parseFloat(document.getElementById('custom-odds').value);
+  if (!name || isNaN(odds) || odds < 1.01) { toast('Vul naam en geldige odds in', 'loss'); return; }
+  const m = {label: name, odds};
+  allMatches.push(m);
+  state.customMatches.push(m);
+  document.getElementById('custom-name').value = '';
+  document.getElementById('custom-odds').value = '';
+  rebuildMatchGrid();
+  selMatch(allMatches.length - 1);
+  saveLocal();
+}
+
+// ── Record / reset ────────────────────────────────────────────
+
+async function record(won) {
+  const bet = state.unit * SEQ[state.step];
+  const match = allMatches[state.selMatch] || allMatches[0];
+  const profit = won ? Math.round(bet * (match.odds - 1)) : -bet;
+  const newPnl = state.pnl + profit;
+
+  if (useDb) {
+    setSaveStatus('spin', 'opslaan...');
+    try {
+      const rows = await dbInsert({
+        match: match.label, stap: state.step+1, inzet: bet,
+        odds: match.odds, gewonnen: won, winst: profit, cumulatief: newPnl
+      });
+      const r = rows[0];
+      pushHistory({
+        id: r.id, match: match.label, step: state.step+1,
+        bet, odds: match.odds, won, profit, cumPnl: newPnl,
+        ts: new Date(r.created_at).toLocaleString('nl-NL', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})
+      });
+      setSaveStatus('ok', 'opgeslagen');
+    } catch(e) {
+      setSaveStatus('err', 'opslaan mislukt');
+      toast('Fout: ' + e.message, 'loss');
+      return;
+    }
+  } else {
+    pushHistory({
+      match: match.label, step: state.step+1, bet,
+      odds: match.odds, won, profit, cumPnl: newPnl,
+      ts: new Date().toLocaleString('nl-NL', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})
+    });
+  }
+
+  state.pnl = newPnl;
+  state.bankroll = state.startBank + state.pnl;
+  if (won && state.step < 3) state.step++;
+  else state.step = 0;
+  saveLocal(); render();
+  toast(won ? '✓ Gewonnen! +€' + profit : '✕ Verloren — reset naar stap 1', won ? 'win' : 'loss');
+}
+
+function pushHistory(entry) { state.history.push(entry); }
+
+async function resetAll() {
+  if (!confirm('Weet je zeker dat je ALLE data wilt wissen?')) return;
+  if (useDb) {
+    setSaveStatus('spin', 'wissen...');
+    try { await dbDeleteAll(); } catch(e) { toast('Wissen mislukt: ' + e.message, 'loss'); return; }
+  }
+  state = {unit:state.unit, startBank:state.startBank, bankroll:state.startBank, step:0, pnl:0, selMatch:0, history:[], customMatches:[]};
+  allMatches = [...DEFAULT_MATCHES];
+  rebuildMatchGrid();
+  saveLocal(); render();
+  setSaveStatus(useDb ? 'ok' : '', useDb ? 'verbonden' : 'lokaal');
+  toast('Alles gewist', '');
+}
+
+// ── Render ────────────────────────────────────────────────────
+
+function render() {
+  const bet = state.unit * SEQ[state.step];
+  const wins = state.history.filter(h => h.won).length;
+  const total = state.history.length;
+
+  const bel = document.getElementById('m-bank');
+  bel.textContent = '€' + state.bankroll;
+  bel.className = 'metric-value' + (state.bankroll > state.startBank ? ' pos' : state.bankroll < state.startBank ? ' neg' : '');
+
+  const pel = document.getElementById('m-pnl');
+  pel.textContent = (state.pnl >= 0 ? '+' : '') + '€' + state.pnl;
+  pel.className = 'metric-value' + (state.pnl > 0 ? ' pos' : state.pnl < 0 ? ' neg' : '');
+
+  document.getElementById('m-count').textContent = total;
+  document.getElementById('m-pct').textContent = total ? Math.round(wins/total*100)+'%' : '—';
+  document.getElementById('bet-disp').textContent = '€' + bet;
+
+  for (let i = 0; i < 4; i++) {
+    const sb = document.getElementById('sb'+i);
+    sb.className = 'sb' + (i===state.step ? ' active' : i<state.step ? ' done' : '');
+  }
+
+  const next = state.step < 3 ? state.unit * SEQ[state.step+1] : null;
+  const tb = document.getElementById('tip-box');
+  if (state.step === 3) {
+    tb.innerHTML = `Stap 4 (max!): zet <strong>€${bet}</strong> in. Na deze ronde reset de cyclus.`;
+  } else {
+    tb.innerHTML = `Stap ${state.step+1}: zet <strong>€${bet}</strong> in. Bij winst → stap ${state.step+2} (<strong>€${next}</strong>). Bij verlies → stap 1.`;
+  }
+
+  renderChart(); renderHistory();
+}
+
+function renderChart() {
+  const wrap = document.getElementById('chart-wrap');
+  const recent = state.history.slice(-28);
+  if (!recent.length) { wrap.innerHTML = '<div class="empty">Nog geen data</div>'; return; }
+  const maxAbs = Math.max(...recent.map(h => Math.abs(h.profit)), 1);
+  wrap.innerHTML = recent.map(h => {
+    const ht = Math.max(Math.round(Math.abs(h.profit)/maxAbs*70), 3);
+    return `<div class="chart-bar" style="height:${ht}px;background:${h.won?'#3ecf8e':'#f87171'}" title="${h.won?'+':''}€${h.profit}"></div>`;
+  }).join('');
+}
+
+function renderHistory() {
+  document.getElementById('hist-count').textContent = state.history.length;
+  const el = document.getElementById('hist-list');
+  if (!state.history.length) { el.innerHTML = '<div class="empty">Nog geen weddenschappen geregistreerd.</div>'; return; }
+  el.innerHTML = [...state.history].reverse().slice(0,40).map(h => `
+    <div class="hist-item">
+      <div class="hist-left">
+        <div class="hist-match">${h.match}</div>
+        <div class="hist-meta">Stap ${h.step} · ${h.ts}</div>
+      </div>
+      <div class="hist-right">
+        <span style="font-size:12px;color:var(--text2)">€${h.bet}</span>
+        <span class="badge ${h.won?'badge-win':'badge-loss'}">${h.won?'+€'+h.profit:'-€'+(-h.profit)}</span>
+      </div>
+    </div>`).join('');
+}
+
+function exportCSV() {
+  if (!state.history.length) { toast('Geen data om te exporteren', 'loss'); return; }
+  const lines = ['Datum,Wedstrijd,Stap,Inzet,Odds,Uitkomst,Resultaat,Totaal P&L'];
+  state.history.forEach(h => lines.push(`${h.ts},"${h.match}",${h.step},${h.bet},${h.odds},${h.won?'Gewonnen':'Verloren'},${h.profit},${h.cumPnl}`));
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([lines.join('\n')], {type:'text/csv'}));
+  a.download = 'wk2026-strategie.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('CSV gedownload', 'win');
+}
+
+function toast(msg, type) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show' + (type ? ' '+type : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// ── Init ──────────────────────────────────────────────────────
+
+(function init() {
+  useDb = true;
+  loadFromDb();
+})();
+</script>
+</body>
+</html>
