@@ -45,6 +45,59 @@ main{padding:0;max-width:480px;margin:0 auto}
 .btn-primary{width:100%;background:var(--or);border:none;border-radius:var(--r);color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.06em;padding:14px;text-transform:uppercase}
 .btn-primary:active{opacity:.85}
 
+/* Ticket */
+.ticket-wrap{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 6px 32px rgba(0,0,0,.14);margin:16px;max-width:420px}
+.ticket-header{background:var(--or);padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+.ticket-logo{display:flex;flex-direction:column;gap:2px}
+.ticket-ns{background:#fff;color:#003DA5;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:4px;letter-spacing:.02em}
+.ticket-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.9);margin-top:4px}
+.ticket-tear{position:relative;height:16px;margin:0 -1px;overflow:visible}
+.ticket-tear-line{position:absolute;top:50%;left:16px;right:16px;border-top:2px dashed #e0e0e0;transform:translateY(-50%)}
+.ticket-tear-circle{position:absolute;top:50%;width:18px;height:18px;background:var(--wh2);border-radius:50%;transform:translateY(-50%)}
+.ticket-tear-circle.left{left:-9px}
+.ticket-tear-circle.right{right:-9px}
+.ticket-body{padding:4px 18px 12px}
+.ticket-section-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g3);margin-bottom:6px}
+.ticket-station-fixed{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ticket-station-code{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--bk);letter-spacing:.04em}
+.ticket-station-name{font-size:14px;font-weight:600;color:var(--g2)}
+.ticket-arrow-row{display:flex;align-items:center;gap:8px;margin:8px 0 10px}
+.ticket-train-line{flex:1;height:2px;background:var(--or);border-radius:1px}
+.ticket-train-icon{font-size:22px}
+.ticket-destinations{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:4px}
+.ticket-dest{background:var(--g6);border:2px solid var(--g5);border-radius:8px;padding:10px 12px;cursor:pointer;transition:all .15s;position:relative}
+.ticket-dest:active{transform:scale(.97)}
+.ticket-dest.sel{background:rgba(232,93,4,.08);border-color:var(--or)}
+.ticket-dest-check{position:absolute;top:6px;right:8px;width:16px;height:16px;border:2px solid var(--g4);border-radius:50%;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.ticket-dest.sel .ticket-dest-check{background:var(--or);border-color:var(--or)}
+.ticket-dest.sel .ticket-dest-check:after{content:'✓';color:#fff;font-size:9px;font-weight:700;line-height:1}
+.ticket-dest-code{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--bk);letter-spacing:.04em}
+.ticket-dest-name{font-size:11px;font-weight:600;color:var(--g2);margin-top:1px}
+.ticket-dest-stops{font-size:10px;color:var(--g3);margin-top:2px}
+.ticket-budget-row{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.ticket-budget-btn{width:38px;height:38px;border-radius:50%;background:var(--or);border:none;color:#fff;font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1}
+.ticket-budget-btn:active{opacity:.82}
+.ticket-budget-display{display:flex;align-items:center;gap:4px;flex:1;justify-content:center}
+.ticket-currency{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:var(--g3)}
+.ticket-budget-inp{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:800;color:var(--bk);border:none;outline:none;width:100px;text-align:center;background:transparent;-moz-appearance:textfield}
+.ticket-budget-inp::-webkit-inner-spin-button,.ticket-budget-inp::-webkit-outer-spin-button{-webkit-appearance:none}
+.ticket-class-row{display:flex;gap:8px}
+.ticket-class-opt{flex:1;border:2px solid var(--g5);border-radius:8px;padding:10px;text-align:center;cursor:pointer;transition:all .15s;background:var(--g6)}
+.ticket-class-opt.sel{background:rgba(232,93,4,.08);border-color:var(--or)}
+.ticket-class-opt:active{transform:scale(.97)}
+.ticket-class-num{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--bk)}
+.ticket-class-opt.sel .ticket-class-num{color:var(--or)}
+.ticket-class-lbl{font-size:11px;font-weight:600;color:var(--g2);margin-top:2px}
+.ticket-meta-row{display:flex;gap:0}
+.ticket-meta-item{flex:1;text-align:center;padding:6px 4px;border-right:1px solid var(--g5)}
+.ticket-meta-item:last-child{border-right:none}
+.ticket-meta-label{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g3);margin-bottom:3px}
+.ticket-meta-val{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--bk)}
+.ticket-barcode-strip{background:var(--g6);padding:10px 18px;display:flex;align-items:center;justify-content:center}
+.ticket-barcode{display:flex;gap:2px;align-items:stretch;height:36px}
+.ticket-bar{background:var(--bk);border-radius:1px;flex-shrink:0}
+.ticket-buy-btn{width:100%;background:var(--or);border:none;color:#fff;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:800;letter-spacing:.06em;padding:16px;text-transform:uppercase;transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.ticket-buy-btn:active{opacity:.85}
 /* Stats */
 .stats-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:2px}
 .stat-tile{background:var(--wh);padding:12px 14px}
@@ -216,21 +269,115 @@ main{padding:0;max-width:480px;margin:0 auto}
 <main>
   <!-- SETUP -->
   <div id="view-setup">
-    <div class="sec-label">Nieuwe treinrit</div>
-    <div class="card">
-      <div class="setup-grid">
-        <div>
-          <label class="field-label">Startbudget (€)</label>
-          <input type="number" class="num-inp" id="cfg-budget" value="30" min="1" max="9999">
+
+    <!-- TICKET CARD -->
+    <div class="ticket-wrap">
+      <!-- Top strip -->
+      <div class="ticket-header">
+        <div class="ticket-logo">
+          <div class="ticket-ns">NS</div>
+          <div class="ticket-title">WK TREIN 2026</div>
         </div>
-        <div>
-          <label class="field-label">Aantal haltes</label>
-          <input type="number" class="num-inp" id="cfg-haltes" value="10" min="2" max="11">
+        <div class="ticket-knvb">
+          <svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="17" fill="#E85D04" stroke="#fff" stroke-width="1.5"/><ellipse cx="18" cy="20" rx="9" ry="8" fill="#FF9500"/><ellipse cx="18" cy="18" rx="7" ry="6.5" fill="#D05000"/><polygon points="9,13 11,9 13,13" fill="#FF9500"/><polygon points="11,10 14,6 15,11" fill="#FF9500"/><polygon points="15,7 18,4 18,9" fill="#FF9500"/><polygon points="21,7 24,5 23,10" fill="#FF9500"/><polygon points="24,10 27,8 26,13" fill="#FF9500"/><circle cx="16" cy="18" r="1.8" fill="#111"/><circle cx="20" cy="18" r="1.8" fill="#111"/><ellipse cx="18" cy="22" rx="3" ry="2" fill="#903000"/></svg>
         </div>
       </div>
-      <button class="btn-primary" onclick="startTrain()">🚂 Trein vertrekken</button>
+
+      <!-- Tear line -->
+      <div class="ticket-tear">
+        <div class="ticket-tear-line"></div>
+        <div class="ticket-tear-circle left"></div>
+        <div class="ticket-tear-circle right"></div>
+      </div>
+
+      <!-- Route selector -->
+      <div class="ticket-body">
+        <div class="ticket-section-label">Vertrek</div>
+        <div class="ticket-station-fixed">
+          <div class="ticket-station-code">WZP</div>
+          <div class="ticket-station-name">Wezep</div>
+        </div>
+
+        <div class="ticket-arrow-row">
+          <div class="ticket-train-line"></div>
+          <div class="ticket-train-icon">🚂</div>
+          <div class="ticket-train-line"></div>
+        </div>
+
+        <div class="ticket-section-label">Bestemming</div>
+        <div class="ticket-destinations" id="ticket-destinations">
+          <!-- built by JS -->
+        </div>
+
+        <!-- Tear line 2 -->
+        <div class="ticket-tear" style="margin:14px 0 12px">
+          <div class="ticket-tear-line"></div>
+          <div class="ticket-tear-circle left"></div>
+          <div class="ticket-tear-circle right"></div>
+        </div>
+
+        <!-- Budget -->
+        <div class="ticket-section-label">Inleg</div>
+        <div class="ticket-budget-row">
+          <button class="ticket-budget-btn" onclick="adjustBudget(-10)">−</button>
+          <div class="ticket-budget-display">
+            <div class="ticket-currency">€</div>
+            <input type="number" id="cfg-budget" value="30" min="10" max="9999" step="10" class="ticket-budget-inp" oninput="syncBudgetDisplay()">
+          </div>
+          <button class="ticket-budget-btn" onclick="adjustBudget(10)">+</button>
+        </div>
+
+        <div class="ticket-section-label" style="margin-top:14px">Klasse</div>
+        <div class="ticket-class-row">
+          <div class="ticket-class-opt sel" id="cls1" onclick="selClass(1)">
+            <div class="ticket-class-num">1</div>
+            <div class="ticket-class-lbl">Eerste klas</div>
+          </div>
+          <div class="ticket-class-opt" id="cls2" onclick="selClass(2)">
+            <div class="ticket-class-num">2</div>
+            <div class="ticket-class-lbl">Tweede klas</div>
+          </div>
+        </div>
+
+        <!-- Tear line 3 -->
+        <div class="ticket-tear" style="margin:14px 0 10px">
+          <div class="ticket-tear-line"></div>
+          <div class="ticket-tear-circle left"></div>
+          <div class="ticket-tear-circle right"></div>
+        </div>
+
+        <!-- Date/time row -->
+        <div class="ticket-meta-row">
+          <div class="ticket-meta-item">
+            <div class="ticket-meta-label">Datum</div>
+            <div class="ticket-meta-val" id="ticket-date">—</div>
+          </div>
+          <div class="ticket-meta-item">
+            <div class="ticket-meta-label">Vertrek</div>
+            <div class="ticket-meta-val" id="ticket-time">—</div>
+          </div>
+          <div class="ticket-meta-item">
+            <div class="ticket-meta-label">Haltes</div>
+            <div class="ticket-meta-val" id="ticket-haltes-disp">—</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Barcode strip -->
+      <div class="ticket-barcode-strip">
+        <div class="ticket-barcode">
+          <div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div>
+        </div>
+      </div>
+
+      <!-- Buy button -->
+      <button class="ticket-buy-btn" onclick="startTrain()">
+        <span>🎫 Kaartje kopen & vertrekken</span>
+      </button>
     </div>
-    <div id="saved-section" style="display:none">
+
+    <div id="saved-section" style="display:none;margin-top:4px">
       <div class="sec-label">Eerdere ritten</div>
       <div class="card" id="saved-list"></div>
     </div>
@@ -678,9 +825,11 @@ function show(v){
 
 function startTrain(){
   var budget = parseFloat(document.getElementById('cfg-budget').value);
-  var haltes = parseInt(document.getElementById('cfg-haltes').value);
+  var destEl = document.querySelector('.ticket-dest.sel');
   if(!budget || budget < 1){ toast('Vul geldig budget in','loss'); return; }
-  if(!haltes || haltes < 2 || haltes > 11){ toast('2 tot 11 haltes','loss'); return; }
+  if(!destEl){ toast('Kies een bestemming','loss'); return; }
+  var haltes = parseInt(destEl.getAttribute('data-haltes'));
+  if(!haltes || haltes < 2){ toast('Ongeldige haltes','loss'); return; }
   J = {
     id: Date.now(),
     budget: budget,
@@ -1111,7 +1260,75 @@ function toast(msg,type){
   clearTimeout(tt); tt=setTimeout(function(){el.classList.remove('show');},2800);
 }
 
+// ── Ticket UI ──
+var ticketDests = [
+  {code:'NKK', name:'Nijkerk',      haltes:3},
+  {code:'AMF', name:'Amersfoort',   haltes:4},
+  {code:'HVS', name:'Hilversum',    haltes:5},
+  {code:'UT',  name:'Utrecht C.',   haltes:6},
+  {code:'GDA', name:'Gouda',        haltes:7},
+  {code:'DH',  name:'Den Haag',     haltes:8},
+  {code:'DL',  name:'Delft',        haltes:9},
+  {code:'SCH', name:'Schiedam',     haltes:10},
+  {code:'RTD', name:"R'dam C.",     haltes:11},
+];
+var selDestIdx = 8; // default Rotterdam
+var ticketClass = 1;
+
+function buildTicketDests(){
+  var el = document.getElementById('ticket-destinations');
+  el.innerHTML = ticketDests.map(function(d, i){
+    var sel = i === selDestIdx ? ' sel' : '';
+    return '<div class="ticket-dest'+sel+'" data-haltes="'+d.haltes+'" onclick="selDest('+i+')">'
+      +'<div class="ticket-dest-check"></div>'
+      +'<div class="ticket-dest-code">'+d.code+'</div>'
+      +'<div class="ticket-dest-name">'+d.name+'</div>'
+      +'<div class="ticket-dest-stops">'+d.haltes+' haltes</div>'
+      +'</div>';
+  }).join('');
+  updateTicketMeta();
+}
+
+function selDest(i){
+  selDestIdx = i;
+  document.querySelectorAll('.ticket-dest').forEach(function(el, j){
+    el.classList.toggle('sel', j === i);
+  });
+  updateTicketMeta();
+}
+
+function selClass(c){
+  ticketClass = c;
+  document.getElementById('cls1').classList.toggle('sel', c===1);
+  document.getElementById('cls2').classList.toggle('sel', c===2);
+}
+
+function adjustBudget(delta){
+  var inp = document.getElementById('cfg-budget');
+  var val = (parseFloat(inp.value)||0) + delta;
+  if(val < 5) val = 5;
+  inp.value = val;
+}
+
+function syncBudgetDisplay(){ updateTicketMeta(); }
+
+function updateTicketMeta(){
+  var d = ticketDests[selDestIdx];
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});
+  var timeStr = now.toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'});
+  var te = document.getElementById('ticket-date');
+  var tv = document.getElementById('ticket-time');
+  var th = document.getElementById('ticket-haltes-disp');
+  if(te) te.textContent = dateStr;
+  if(tv) tv.textContent = timeStr;
+  if(th) th.textContent = d ? d.haltes : '—';
+}
+
 init();
+buildTicketDests();
+// set date/time on load
+updateTicketMeta();
 </script>
 </body>
 </html>
