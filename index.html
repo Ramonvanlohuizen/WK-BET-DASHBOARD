@@ -122,7 +122,7 @@ input[type=number]::placeholder{color:var(--g4)}
 .btn-loss:active{opacity:.85}
 .tip-bar{background:var(--wh);border-left:3px solid var(--or);padding:11px 14px;font-size:13px;color:var(--g2);margin-bottom:2px}
 .tip-bar strong{color:var(--or)}
-.util-row{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px}
+.util-row{display:grid;grid-template-columns:1fr;gap:2px;margin-bottom:2px}
 .util-btn{background:var(--wh);border:none;color:var(--g2);cursor:pointer;font-family:'Barlow',sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;padding:12px;text-align:center;text-transform:uppercase;transition:all .15s}
 .util-btn:hover{background:var(--g6)}
 .util-btn.danger:hover{color:var(--re)}
@@ -273,10 +273,7 @@ input[type=number]::placeholder{color:var(--g4)}
 
   <div class="tip-bar" id="tipbar"></div>
 
-  <div class="util-row">
-    <button class="util-btn" onclick="exportCSV()">↓ Export CSV</button>
-    <button class="util-btn danger" onclick="resetAll()">↺ Reset alles</button>
-  </div>
+
 
   <div class="sec-label">Resultaten</div>
   <div class="card" style="padding:12px 0 8px">
@@ -291,6 +288,10 @@ input[type=number]::placeholder{color:var(--g4)}
   <div class="sec-label">Geschiedenis · <span id="hcount">0</span> weddenschappen</div>
   <div class="card">
     <div id="hlist"><div class="empty">Nog geen weddenschappen</div></div>
+  </div>
+
+  <div style="text-align:center;padding:32px 18px 8px">
+    <button onclick="resetAll()" style="background:none;border:none;color:var(--g4);font-family:'Barlow',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:8px 16px">↺ Reset alles</button>
   </div>
 
 </main>
