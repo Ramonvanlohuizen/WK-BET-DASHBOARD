@@ -84,19 +84,19 @@ input::placeholder{color:var(--text3)}
 .badge-win{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
 .badge-loss{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
 .empty{font-size:13px;color:var(--text3);text-align:center;padding:14px 0}
-.setup-overlay{position:fixed;inset:0;background:rgba(10,14,26,.97);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
-.setup-card{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);padding:24px;width:100%;max-width:440px}
-.setup-title{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--text);margin-bottom:4px}
+
+
+
 .setup-title span{color:var(--accent)}
-.setup-sub{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.6}
-.setup-field{margin-bottom:10px}
+
+
 .setup-field label{display:block;font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
 .setup-field input{width:100%}
-.btn-primary{background:var(--accent);color:#0a0e1a;border:none;border-radius:var(--radius-sm);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:.04em;padding:13px;text-transform:uppercase;width:100%;margin-top:8px;transition:all .15s}
+
 .btn-primary:active{transform:scale(.98)}
-.btn-secondary{background:transparent;color:var(--text2);border:1px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;font-family:'Barlow',sans-serif;font-size:14px;padding:10px;text-align:center;width:100%;margin-top:6px;transition:all .15s}
-.conn-err{background:var(--red-bg);border:1px solid var(--red-border);border-radius:var(--radius-sm);padding:10px 13px;font-size:13px;color:var(--red);margin-top:8px;display:none}
-.info-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.7}
+
+
+
 .info-box code{background:var(--bg);border:1px solid var(--border2);border-radius:4px;padding:1px 6px;font-size:12px;color:var(--accent);font-family:monospace;display:inline-block;margin:1px 0}
 .toast-wrap{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:200;pointer-events:none}
 .toast{background:var(--bg2);border:1px solid var(--border2);border-radius:40px;color:var(--text);font-size:14px;font-weight:500;padding:9px 20px;white-space:nowrap;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s}
@@ -216,65 +216,6 @@ async function dbLoad()      { return sbFetch('weddenschappen?order=created_at.a
 async function dbDeleteAll() { return sbFetch('weddenschappen?id=gte.0', 'DELETE'); }
 
 // ── Setup ─────────────────────────────────────────────────────
-
-async function connectSupabase() {
-  const url = document.getElementById('sb-url').value.trim().replace(/\/$/, '');
-  const key = document.getElementById('sb-key').value.trim();
-  const errEl = document.getElementById('conn-err');
-  const btn = document.getElementById('connect-btn');
-  errEl.style.display = 'none';
-
-  if (!url.startsWith('https://') || !key) {
-    errEl.textContent = 'Vul beide velden in.';
-    errEl.style.display = 'block';
-    return;
-  }
-
-  btn.textContent = 'Verbinden...';
-  btn.disabled = true;
-  sbUrl = url; sbKey = key;
-
-  try {
-    const res = await fetch(url + '/rest/v1/weddenschappen?limit=1', {
-      headers: {'apikey': key, 'Authorization': 'Bearer ' + key}
-    });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-  } catch(e) {
-    errEl.textContent = 'Kan niet verbinden. Controleer de URL en key, en of de tabel bestaat.';
-    errEl.style.display = 'block';
-    document.getElementById('skip-btn').style.display = 'block';
-    sbUrl = ''; sbKey = '';
-    btn.textContent = 'Opnieuw proberen →';
-    btn.disabled = false;
-    return;
-  }
-
-  localStorage.setItem(LS_CREDS, JSON.stringify({url, key}));
-  useDb = true;
-  document.getElementById('setup-overlay').style.display = 'none';
-  btn.textContent = 'Verbinden →';
-  btn.disabled = false;
-  setSaveStatus('ok', 'verbonden');
-  await loadFromDb();
-}
-
-function skipSetup() {
-  useDb = false;
-  document.getElementById('setup-overlay').style.display = 'none';
-  setSaveStatus('', 'lokaal');
-  loadLocalState();
-  render();
-}
-
-function showSetup() {
-  const creds = JSON.parse(localStorage.getItem(LS_CREDS) || 'null');
-  if (creds) {
-    document.getElementById('sb-url').value = creds.url || '';
-    document.getElementById('sb-key').value = creds.key || '';
-  }
-  document.getElementById('conn-err').style.display = 'none';
-  document.getElementById('setup-overlay').style.display = 'flex';
-}
 
 // ── Data laden ────────────────────────────────────────────────
 
