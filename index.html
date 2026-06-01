@@ -12,6 +12,7 @@
 <link rel="manifest" href="manifest.json">
 <title>WK 2026 · 1-3-2-6 Strategie</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 :root{
   --or:#E85D04;--or2:#FF6B1A;--or3:rgba(232,93,4,0.10);--or4:rgba(232,93,4,0.06);
@@ -108,6 +109,10 @@ input[type=number]::placeholder{color:var(--g4)}
 .combo-lbl{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--or)}
 .combo-val{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--or)}
 .no-legs{font-size:13px;color:var(--g3);text-align:center;padding:12px 0}
+.date-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.date-lbl{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g3);white-space:nowrap}
+input[type=date]{background:var(--wh);border:1.5px solid var(--g5);border-radius:var(--r);color:var(--bk);font-family:'Barlow',sans-serif;font-size:14px;padding:9px 11px;outline:none;flex:1;transition:border-color .15s}
+input[type=date]:focus{border-color:var(--or)}
 
 /* ── Inzet bar ── */
 .inzet-bar{background:var(--or);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
@@ -253,6 +258,10 @@ input[type=number]::placeholder{color:var(--g4)}
       </div>
     </div>
 
+    <div class="date-row">
+      <span class="date-lbl">Wedstrijddatum</span>
+      <input type="date" id="match-date">
+    </div>
     <div class="card-title" style="margin-top:4px">Bet selecties <span style="color:var(--g3);font-size:11px;font-weight:400;text-transform:none;letter-spacing:0" id="lcount">(0)</span></div>
     <div id="legs-list"><div class="no-legs">Nog geen selecties</div></div>
     <div class="combo-row" id="combo-row" style="display:none">
@@ -275,9 +284,12 @@ input[type=number]::placeholder{color:var(--g4)}
 
 
 
-  <div class="sec-label">Resultaten</div>
-  <div class="card" style="padding:12px 0 8px">
-    <div class="chart-wrap" id="chartwrap"><div class="empty">Nog geen data</div></div>
+  <div class="sec-label">Bankroll verloop</div>
+  <div class="card" style="padding:14px 18px 10px">
+    <div style="position:relative;width:100%;height:110px">
+      <canvas id="balancechart" style="width:100%;height:110px"></canvas>
+      <div class="empty" id="chart-empty">Nog geen data</div>
+    </div>
   </div>
 
   <div class="sec-label">Cyclus overzicht · <span id="ccount">0</span> cycli</div>
@@ -396,10 +408,12 @@ function getBetLabel(){if(!legs.length)return'—';return legs.map(l=>`${l.match
 function getCombinedOdds(){if(!legs.length)return 2.00;return parseFloat(legs.reduce((a,l)=>a*l.odds,1).toFixed(2));}
 async function record(won){
   const bet=UNIT*SEQ[S.step],odds=getCombinedOdds(),label=getBetLabel();
+  const matchDate=document.getElementById('match-date').value;
+  const fullLabel=matchDate?`[${matchDate}] ${label}`:label;
   const profit=won?Math.round(bet*(odds-1)):-bet,newPnl=S.pnl+profit;
   status('sp','opslaan');
   try{
-    const rows=await api('weddenschappen','POST',{match:label,stap:S.step+1,inzet:bet,odds,gewonnen:won,winst:profit,cumulatief:newPnl});
+    const rows=await api('weddenschappen','POST',{match:fullLabel,stap:S.step+1,inzet:bet,odds,gewonnen:won,winst:profit,cumulatief:newPnl});
     const r=rows[0];
     S.history.push({id:r.id,match:label,step:S.step+1,bet,odds,won,profit,cumPnl:newPnl,ts:new Date(r.created_at).toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})});
     S.pnl=newPnl;if(won&&S.step<3)S.step++;else S.step=0;
@@ -463,11 +477,59 @@ function render(){
   document.getElementById('tipbar').innerHTML=S.step===3?`Stap 4 (max!): zet <strong>€${bet}</strong> in. Daarna reset de cyclus.`:`Stap ${S.step+1}: zet <strong>€${bet}</strong> in. Winst → stap ${S.step+2} (<strong>€${next}</strong>). Verlies → stap 1.`;
   renderChart();renderCycles();renderHist();
 }
+let balanceChart = null;
 function renderChart(){
-  const w=document.getElementById('chartwrap'),r=S.history.slice(-28);
-  if(!r.length){w.innerHTML='<div class="empty">Nog geen data</div>';return;}
-  const mx=Math.max(...r.map(h=>Math.abs(h.profit)),1);
-  w.innerHTML=r.map(h=>`<div class="chart-bar" style="height:${Math.max(Math.round(Math.abs(h.profit)/mx*62),3)}px;background:${h.won?'#16a34a':'#dc2626'}"></div>`).join('');
+  const empty = document.getElementById('chart-empty');
+  const canvas = document.getElementById('balancechart');
+  if(!S.history.length){
+    empty.style.display='block';
+    canvas.style.display='none';
+    if(balanceChart){balanceChart.destroy();balanceChart=null;}
+    return;
+  }
+  empty.style.display='none';
+  canvas.style.display='block';
+
+  const labels = S.history.map((h,i) => i+1);
+  const data = S.history.map(h => START + h.cumPnl);
+  const colors = S.history.map(h => h.won ? '#16a34a' : '#dc2626');
+
+  if(balanceChart){balanceChart.destroy();}
+  balanceChart = new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        borderColor: '#E85D04',
+        borderWidth: 2.5,
+        pointBackgroundColor: colors,
+        pointBorderColor: colors,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        fill: {target:'origin', above:'rgba(232,93,4,0.07)', below:'rgba(220,38,38,0.07)'},
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {legend:{display:false}, tooltip:{
+        callbacks:{
+          label: ctx => `€${ctx.parsed.y}`,
+          title: ctx => `Weddenschap ${ctx[0].label}`
+        }
+      }},
+      scales: {
+        x: {display:false},
+        y: {
+          grid:{color:'rgba(0,0,0,0.06)'},
+          ticks:{font:{family:'Barlow',size:11}, color:'#999', callback: v => '€'+v},
+          border:{display:false}
+        }
+      }
+    }
+  });
 }
 function buildCycles(){const cycles=[];let cur=[];S.history.forEach(h=>{cur.push(h);if(!h.won||h.step===4){cycles.push([...cur]);cur=[];}});if(cur.length)cycles.push([...cur]);return cycles;}
 function renderCycles(){
@@ -499,6 +561,13 @@ function renderHist(){
   }).join('');
 }
 function toast(msg,type){const el=document.getElementById('toast');el.textContent=msg;el.className='toast show'+(type?' '+type:'');clearTimeout(tt);tt=setTimeout(()=>el.classList.remove('show'),2800);}
+// Set today as default match date
+const today = new Date();
+const yyyy = today.getFullYear();
+const mm = String(today.getMonth()+1).padStart(2,'0');
+const dd = String(today.getDate()).padStart(2,'0');
+document.getElementById('match-date').value = `${yyyy}-${mm}-${dd}`;
+
 load();renderLegs();
 </script>
 </body>
