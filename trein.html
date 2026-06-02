@@ -14,20 +14,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
-:root{
-  --or:#E85D04;--or3:rgba(232,93,4,0.12);
-  --bk:#111;--wh:#fff;--wh2:#f5f5f5;
-  --g2:#555;--g3:#888;--g4:#bbb;--g5:#e0e0e0;--g6:#f2f2f2;
-  --gr:#16a34a;--gr2:rgba(22,163,74,0.12);--gr3:rgba(22,163,74,0.35);
-  --re:#dc2626;--re2:rgba(220,38,38,0.12);--re3:rgba(220,38,38,0.35);
-  --r:4px;
-}
+:root{--or:#E85D04;--or3:rgba(232,93,4,0.10);--bk:#111;--wh:#fff;--wh2:#f5f5f5;--g2:#555;--g3:#888;--g4:#bbb;--g5:#e0e0e0;--g6:#f2f2f2;--gr:#16a34a;--gr2:rgba(22,163,74,0.12);--gr3:rgba(22,163,74,0.30);--re:#dc2626;--re2:rgba(220,38,38,0.12);--re3:rgba(220,38,38,0.30);--r:4px}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{background:var(--wh2);color:var(--bk);font-family:'Barlow',sans-serif;font-size:15px;min-height:100vh;padding-bottom:calc(40px + env(safe-area-inset-bottom))}
 header{background:var(--wh);border-bottom:3px solid var(--or);padding:0 18px;padding-top:env(safe-area-inset-top);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .hinner{display:flex;justify-content:space-between;align-items:center;height:50px}
-.logo{font-family:'Barlow Condensed',sans-serif;font-size:23px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--bk)}
-.logo span{color:var(--or)}
+.logo{font-family:'Barlow Condensed',sans-serif;font-size:23px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--bk)}.logo span{color:var(--or)}
 .nav-tabs{display:flex;border-top:1px solid var(--g5)}
 .nav-tab{flex:1;text-align:center;padding:10px 0;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--g3);border-bottom:3px solid transparent}
 .nav-tab.active{color:var(--or);border-bottom-color:var(--or)}
@@ -36,26 +28,15 @@ main{padding:0;max-width:480px;margin:0 auto}
 .sec-label:before{content:'';display:block;width:3px;height:13px;background:var(--or);border-radius:2px;flex-shrink:0}
 .card{background:var(--wh);padding:14px 18px;margin-bottom:2px}
 
-/* Setup */
-.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.field-label{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g3);margin-bottom:5px}
-.num-inp{width:100%;background:var(--wh);border:1.5px solid var(--g5);border-radius:var(--r);color:var(--bk);font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;padding:10px 12px;outline:none;text-align:center;transition:border-color .15s;-moz-appearance:textfield}
-.num-inp:focus{border-color:var(--or)}
-.num-inp::-webkit-inner-spin-button,.num-inp::-webkit-outer-spin-button{-webkit-appearance:none}
-.btn-primary{width:100%;background:var(--or);border:none;border-radius:var(--r);color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.06em;padding:14px;text-transform:uppercase}
-.btn-primary:active{opacity:.85}
-
 /* Ticket */
-.ticket-wrap{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 6px 32px rgba(0,0,0,.14);margin:16px;max-width:420px}
+.ticket-wrap{background:var(--wh);border-radius:12px;overflow:hidden;box-shadow:0 6px 32px rgba(0,0,0,.14);margin:16px}
 .ticket-header{background:var(--or);padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
-.ticket-logo{display:flex;flex-direction:column;gap:2px}
-.ticket-ns{background:#fff;color:#003DA5;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:4px;letter-spacing:.02em}
+.ticket-ns{background:#fff;color:#003DA5;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:4px}
 .ticket-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.9);margin-top:4px}
-.ticket-tear{position:relative;height:16px;margin:0 -1px;overflow:visible}
+.ticket-tear{position:relative;height:16px;margin:0 -1px}
 .ticket-tear-line{position:absolute;top:50%;left:16px;right:16px;border-top:2px dashed #e0e0e0;transform:translateY(-50%)}
 .ticket-tear-circle{position:absolute;top:50%;width:18px;height:18px;background:var(--wh2);border-radius:50%;transform:translateY(-50%)}
-.ticket-tear-circle.left{left:-9px}
-.ticket-tear-circle.right{right:-9px}
+.ticket-tear-circle.left{left:-9px}.ticket-tear-circle.right{right:-9px}
 .ticket-body{padding:4px 18px 12px}
 .ticket-section-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g3);margin-bottom:6px}
 .ticket-station-fixed{display:flex;align-items:center;gap:10px;margin-bottom:10px}
@@ -71,19 +52,18 @@ main{padding:0;max-width:480px;margin:0 auto}
 .ticket-dest-check{position:absolute;top:6px;right:8px;width:16px;height:16px;border:2px solid var(--g4);border-radius:50%;transition:all .15s;display:flex;align-items:center;justify-content:center}
 .ticket-dest.sel .ticket-dest-check{background:var(--or);border-color:var(--or)}
 .ticket-dest.sel .ticket-dest-check:after{content:'✓';color:#fff;font-size:9px;font-weight:700;line-height:1}
-.ticket-dest-code{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--bk);letter-spacing:.04em}
-.ticket-dest-name{font-size:11px;font-weight:600;color:var(--g2);margin-top:1px}
-.ticket-dest-stops{font-size:9px;color:var(--g3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ticket-dest-nl{font-size:9px;font-weight:700;color:var(--or);margin-top:2px;letter-spacing:.02em}
+.ticket-dest-code{font-size:20px;margin-bottom:2px}
+.ticket-dest-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--bk)}
+.ticket-dest-stops{font-size:10px;color:var(--g3);margin-top:2px}
 .ticket-budget-row{display:flex;align-items:center;gap:12px;margin-bottom:4px}
-.ticket-budget-btn{width:38px;height:38px;border-radius:50%;background:var(--or);border:none;color:#fff;font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1}
+.ticket-budget-btn{width:38px;height:38px;border-radius:50%;background:var(--or);border:none;color:#fff;font-size:22px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1}
 .ticket-budget-btn:active{opacity:.82}
 .ticket-budget-display{display:flex;align-items:center;gap:4px;flex:1;justify-content:center}
 .ticket-currency{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:var(--g3)}
 .ticket-budget-inp{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:800;color:var(--bk);border:none;outline:none;width:100px;text-align:center;background:transparent;-moz-appearance:textfield}
 .ticket-budget-inp::-webkit-inner-spin-button,.ticket-budget-inp::-webkit-outer-spin-button{-webkit-appearance:none}
 .ticket-class-row{display:flex;gap:8px}
-.ticket-class-opt{flex:1;border:2px solid var(--g5);border-radius:8px;padding:10px;text-align:center;cursor:pointer;transition:all .15s;background:var(--g6)}
+.ticket-class-opt{flex:1;border:2px solid var(--g5);border-radius:8px;padding:10px;text-align:center;cursor:pointer;background:var(--g6)}
 .ticket-class-opt.sel{background:rgba(232,93,4,.08);border-color:var(--or)}
 .ticket-class-opt:active{transform:scale(.97)}
 .ticket-class-num{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--bk)}
@@ -97,8 +77,9 @@ main{padding:0;max-width:480px;margin:0 auto}
 .ticket-barcode-strip{background:var(--g6);padding:10px 18px;display:flex;align-items:center;justify-content:center}
 .ticket-barcode{display:flex;gap:2px;align-items:stretch;height:36px}
 .ticket-bar{background:var(--bk);border-radius:1px;flex-shrink:0}
-.ticket-buy-btn{width:100%;background:var(--or);border:none;color:#fff;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:800;letter-spacing:.06em;padding:16px;text-transform:uppercase;transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.ticket-buy-btn{width:100%;background:var(--or);border:none;color:#fff;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:800;letter-spacing:.06em;padding:16px;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:8px}
 .ticket-buy-btn:active{opacity:.85}
+
 /* Stats */
 .stats-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:2px}
 .stat-tile{background:var(--wh);padding:12px 14px}
@@ -128,10 +109,10 @@ main{padding:0;max-width:480px;margin:0 auto}
 .st-amt.won{color:var(--gr)}.st-amt.lost{color:var(--re)}.st-amt.cur{color:var(--or)}
 .train-pos{position:absolute;top:6px;font-size:20px;transform:translateX(-50%);transition:left .5s ease;z-index:3;pointer-events:none}
 
-/* Odds + bet */
+/* Bet */
 .odds-row{background:var(--wh);padding:12px 18px;margin-bottom:2px;display:flex;align-items:center;gap:12px}
 .odds-lbl{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g3);white-space:nowrap}
-.odds-inp{background:var(--wh);border:1.5px solid var(--g5);border-radius:var(--r);color:var(--bk);font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;padding:8px 12px;outline:none;width:130px;text-align:center;transition:border-color .15s;-moz-appearance:textfield}
+.odds-inp{background:var(--wh);border:1.5px solid var(--g5);border-radius:var(--r);color:var(--bk);font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;padding:8px 12px;outline:none;width:130px;text-align:center;-moz-appearance:textfield}
 .odds-inp:focus{border-color:var(--or)}
 .odds-inp::-webkit-inner-spin-button,.odds-inp::-webkit-outer-spin-button{-webkit-appearance:none}
 .inzet-bar{background:var(--or);padding:12px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
@@ -144,6 +125,11 @@ main{padding:0;max-width:480px;margin:0 auto}
 .btn-loss:active{opacity:.85}
 .tip-bar{background:var(--wh);border-left:3px solid var(--or);padding:10px 14px;font-size:13px;color:var(--g2);margin-bottom:2px}
 .tip-bar strong{color:var(--or)}
+
+/* Uitstap */
+.uitstap-section{background:var(--wh);padding:14px 18px;margin-bottom:2px}
+.btn-cashout{width:100%;background:var(--gr);border:none;border-radius:var(--r);color:#fff;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;padding:13px;text-transform:uppercase;margin-bottom:8px}
+.btn-cashout:active{opacity:.85}
 
 /* History */
 .hi-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--g6)}
@@ -166,35 +152,28 @@ main{padding:0;max-width:480px;margin:0 auto}
 .res-sub{font-size:13px;color:var(--g2);margin-bottom:22px;line-height:1.6}
 .btn-new{background:var(--or);border:none;border-radius:var(--r);color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;padding:13px 28px;text-transform:uppercase}
 
-/* WK Canvas Animation */
+/* Saved */
+.saved-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--g6)}
+.saved-row:last-child{border-bottom:none}
+
+/* Canvas overlay */
 .wk-overlay{position:fixed;inset:0;z-index:999;display:none;overflow:hidden;background:#000}
 .wk-overlay.active{display:block}
 #anim-canvas{position:absolute;inset:0;width:100%;height:100%}
-/* Scoreboard */
-.anim-board{position:absolute;top:6%;left:50%;transform:translateX(-50%);background:rgba(0,0,20,.88);border:2px solid rgba(255,165,0,.6);border-radius:8px;padding:10px 22px;text-align:center;opacity:0;transition:opacity .4s;min-width:200px;z-index:20}
+.anim-board{position:absolute;top:6%;left:50%;transform:translateX(-50%);background:rgba(0,0,20,.88);border:2px solid rgba(255,165,0,.5);border-radius:8px;padding:10px 22px;text-align:center;opacity:0;transition:opacity .4s;min-width:200px;z-index:20}
 .anim-board.show{opacity:1}
 .ab-top{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,165,0,.9);margin-bottom:3px}
 .ab-score{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:#fff;line-height:1}
 .ab-score span{color:#f97316}
 .ab-bottom{font-family:'Barlow Condensed',sans-serif;font-size:14px;color:rgba(255,255,255,.75);margin-top:3px}
-/* Confetti */
-@keyframes confFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(540deg);opacity:0}}
-.conf{position:absolute;top:-10px;border-radius:2px;animation:confFall linear forwards}
-/* Flag wavers on roadside */
-.flagwaver{position:absolute;bottom:calc(28% + 2px);font-size:18px}
-@keyframes wave{0%,100%{transform:rotate(-20deg)}50%{transform:rotate(20deg)}}
-.flagwaver span{display:inline-block;animation:wave .5s ease-in-out infinite}
-/* Derail */
 .derail-screen{position:absolute;inset:0;background:rgba(0,0,0,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:30}
 .derail-screen.show{opacity:1}
 .derail-icon{font-size:64px;margin-bottom:10px}
 .derail-title{font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:900;color:var(--re);text-transform:uppercase}
 .derail-sub{font-family:'Barlow Condensed',sans-serif;font-size:18px;color:rgba(255,255,255,.6);margin-top:6px}
 .overlay-skip{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.3);border-radius:20px;color:rgba(255,255,255,.8);cursor:pointer;font-family:'Barlow',sans-serif;font-size:12px;padding:7px 18px;z-index:40}
-
-/* Saved */
-.saved-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--g6)}
-.saved-row:last-child{border-bottom:none}
+@keyframes confFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(540deg);opacity:0}}
+.conf{position:absolute;top:-10px;border-radius:2px;animation:confFall linear forwards}
 
 /* Toast */
 .toast-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:1000;pointer-events:none}
@@ -218,114 +197,49 @@ main{padding:0;max-width:480px;margin:0 auto}
 <main>
   <!-- SETUP -->
   <div id="view-setup">
-
-    <!-- TICKET CARD -->
     <div class="ticket-wrap">
-      <!-- Top strip -->
       <div class="ticket-header">
-        <div class="ticket-logo">
-          <div class="ticket-ns">NS</div>
-          <div class="ticket-title">WK TREIN 2026</div>
-        </div>
-        <div class="ticket-knvb">
-          <svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="17" fill="#E85D04" stroke="#fff" stroke-width="1.5"/><ellipse cx="18" cy="20" rx="9" ry="8" fill="#FF9500"/><ellipse cx="18" cy="18" rx="7" ry="6.5" fill="#D05000"/><polygon points="9,13 11,9 13,13" fill="#FF9500"/><polygon points="11,10 14,6 15,11" fill="#FF9500"/><polygon points="15,7 18,4 18,9" fill="#FF9500"/><polygon points="21,7 24,5 23,10" fill="#FF9500"/><polygon points="24,10 27,8 26,13" fill="#FF9500"/><circle cx="16" cy="18" r="1.8" fill="#111"/><circle cx="20" cy="18" r="1.8" fill="#111"/><ellipse cx="18" cy="22" rx="3" ry="2" fill="#903000"/></svg>
-        </div>
+        <div><div class="ticket-ns">NS</div><div class="ticket-title">WK TREIN 2026</div></div>
+        <div style="font-size:32px">🚂</div>
       </div>
-
-      <!-- Tear line -->
-      <div class="ticket-tear">
-        <div class="ticket-tear-line"></div>
-        <div class="ticket-tear-circle left"></div>
-        <div class="ticket-tear-circle right"></div>
-      </div>
-
-      <!-- Route selector -->
+      <div class="ticket-tear"><div class="ticket-tear-line"></div><div class="ticket-tear-circle left"></div><div class="ticket-tear-circle right"></div></div>
       <div class="ticket-body">
         <div class="ticket-section-label">Vertrek</div>
         <div class="ticket-station-fixed">
           <div class="ticket-station-code">WZP</div>
           <div class="ticket-station-name">Wezep</div>
         </div>
-
         <div class="ticket-arrow-row">
           <div class="ticket-train-line"></div>
-          <div class="ticket-train-icon">🚂✈️</div>
+          <div class="ticket-train-icon">🚂</div>
           <div class="ticket-train-line"></div>
         </div>
-
         <div class="ticket-section-label">Bestemming</div>
-        <div class="ticket-destinations" id="ticket-destinations">
-          <!-- built by JS -->
-        </div>
-
-        <!-- Tear line 2 -->
-        <div class="ticket-tear" style="margin:14px 0 12px">
-          <div class="ticket-tear-line"></div>
-          <div class="ticket-tear-circle left"></div>
-          <div class="ticket-tear-circle right"></div>
-        </div>
-
-        <!-- Budget -->
+        <div class="ticket-destinations" id="ticket-destinations"></div>
+        <div class="ticket-tear" style="margin:14px 0 12px"><div class="ticket-tear-line"></div><div class="ticket-tear-circle left"></div><div class="ticket-tear-circle right"></div></div>
         <div class="ticket-section-label">Inleg</div>
         <div class="ticket-budget-row">
           <button class="ticket-budget-btn" onclick="adjustBudget(-10)">−</button>
           <div class="ticket-budget-display">
             <div class="ticket-currency">€</div>
-            <input type="number" id="cfg-budget" value="30" min="10" max="9999" step="10" class="ticket-budget-inp" oninput="syncBudgetDisplay()">
+            <input type="number" id="cfg-budget" value="30" min="5" max="9999" step="5" class="ticket-budget-inp">
           </div>
           <button class="ticket-budget-btn" onclick="adjustBudget(10)">+</button>
         </div>
-
-        <div class="ticket-section-label" style="margin-top:14px">Klasse</div>
-        <div class="ticket-class-row">
-          <div class="ticket-class-opt sel" id="cls1" onclick="selClass(1)">
-            <div class="ticket-class-num">1</div>
-            <div class="ticket-class-lbl">Eerste klas</div>
-          </div>
-          <div class="ticket-class-opt" id="cls2" onclick="selClass(2)">
-            <div class="ticket-class-num">2</div>
-            <div class="ticket-class-lbl">Tweede klas</div>
-          </div>
-        </div>
-
-        <!-- Tear line 3 -->
-        <div class="ticket-tear" style="margin:14px 0 10px">
-          <div class="ticket-tear-line"></div>
-          <div class="ticket-tear-circle left"></div>
-          <div class="ticket-tear-circle right"></div>
-        </div>
-
-        <!-- Date/time row -->
+        <div class="ticket-tear" style="margin:14px 0 10px"><div class="ticket-tear-line"></div><div class="ticket-tear-circle left"></div><div class="ticket-tear-circle right"></div></div>
         <div class="ticket-meta-row">
-          <div class="ticket-meta-item">
-            <div class="ticket-meta-label">Datum</div>
-            <div class="ticket-meta-val" id="ticket-date">—</div>
-          </div>
-          <div class="ticket-meta-item">
-            <div class="ticket-meta-label">Vertrek</div>
-            <div class="ticket-meta-val" id="ticket-time">—</div>
-          </div>
-          <div class="ticket-meta-item">
-            <div class="ticket-meta-label">Haltes</div>
-            <div class="ticket-meta-val" id="ticket-haltes-disp">—</div>
-          </div>
+          <div class="ticket-meta-item"><div class="ticket-meta-label">Datum</div><div class="ticket-meta-val" id="ticket-date">—</div></div>
+          <div class="ticket-meta-item"><div class="ticket-meta-label">Tijd</div><div class="ticket-meta-val" id="ticket-time">—</div></div>
+          <div class="ticket-meta-item"><div class="ticket-meta-label">Haltes</div><div class="ticket-meta-val" id="ticket-haltes-disp">—</div></div>
         </div>
-
       </div>
-
-      <!-- Barcode strip -->
       <div class="ticket-barcode-strip">
         <div class="ticket-barcode">
-          <div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div>
+          <div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div><div class="ticket-bar" style="width:3px"></div><div class="ticket-bar" style="width:1px"></div><div class="ticket-bar" style="width:2px"></div>
         </div>
       </div>
-
-      <!-- Buy button -->
-      <button class="ticket-buy-btn" onclick="startTrain()">
-        <span>🎫 Kaartje kopen & vertrekken</span>
-      </button>
+      <button class="ticket-buy-btn" onclick="startTrain()">🎫 Kaartje kopen & vertrekken</button>
     </div>
-
     <div id="saved-section" style="display:none;margin-top:4px">
       <div class="sec-label">Eerdere ritten</div>
       <div class="card" id="saved-list"></div>
@@ -339,10 +253,8 @@ main{padding:0;max-width:480px;margin:0 auto}
       <div class="stat-tile"><div class="stat-lbl">Halte</div><div class="stat-val" id="s-halte">1/10</div></div>
       <div class="stat-tile"><div class="stat-lbl">Winst</div><div class="stat-val pos" id="s-winst">€0</div></div>
     </div>
-
-    <div class="sec-label">Route — Trein + vlucht naar WK 2026</div>
+    <div class="sec-label" id="route-label">Route</div>
     <div class="map-wrap"><div id="routemap"></div></div>
-
     <div class="track-wrap">
       <div class="track-scroll">
         <div style="position:relative" id="track-container">
@@ -355,7 +267,6 @@ main{padding:0;max-width:480px;margin:0 auto}
         </div>
       </div>
     </div>
-
     <div class="odds-row">
       <span class="odds-lbl">Odds halte <span id="cur-h-num">1</span></span>
       <input type="number" class="odds-inp" id="odds-inp" placeholder="2.00" min="1.01" step="0.01">
@@ -370,26 +281,20 @@ main{padding:0;max-width:480px;margin:0 auto}
     </div>
     <div class="tip-bar" id="tipbar"></div>
 
+    <!-- Uitstap -->
+    <div class="uitstap-section" id="uitstap-card" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div><div class="stat-lbl">Huidige pot</div><div class="stat-val pos" id="cash-out-amt">€0</div></div>
+        <div style="text-align:right"><div class="stat-lbl">Winst</div><div class="stat-val pos" id="cash-out-profit">€0</div></div>
+      </div>
+      <button class="btn-cashout" onclick="cashOut()">💰 Uitstappen & cashen</button>
+      <div style="text-align:center"><button onclick="abandonJourney()" style="background:none;border:none;color:var(--g4);font-size:11px;cursor:pointer;text-decoration:underline">Rit afbreken</button></div>
+    </div>
+
     <div class="sec-label">Haltes · <span id="hcount">0</span></div>
     <div class="card"><div id="hlist"><div class="empty">Nog geen haltes</div></div></div>
-
-    <!-- Uitstappen card -->
-    <div class="sec-label">Uitstappen</div>
-    <div class="card" id="uitstap-card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <div>
-          <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g3);margin-bottom:2px">Huidige pot</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--gr)" id="cash-out-amt">€30</div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g3);margin-bottom:2px">Winst t.o.v. start</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--gr)" id="cash-out-profit">€0</div>
-        </div>
-      </div>
-      <button onclick="cashOut()" style="width:100%;background:var(--gr);border:none;border-radius:var(--r);color:#fff;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:.06em;padding:13px;text-transform:uppercase;margin-bottom:8px">💰 Uitstappen & cashen</button>
-      <div style="text-align:center">
-        <button onclick="abandonJourney()" style="background:none;border:none;color:var(--g4);font-family:'Barlow',sans-serif;font-size:11px;cursor:pointer;text-decoration:underline;text-underline-offset:3px">Rit afbreken (zonder cashen)</button>
-      </div>
+    <div style="text-align:center;padding:20px 0 8px" id="abandon-btn">
+      <button onclick="abandonJourney()" style="background:none;border:none;color:var(--g4);font-size:11px;cursor:pointer;text-decoration:underline">Rit afbreken</button>
     </div>
   </div>
 
@@ -397,7 +302,7 @@ main{padding:0;max-width:480px;margin:0 auto}
   <div id="view-result" style="display:none">
     <div class="result-card">
       <div class="res-icon" id="res-icon">🏆</div>
-      <div class="res-title" id="res-title">Eindstation!</div>
+      <div class="res-title" id="res-title">Aangekomen!</div>
       <div class="res-amt" id="res-amt">+€0</div>
       <div class="res-sub" id="res-sub"></div>
       <button class="btn-new" onclick="newJourney()">🚂 Nieuwe rit</button>
@@ -407,7 +312,7 @@ main{padding:0;max-width:480px;margin:0 auto}
   </div>
 </main>
 
-<!-- WK Canvas Animation Overlay -->
+<!-- Canvas overlay -->
 <div class="wk-overlay" id="wk-overlay">
   <canvas id="anim-canvas"></canvas>
   <div class="anim-board" id="anim-board">
@@ -420,1184 +325,643 @@ main{padding:0;max-width:480px;margin:0 auto}
     <div class="derail-title">Ontspoord!</div>
     <div class="derail-sub" id="derail-sub">Halte 1</div>
   </div>
-  <div id="conf-layer"></div>
   <button class="overlay-skip" onclick="closeOverlay()">Overslaan</button>
 </div>
 
 <div class="toast-wrap"><div class="toast" id="toast"></div></div>
 
 <script>
-// Real NS intercity route Wezep → Rotterdam
-// Echte NS intercity route: Wezep → Schiphol Airport
-var ROUTE = [
-  {name:'Wezep',          short:'Wezep',    lat:52.4538, lng:6.0017},
-  {name:'Zwolle',         short:'Zwolle',   lat:52.5053, lng:6.0906},
-  {name:'Amersfoort',     short:'Amersft.', lat:52.1531, lng:5.3764},
-  {name:'Hilversum',      short:'Hilvers.', lat:52.2281, lng:5.1800},
-  {name:'Utrecht C.',     short:'Utrecht',  lat:52.0894, lng:5.1108},
-  {name:'Amsterdam C.',   short:'AMS C.',   lat:52.3791, lng:4.8997},
-  {name:'Amsterdam Sloterdijk', short:'Sloter.', lat:52.3888, lng:4.8371},
-  {name:'Schiphol ✈️',    short:'Schiphol', lat:52.3105, lng:4.7683},
-];
+// ── Routes — gesorteerd van dichtbij (4 haltes) naar ver (10 haltes) ──
+var ROUTES = {
+  amsterdam:[
+    {name:'Wezep',       short:'Wezep',  lat:52.4538,lng:6.0017},
+    {name:'Zwolle',      short:'Zwolle', lat:52.5053,lng:6.0906},
+    {name:'Amersfoort',  short:'Amersft',lat:52.1531,lng:5.3764},
+    {name:'Hilversum',   short:'Hilvers',lat:52.2281,lng:5.1800},
+    {name:'Amsterdam',   short:'AMS',    lat:52.3791,lng:4.8997},
+  ],
+  brussel:[
+    {name:'Wezep',       short:'Wezep',  lat:52.4538,lng:6.0017},
+    {name:'Utrecht',     short:'Utrecht',lat:52.0894,lng:5.1108},
+    {name:'Rotterdam',   short:"R'dam",  lat:51.9225,lng:4.4689},
+    {name:'Antwerpen',   short:'Antwerp',lat:51.2194,lng:4.4025},
+    {name:'Gent',        short:'Gent',   lat:51.0538,lng:3.7174},
+    {name:'Brussel',     short:'Brussel',lat:50.8503,lng:4.3517},
+  ],
+  berlijn:[
+    {name:'Wezep',       short:'Wezep',  lat:52.4538,lng:6.0017},
+    {name:'Zwolle',      short:'Zwolle', lat:52.5053,lng:6.0906},
+    {name:'Hengelo',     short:'Hengelo',lat:52.2656,lng:6.7936},
+    {name:'Bad Bentheim',short:'B.Benth',lat:52.3063,lng:7.1540},
+    {name:'Osnabrück',   short:'Osnbr.', lat:52.2796,lng:8.0474},
+    {name:'Hannover',    short:'Hannov.',lat:52.3759,lng:9.7320},
+    {name:'Berlijn',     short:'Berlin', lat:52.5200,lng:13.4050},
+  ],
+  parijs:[
+    {name:'Wezep',       short:'Wezep',  lat:52.4538,lng:6.0017},
+    {name:'Utrecht',     short:'Utrecht',lat:52.0894,lng:5.1108},
+    {name:'Rotterdam',   short:"R'dam",  lat:51.9225,lng:4.4689},
+    {name:'Antwerpen',   short:'Antwerp',lat:51.2194,lng:4.4025},
+    {name:'Brussel',     short:'Brussel',lat:50.8503,lng:4.3517},
+    {name:'Rijsel',      short:'Rijsel', lat:50.6292,lng:3.0573},
+    {name:'Parijs',      short:'Paris',  lat:48.8566,lng:2.3522},
+  ],
+  londen:[
+    {name:'Wezep',       short:'Wezep',  lat:52.4538,lng:6.0017},
+    {name:'Utrecht',     short:'Utrecht',lat:52.0894,lng:5.1108},
+    {name:'Rotterdam',   short:"R'dam",  lat:51.9225,lng:4.4689},
+    {name:'Antwerpen',   short:'Antwerp',lat:51.2194,lng:4.4025},
+    {name:'Brussel',     short:'Brussel',lat:50.8503,lng:4.3517},
+    {name:'Rijsel',      short:'Rijsel', lat:50.6292,lng:3.0573},
+    {name:'Calais',      short:'Calais', lat:50.9513,lng:1.8587},
+    {name:'Londen',      short:'London', lat:51.5074,lng:-0.1278},
+  ],
+  barcelona:[
+    {name:'Wezep',       short:'Wezep',  lat:52.4538,lng:6.0017},
+    {name:'Utrecht',     short:'Utrecht',lat:52.0894,lng:5.1108},
+    {name:'Brussel',     short:'Brussel',lat:50.8503,lng:4.3517},
+    {name:'Parijs',      short:'Paris',  lat:48.8566,lng:2.3522},
+    {name:'Lyon',        short:'Lyon',   lat:45.7640,lng:4.8357},
+    {name:'Montpellier', short:'Montpl.',lat:43.6108,lng:3.8767},
+    {name:'Perpignan',   short:'Perp.',  lat:42.6887,lng:2.8948},
+    {name:'Barcelona',   short:'BCN',    lat:41.3851,lng:2.1734},
+  ],
+  madrid:[
+    {name:'Wezep',       short:'Wezep',  lat:52.4538,lng:6.0017},
+    {name:'Utrecht',     short:'Utrecht',lat:52.0894,lng:5.1108},
+    {name:'Brussel',     short:'Brussel',lat:50.8503,lng:4.3517},
+    {name:'Parijs',      short:'Paris',  lat:48.8566,lng:2.3522},
+    {name:'Bordeaux',    short:'Bordx.', lat:44.8378,lng:-0.5792},
+    {name:'San Sebastián',short:'S.Seb.',lat:43.3183,lng:-1.9812},
+    {name:'Burgos',      short:'Burgos', lat:42.3439,lng:-3.6969},
+    {name:'Valladolid',  short:'Valldld',lat:41.6528,lng:-4.7286},
+    {name:'Madrid',      short:'Madrid', lat:40.4168,lng:-3.7038},
+  ],
+  rome:[
+    {name:'Wezep',       short:'Wezep',  lat:52.4538,lng:6.0017},
+    {name:'Utrecht',     short:'Utrecht',lat:52.0894,lng:5.1108},
+    {name:'Brussel',     short:'Brussel',lat:50.8503,lng:4.3517},
+    {name:'Parijs',      short:'Paris',  lat:48.8566,lng:2.3522},
+    {name:'Lyon',        short:'Lyon',   lat:45.7640,lng:4.8357},
+    {name:'Turijn',      short:'Turijn', lat:45.0703,lng:7.6869},
+    {name:'Milaan',      short:'Milaan', lat:45.4654,lng:9.1859},
+    {name:'Bologna',     short:'Bologna',lat:44.4949,lng:11.3426},
+    {name:'Florence',    short:'Flrnce', lat:43.7696,lng:11.2558},
+    {name:'Rome',        short:'Rome',   lat:41.9028,lng:12.4964},
+  ],
+};
 
-var LS_J = 'wk2026_trein_v3';
-var LS_S = 'wk2026_trein_saved_v2';
-var J = null, tt = null, leafMap = null, animTimeout = null;
+// Sorted by haltes ascending (nearest first)
+var ticketDests = [
+  {code:'🇳🇱', name:'Amsterdam',  haltes:4,  route:'amsterdam'},
+  {code:'🇧🇪', name:'Brussel',    haltes:6,  route:'brussel'},
+  {code:'🇩🇪', name:'Berlijn',    haltes:7,  route:'berlijn'},
+  {code:'🇫🇷', name:'Parijs',     haltes:7,  route:'parijs'},
+  {code:'🇬🇧', name:'Londen',     haltes:8,  route:'londen'},
+  {code:'🇪🇸', name:'Barcelona',  haltes:8,  route:'barcelona'},
+  {code:'🇪🇸', name:'Madrid',     haltes:9,  route:'madrid'},
+  {code:'🇮🇹', name:'Rome',       haltes:10, route:'rome'},
+];
+var selDestIdx = 0;
+var ROUTE = ROUTES.amsterdam;
+
+var LS_J='wk2026_trein_v4', LS_S='wk2026_trein_saved_v3';
+var J=null, tt=null, leafMap=null, animRAF=null, animTimeout=null, animStartTime=0;
+var ANIM={skipCalled:false};
 
 function loadJ(){return JSON.parse(localStorage.getItem(LS_J)||'null');}
-function saveJ(){localStorage.setItem(LS_J, JSON.stringify(J));}
+function saveJ(){localStorage.setItem(LS_J,JSON.stringify(J));}
 function loadSaved(){return JSON.parse(localStorage.getItem(LS_S)||'[]');}
-function saveSaved(a){localStorage.setItem(LS_S, JSON.stringify(a));}
-
-function pickRoute(n){
-  var total = ROUTE.length; // 11 stations = 10 possible haltes
-  var count = Math.min(n + 1, total); // n haltes = n+1 stations
-  if(count >= total) return ROUTE.slice();
-  var result = [ROUTE[0]];
-  var step = (total - 1) / (count - 1);
-  for(var i = 1; i < count - 1; i++){
-    result.push(ROUTE[Math.round(i * step)]);
-  }
-  result.push(ROUTE[total - 1]);
-  return result;
-}
-
-function init(){
-  J = loadJ();
-  if(J && !J.finished){
-    show('active');
-    initMap();
-    renderTrack();
-    renderStats();
-    renderTip();
-    renderHistory();
-  } else {
-    show('setup');
-    renderSaved();
-  }
-}
-
-function show(v){
-  ['setup','active','result'].forEach(function(x){
-    document.getElementById('view-'+x).style.display = x===v ? 'block' : 'none';
-  });
-}
-
-function startTrain(){
-  var budget = parseFloat(document.getElementById('cfg-budget').value);
-  var destEl = document.querySelector('.ticket-dest.sel');
-  if(!budget || budget < 1){ toast('Vul geldig budget in','loss'); return; }
-  if(!destEl){ toast('Kies een bestemming','loss'); return; }
-  var haltes = parseInt(destEl.getAttribute('data-haltes'));
-  if(!haltes || haltes < 2){ toast('Ongeldige haltes','loss'); return; }
-  J = {
-    id: Date.now(),
-    budget: budget,
-    haltes: haltes,
-    stations: pickRoute(haltes),
-    current: 0,
-    inzet: budget,
-    stops: [],
-    finished: false,
-    startedAt: new Date().toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})
-  };
-  saveJ();
-  show('active');
-  leafMap = null;
-  initMap();
-  renderTrack();
-  renderStats();
-  renderTip();
-  renderHistory();
-  toast('🚂 Wezep → Schiphol → WK!','');
-}
-
-function initMap(){
-  setTimeout(function(){
-    var el = document.getElementById('routemap');
-    if(!el || !J) return;
-    if(leafMap){ leafMap.remove(); leafMap = null; }
-    var stations = J.stations;
-    var lats = stations.map(function(s){return s.lat;});
-    var lngs = stations.map(function(s){return s.lng;});
-    var centerLat = lats.reduce(function(a,b){return a+b;},0)/lats.length;
-    var centerLng = lngs.reduce(function(a,b){return a+b;},0)/lngs.length;
-
-    leafMap = L.map('routemap',{zoomControl:false,attributionControl:false}).setView([centerLat, centerLng], 8);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18}).addTo(leafMap);
-
-    // Grey full route
-    var allCoords = stations.map(function(s){return [s.lat, s.lng];});
-    L.polyline(allCoords, {color:'#ccc', weight:4, dashArray:'6 5'}).addTo(leafMap);
-
-    // Orange done route
-    if(J.current > 0){
-      var doneCoords = stations.slice(0, J.current+1).map(function(s){return [s.lat, s.lng];});
-      L.polyline(doneCoords, {color:'#E85D04', weight:5}).addTo(leafMap);
-    }
-
-    // Markers
-    stations.forEach(function(s, i){
-      var isDone = i < J.current;
-      var isActive = i === J.current && !J.finished;
-      var isEnd = i === stations.length - 1;
-      var color = isDone ? '#16a34a' : isActive ? '#E85D04' : '#aaa';
-      var r = isEnd ? 10 : isActive ? 9 : 7;
-
-      L.circleMarker([s.lat, s.lng], {
-        radius: r,
-        fillColor: color,
-        color: '#fff',
-        weight: 2,
-        fillOpacity: 1
-      }).addTo(leafMap);
-
-      // Label above marker
-      L.marker([s.lat, s.lng], {
-        icon: L.divIcon({
-          className: '',
-          html: '<div class="station-lbl" style="border-color:'+color+';margin-left:10px;margin-top:-24px">'+(isEnd?'🏁 ':'')+s.short+'</div>',
-          iconSize: [0,0],
-          iconAnchor: [0,0]
-        })
-      }).addTo(leafMap);
-    });
-
-    // Train at current position
-    if(J.current < stations.length){
-      var cur = stations[J.current];
-      L.marker([cur.lat, cur.lng], {
-        icon: L.divIcon({
-          className:'',
-          html:'<div style="font-size:22px;margin-left:-11px;margin-top:-30px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))">🚂</div>',
-          iconSize:[0,0],iconAnchor:[0,0]
-        })
-      }).addTo(leafMap);
-    }
-
-    leafMap.fitBounds(L.latLngBounds(allCoords), {padding:[28,28]});
-  }, 100);
-}
-
-function renderTrack(){
-  var stations = J.stations;
-  var total = J.haltes;
-  var done = J.current;
-  var SW = 56, GAP = 28;
-  var totalW = stations.length * SW + (stations.length-1) * GAP;
-
-  var html = '';
-  stations.forEach(function(s, i){
-    var isEnd = i === stations.length-1;
-    var isDone = i < done;
-    var isActive = i === done && !J.finished;
-    var stop = J.stops[i-1];
-    var isFailed = stop && !stop.won;
-
-    var cls = 'st-dot';
-    if(isEnd) cls += ' end';
-    if(isDone && !isFailed) cls += ' done';
-    if(isFailed) cls += ' failed';
-    if(isActive) cls += ' active';
-    if(isEnd && J.result === 'won') cls = 'st-dot end done';
-
-    var label = isEnd ? '🏁' : i === 0 ? '🚉' : i;
-    var amtHtml = '';
-    if(stop){
-      amtHtml = '<div class="st-amt '+(stop.won?'won':'lost')+'">'+(stop.won?'+€'+stop.winst.toFixed(0):'✕')+'</div>';
-    } else if(isActive){
-      amtHtml = '<div class="st-amt cur">€'+J.inzet.toFixed(0)+'</div>';
-    }
-    var spacer = i < stations.length-1 ? '<div style="width:'+GAP+'px;flex-shrink:0"></div>' : '';
-    html += '<div class="st"><div class="'+cls+'">'+label+'</div><div class="st-name">'+(isEnd?'Eind':s.short)+'</div>'+amtHtml+'</div>'+spacer;
-  });
-
-  document.getElementById('track-stations').innerHTML = html;
-  document.getElementById('track-stations').style.width = totalW+'px';
-  document.getElementById('track-row').style.minWidth = totalW+'px';
-
-  // Rail
-  var railTotal = totalW - SW;
-  document.getElementById('track-line-bg').style.left = (SW/2)+'px';
-  document.getElementById('track-line-bg').style.right = (SW/2)+'px';
-  document.getElementById('track-done').style.left = (SW/2)+'px';
-  document.getElementById('track-done').style.width = (railTotal * done / (stations.length-1))+'px';
-
-  // Train icon
-  var trainLeft = done * (SW + GAP) + SW/2;
-  document.getElementById('train-pos').style.left = trainLeft+'px';
-}
-
-function renderStats(){
-  document.getElementById('s-inzet').textContent = '€'+J.inzet.toFixed(2);
-  document.getElementById('s-halte').textContent = (J.current+1)+'/'+J.haltes;
-  document.getElementById('cur-h-num').textContent = J.current+1;
-  document.getElementById('betdisp').textContent = '€'+J.inzet.toFixed(2);
-  var profit = J.inzet - J.budget;
-  var el = document.getElementById('s-winst');
-  el.textContent = (profit>=0?'+':'')+'€'+profit.toFixed(0);
-  el.className = 'stat-val'+(profit>0?' pos':profit<0?' neg':'');
-  // Update uitstap card
-  var cao = document.getElementById('cash-out-amt');
-  var cap = document.getElementById('cash-out-profit');
-  if(cao){
-    cao.textContent = '€'+J.inzet.toFixed(2);
-    var p = J.inzet - J.budget;
-    cap.textContent = (p>=0?'+':'')+'€'+p.toFixed(2);
-    cap.style.color = p>=0?'var(--gr)':'var(--re)';
-    // Only show uitstap if we've won at least one halte
-    document.getElementById('uitstap-card').style.display = J.current > 0 ? 'block' : 'none';
-  }
-}
-
-function renderTip(){
-  var s = J.stations[J.current];
-  var next = J.stations[J.current+1];
-  var potText = J.current > 0 ? ' · Pot tot nu: <strong>€'+J.inzet.toFixed(2)+'</strong>' : '';
-  document.getElementById('tipbar').innerHTML =
-    'Halte <strong>'+(J.current+1)+'</strong> — <strong>'+(s?s.name:'')+'</strong>. Inzet: <strong>€'+J.inzet.toFixed(2)+'</strong>.'+(next?' Bij winst totale pot → <strong>€'+(J.inzet * 2).toFixed(0)+'</strong> (bij @2.00).':'')+'<br><span style="color:var(--or);font-size:12px">💡 Je kunt op elk moment uitstappen en je pot cashen via de uitstap-knop.</span>';
-}
-
-function renderHistory(){
-  document.getElementById('hcount').textContent = J.stops.length;
-  var el = document.getElementById('hlist');
-  if(!J.stops.length){ el.innerHTML='<div class="empty">Nog geen haltes</div>'; return; }
-  el.innerHTML = J.stops.slice().reverse().map(function(s){
-    var potStr = s.won ? '→ €'+(s.pot||0).toFixed(2) : '';
-    return '<div class="hi-row"><div class="hi-left"><div class="hi-match">'+s.station+' <span style="color:var(--g3);font-weight:400">@'+s.odds+'</span></div><div class="hi-meta">Halte '+s.halte+' · €'+s.inzet.toFixed(2)+' inzet '+potStr+' · '+s.ts+'</div></div><span class="badge '+(s.won?'bwin':'blos')+'">'+(s.won?'€'+(s.pot||0).toFixed(2):'Verloren')+'</span></div>';
-  }).join('');
-}
-
-function renderSaved(){
-  var saved = loadSaved();
-  var sec = document.getElementById('saved-section');
-  if(!saved.length){ sec.style.display='none'; return; }
-  sec.style.display='block';
-  document.getElementById('saved-list').innerHTML = saved.map(function(j){
-    var won = j.result==='won';
-    var profit = won ? j.finalProfit : -j.budget;
-    return '<div class="saved-row"><div><div style="font-size:13px;font-weight:600">'+j.haltes+' haltes · €'+j.budget+' start</div><div style="font-size:11px;color:var(--g3);margin-top:2px">'+j.startedAt+'</div></div><span class="badge '+(won?'bwin':'blos')+'">'+(profit>=0?'+':'')+'€'+profit.toFixed(2)+'</span></div>';
-  }).join('');
-}
-
-function recordResult(won){
-  var odds = parseFloat(document.getElementById('odds-inp').value);
-  if(isNaN(odds)||odds<1.01){ toast('Vul geldige odds in','loss'); return; }
-  var halteNum = J.current+1;
-  var inzet = J.inzet;
-  var station = J.stations[J.current] || {name:'Halte '+halteNum};
-  // Totale pot = inzet * odds (niet alleen winst)
-  var potNaWinst = won ? parseFloat((inzet * odds).toFixed(2)) : 0;
-  var winst = won ? parseFloat((inzet * (odds-1)).toFixed(2)) : 0;
-  J.stops.push({halte:halteNum, station:station.name, inzet:inzet, odds:odds, won:won, winst:winst, pot:potNaWinst,
-    ts:new Date().toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})});
-  J.current++;
-
-  if(!won){
-    J.finished=true; J.result='lost'; J.finalProfit=-J.budget;
-    saveJ();
-    playDerail(station.name, function(){ showResult(); });
-    return;
-  }
-  if(J.current >= J.haltes){
-    J.finished=true; J.result='won'; J.finalProfit=potNaWinst - J.budget;
-    J.finalPot=potNaWinst;
-    saveJ();
-    playGoal(halteNum, potNaWinst, true, function(){ showResult(); });
-    return;
-  }
-  // Volgende inzet = totale pot na winst
-  J.inzet = potNaWinst;
-  saveJ();
-  document.getElementById('odds-inp').value='';
-  playGoal(halteNum, potNaWinst, false, function(){
-    initMap(); renderTrack(); renderStats(); renderTip(); renderHistory();
-  });
-}
-
-// ── CANVAS ANIMATION ENGINE ──
-var animRAF = null, animTimeout = null, animStartTime = 0;
-var ANIM = { phase:'idle', t:0, skipCalled:false };
-
-function initCanvas(){
-  var cv = document.getElementById('anim-canvas');
-  var W = window.innerWidth, H = window.innerHeight;
-  cv.width = W; cv.height = H;
-  return {cv:cv, ctx:cv.getContext('2d'), W:W, H:H};
-}
-
-// ── Scene drawing helpers ──
-function drawSky(ctx, W, H, t){
-  // Animated sky gradient
-  var g = ctx.createLinearGradient(0,0,0,H*0.65);
-  g.addColorStop(0,'#2a6aaa');
-  g.addColorStop(1,'#87CEEB');
-  ctx.fillStyle = g;
-  ctx.fillRect(0,0,W,H*0.65);
-}
-
-function drawSun(ctx, W, H){
-  ctx.save();
-  ctx.shadowColor='rgba(255,220,50,.4)';
-  ctx.shadowBlur=40;
-  ctx.beginPath();
-  ctx.arc(W*0.82, H*0.12, 32, 0, Math.PI*2);
-  ctx.fillStyle='#FFE066';
-  ctx.fill();
-  ctx.restore();
-}
-
-function drawClouds(ctx, W, H, offset){
-  var clouds=[
-    {x:0.08,y:0.07,rx:80,ry:28,s:0.6},
-    {x:0.22,y:0.05,rx:110,ry:36,s:0.8},
-    {x:0.42,y:0.09,rx:90,ry:30,s:0.65},
-    {x:0.62,y:0.04,rx:130,ry:40,s:0.9},
-    {x:0.78,y:0.08,rx:85,ry:28,s:0.7},
-    {x:1.05,y:0.06,rx:95,ry:32,s:0.75},
-    {x:1.22,y:0.10,rx:70,ry:24,s:0.6},
-  ];
-  clouds.forEach(function(c){
-    var x = ((c.x*W - offset*0.15) % (W*1.4) + W*1.4) % (W*1.4) - W*0.1;
-    var y = c.y*H;
-    ctx.save();
-    ctx.globalAlpha = 0.88*c.s+0.1;
-    ctx.shadowColor='rgba(255,255,255,.3)';
-    ctx.shadowBlur=8;
-    drawCloud(ctx,x,y,c.rx,c.ry);
-    ctx.restore();
-  });
-}
-
-function drawCloud(ctx,x,y,rx,ry){
-  ctx.beginPath();
-  ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2); ctx.fillStyle='#fff'; ctx.fill();
-  ctx.beginPath(); ctx.ellipse(x-rx*0.35,y+ry*0.2,rx*0.55,ry*0.65,0,0,Math.PI*2); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(x+rx*0.35,y+ry*0.15,rx*0.5,ry*0.6,0,0,Math.PI*2); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(x+rx*0.1,y-ry*0.3,rx*0.4,ry*0.5,0,0,Math.PI*2); ctx.fill();
-}
-
-function drawFarBg(ctx, W, H, offset){
-  // Far fields gradient
-  var g = ctx.createLinearGradient(0,H*0.58,0,H*0.72);
-  g.addColorStop(0,'#6abf3a'); g.addColorStop(1,'#4a9020');
-  ctx.fillStyle=g; ctx.fillRect(0,H*0.58,W,H*0.15);
-  // Windmill (far, slow parallax)
-  var wmx = ((W*0.12 - offset*0.08)%(W*1.5)+W*1.5)%(W*1.5)-50;
-  drawWindmill(ctx, wmx, H*0.62, 0.55);
-  var wmx2 = ((W*0.7 - offset*0.08)%(W*1.5)+W*1.5)%(W*1.5)-50;
-  drawWindmill(ctx, wmx2, H*0.64, 0.4);
-  // Houses
-  for(var i=0;i<4;i++){
-    var hx = ((W*(0.25+i*0.22) - offset*0.1)%(W*1.5)+W*1.5)%(W*1.5)-30;
-    drawHouse(ctx, hx, H*0.63, 0.45+i%2*0.1);
-  }
-  // Trees row
-  for(var j=0;j<8;j++){
-    var tx = ((W*(0.18+j*0.13) - offset*0.12)%(W*1.5)+W*1.5)%(W*1.5)-20;
-    drawTree(ctx, tx, H*0.65, 0.5+j%3*0.08);
-  }
-}
-
-function drawWindmill(ctx,x,y,s){
-  ctx.save(); ctx.translate(x,y); ctx.scale(s,s);
-  // Tower
-  ctx.beginPath(); ctx.moveTo(-8,0); ctx.lineTo(-5,-80); ctx.lineTo(5,-80); ctx.lineTo(8,0); ctx.closePath();
-  ctx.fillStyle='#c8a060'; ctx.fill();
-  // Cap
-  ctx.fillStyle='#8b6020';
-  ctx.fillRect(-12,-90,24,12);
-  // Blades
-  ctx.strokeStyle='#6b4010'; ctx.lineWidth=4; ctx.lineCap='round';
-  var bladeAngle = animStartTime ? (Date.now()-animStartTime)*0.002 : 0;
-  for(var b=0;b<4;b++){
-    var a=bladeAngle+b*Math.PI/2;
-    ctx.beginPath(); ctx.moveTo(0,-84); ctx.lineTo(Math.cos(a)*38,Math.sin(a)*38-84); ctx.stroke();
-    // Blade sail
-    ctx.save(); ctx.globalAlpha=0.7;
-    ctx.beginPath(); ctx.moveTo(0,-84);
-    ctx.lineTo(Math.cos(a)*38,Math.sin(a)*38-84);
-    ctx.lineTo(Math.cos(a+0.4)*30,Math.sin(a+0.4)*30-84);
-    ctx.closePath(); ctx.fillStyle='#8b5018'; ctx.fill();
-    ctx.restore();
-  }
-  ctx.restore();
-}
-
-function drawHouse(ctx,x,y,s){
-  ctx.save(); ctx.translate(x,y); ctx.scale(s,s);
-  ctx.fillStyle='#c88060'; ctx.fillRect(-18,-35,36,35);
-  ctx.beginPath(); ctx.moveTo(-22,-35); ctx.lineTo(22,-35); ctx.lineTo(0,-58); ctx.closePath();
-  ctx.fillStyle='#8b4010'; ctx.fill();
-  ctx.fillStyle='rgba(255,210,100,.5)'; ctx.fillRect(-8,-25,10,14);
-  ctx.fillRect(4,-25,8,10);
-  ctx.restore();
-}
-
-function drawTree(ctx,x,y,s){
-  ctx.save(); ctx.translate(x,y); ctx.scale(s,s);
-  ctx.fillStyle='#5c3010'; ctx.fillRect(-4,0,8,18);
-  ctx.beginPath(); ctx.arc(0,-12,18,0,Math.PI*2);
-  ctx.fillStyle='#2a6a14'; ctx.fill();
-  ctx.beginPath(); ctx.arc(-6,-20,12,0,Math.PI*2);
-  ctx.fill();
-  ctx.beginPath(); ctx.arc(6,-18,13,0,Math.PI*2);
-  ctx.fill();
-  ctx.restore();
-}
-
-function drawMidGround(ctx,W,H,offset){
-  // Green grass bank
-  var g=ctx.createLinearGradient(0,H*0.67,0,H*0.78);
-  g.addColorStop(0,'#5aaa2e'); g.addColorStop(1,'#3d8018');
-  ctx.fillStyle=g; ctx.fillRect(0,H*0.67,W,H*0.12);
-  // Canal
-  ctx.fillStyle='#4a8ab0';
-  ctx.fillRect(0,H*0.72,W*0.22,H*0.04);
-  ctx.beginPath(); ctx.moveTo(0,H*0.72); ctx.quadraticCurveTo(W*0.11,H*0.70,W*0.22,H*0.72);
-  ctx.strokeStyle='#6aadd8'; ctx.lineWidth=2; ctx.stroke();
-  // Road/path right side
-  ctx.fillStyle='#999';
-  ctx.fillRect(W*0.82,H*0.67,W*0.18,H*0.12);
-  ctx.strokeStyle='rgba(255,255,255,.4)'; ctx.lineWidth=2; ctx.setLineDash([12,8]);
-  ctx.beginPath(); ctx.moveTo(W*0.9,H*0.67); ctx.lineTo(W*0.9,H*0.79); ctx.stroke();
-  ctx.setLineDash([]);
-  // Cows
-  var cowPositions=[0.38,0.52,0.65];
-  cowPositions.forEach(function(p){
-    var cx=((p*W - offset*0.3)%(W*1.2)+W*1.2)%(W*1.2)-40;
-    if(cx>-20&&cx<W+20) drawCow(ctx,cx,H*0.7);
-  });
-  // Flag wavers on road
-  for(var i=0;i<3;i++){
-    var fx=((W*(0.84+i*0.05) - offset*0.4)%(W*1.3)+W*1.3)%(W*1.3);
-    if(fx>W*0.75&&fx<W) drawFlagWaver(ctx,fx,H*0.73);
-  }
-}
-
-function drawCow(ctx,x,y){
-  ctx.save(); ctx.translate(x,y);
-  ctx.fillStyle='#f5f5f5';
-  ctx.beginPath(); ctx.ellipse(0,0,16,9,0,0,Math.PI*2); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(-12,-4,7,6,0,0,Math.PI*2); ctx.fill();
-  // Spots
-  ctx.fillStyle='rgba(30,30,30,.25)';
-  ctx.beginPath(); ctx.ellipse(3,-1,5,4,0.3,0,Math.PI*2); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(-4,2,4,3,-0.2,0,Math.PI*2); ctx.fill();
-  // Legs
-  ctx.strokeStyle='#ddd'; ctx.lineWidth=3;
-  [-8,-3,3,8].forEach(function(lx){
-    ctx.beginPath(); ctx.moveTo(lx,7); ctx.lineTo(lx,15); ctx.stroke();
-  });
-  ctx.restore();
-}
-
-function drawFlagWaver(ctx,x,y){
-  ctx.save(); ctx.translate(x,y);
-  ctx.fillStyle='#E85D04';
-  ctx.beginPath(); ctx.arc(0,-18,6,0,Math.PI*2); ctx.fill();
-  ctx.fillRect(-4,-12,8,12);
-  // Flag
-  var wave=Math.sin(Date.now()*0.008)*0.3;
-  ctx.strokeStyle='#ccc'; ctx.lineWidth=1.5;
-  ctx.beginPath(); ctx.moveTo(3,-20); ctx.lineTo(3,-32); ctx.stroke();
-  ctx.fillStyle='#AE1C28'; ctx.fillRect(3,-32,14,4);
-  ctx.fillStyle='#fff'; ctx.fillRect(3,-28,14,4);
-  ctx.fillStyle='#003DA5'; ctx.fillRect(3,-24,14,4);
-  ctx.restore();
-}
-
-function drawOHW(ctx,W,H,offset){
-  // Overhead wire
-  ctx.strokeStyle='rgba(180,180,180,.7)'; ctx.lineWidth=1.5;
-  ctx.beginPath(); ctx.moveTo(0,H*0.38); ctx.lineTo(W,H*0.38); ctx.stroke();
-  ctx.strokeStyle='rgba(200,200,200,.4)'; ctx.lineWidth=0.8;
-  ctx.beginPath(); ctx.moveTo(0,H*0.385); ctx.lineTo(W,H*0.385); ctx.stroke();
-  // Poles
-  var poleSpacing = W*0.28;
-  for(var p=0;p<5;p++){
-    var px = ((p*poleSpacing - offset*0.5)%(W*1.4)+W*1.4)%(W*1.4)-30;
-    if(px>-10&&px<W+10){
-      ctx.fillStyle='#666';
-      ctx.fillRect(px-3,H*0.38,5,H*0.42);
-      // Cross arm
-      ctx.fillStyle='#777';
-      ctx.fillRect(px-14,H*0.375,28,5);
-      ctx.beginPath();
-      ctx.moveTo(px-12,H*0.38); ctx.lineTo(px-3,H*0.42);
-      ctx.moveTo(px+12,H*0.38); ctx.lineTo(px+3,H*0.42);
-      ctx.strokeStyle='#888'; ctx.lineWidth=1.5; ctx.stroke();
-    }
-  }
-}
-
-function drawTrack(ctx,W,H){
-  var railY1 = H*0.80, railY2 = H*0.84;
-  // Ballast
-  var bg=ctx.createLinearGradient(0,H*0.78,0,H*0.88);
-  bg.addColorStop(0,'#b0a090'); bg.addColorStop(1,'#8a7a6a');
-  ctx.fillStyle=bg; ctx.fillRect(0,H*0.78,W,H*0.1);
-  // Rails
-  ctx.fillStyle='#7a7a7a';
-  ctx.fillRect(0,railY1,W,6);
-  ctx.fillRect(0,railY2,W,6);
-  ctx.fillStyle='#5a5a5a';
-  ctx.fillRect(0,railY1+1,W,2);
-  ctx.fillRect(0,railY2+1,W,2);
-}
-
-function drawSleepers(ctx,W,H,offset){
-  var sleeperSpacing=52, railY=H*0.80;
-  var count=Math.ceil(W/sleeperSpacing)+3;
-  var startX=-(offset*0.5%sleeperSpacing);
-  for(var i=0;i<count;i++){
-    var sx=startX+i*sleeperSpacing;
-    ctx.fillStyle='#5c3810';
-    ctx.fillRect(sx-11,railY-4,22,H*0.09);
-    // Grain lines
-    ctx.strokeStyle='rgba(0,0,0,.1)'; ctx.lineWidth=0.8;
-    ctx.beginPath(); ctx.moveTo(sx-9,railY); ctx.lineTo(sx-9,railY+H*0.07); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(sx,railY); ctx.lineTo(sx,railY+H*0.07); ctx.stroke();
-  }
-}
-
-function drawForeground(ctx,W,H){
-  var g=ctx.createLinearGradient(0,H*0.88,0,H);
-  g.addColorStop(0,'#4a8a22'); g.addColorStop(1,'#2d6010');
-  ctx.fillStyle=g;
-  ctx.beginPath();
-  ctx.moveTo(0,H*0.88);
-  ctx.bezierCurveTo(W*0.25,H*0.85,W*0.5,H*0.9,W*0.75,H*0.87);
-  ctx.bezierCurveTo(W*0.88,H*0.86,W*0.95,H*0.88,W,H*0.88);
-  ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath();
-  ctx.fill();
-}
-
-function drawTrain(ctx,W,H,trainX,speed){
-  ctx.save();
-  ctx.translate(trainX, H*0.72);
-  // Motion blur shadow
-  if(speed>3){
-    ctx.save();
-    ctx.globalAlpha=0.12;
-    for(var mb=1;mb<=4;mb++){
-      ctx.translate(-speed*mb*0.8,0);
-      drawTrainBody(ctx,W,H,0);
-    }
-    ctx.restore();
-  }
-  drawTrainBody(ctx,W,H,speed);
-  ctx.restore();
-}
-
-function drawTrainBody(ctx,W,H,speed){
-  var scale = H/480;
-  ctx.save();
-  ctx.scale(scale,scale);
-  var t = animStartTime ? (Date.now()-animStartTime)/1000 : 0;
-  var wheelRot = speed>0 ? t*speed*3.5 : 0;
-
-  // Drop shadow
-  ctx.save(); ctx.globalAlpha=0.15;
-  ctx.beginPath(); ctx.ellipse(300,152,320,10,0,0,Math.PI*2);
-  ctx.fillStyle='#000'; ctx.fill(); ctx.restore();
-
-  // === LOCOMOTIVE ===
-  // Body
-  ctx.fillStyle='#E85D04';
-  ctx.beginPath(); ctx.roundRect(0,20,168,108,8); ctx.fill();
-  // Subtle top sheen
-  ctx.fillStyle='rgba(255,255,255,.08)';
-  ctx.beginPath(); ctx.roundRect(2,20,164,14,6); ctx.fill();
-  // Nose
-  ctx.fillStyle='#C44A00';
-  ctx.beginPath(); ctx.moveTo(168,20); ctx.lineTo(194,30); ctx.lineTo(194,116); ctx.lineTo(168,128); ctx.closePath(); ctx.fill();
-  ctx.fillStyle='#1a1a1a';
-  ctx.beginPath(); ctx.moveTo(190,28); ctx.lineTo(200,32); ctx.lineTo(200,114); ctx.lineTo(190,118); ctx.closePath(); ctx.fill();
-  // Three cab windows
-  drawCleanWindow(ctx,10,28,48,36);
-  drawCleanWindow(ctx,66,28,48,36);
-  drawCleanWindow(ctx,122,30,36,32);
-  // Bottom colour band
-  ctx.fillStyle='#003DA5'; ctx.fillRect(0,120,168,6);
-  ctx.fillStyle='#fff';    ctx.fillRect(0,126,168,4);
-  ctx.fillStyle='#AE1C28'; ctx.fillRect(0,130,168,4);
-  // Roof strip
-  ctx.fillStyle='#A03800'; ctx.beginPath(); ctx.roundRect(2,12,164,10,4); ctx.fill();
-  // Front lights
-  ctx.fillStyle='#FFFBD0'; ctx.beginPath(); ctx.roundRect(194,44,9,8,2); ctx.fill();
-  ctx.fillStyle='#FF2020'; ctx.beginPath(); ctx.roundRect(194,58,9,7,2); ctx.fill();
-  // Light glow
-  ctx.save(); ctx.globalAlpha=0.28;
-  var gl=ctx.createRadialGradient(198,48,0,198,48,22);
-  gl.addColorStop(0,'#FFFBD0'); gl.addColorStop(1,'transparent');
-  ctx.fillStyle=gl; ctx.beginPath(); ctx.arc(198,48,22,0,Math.PI*2); ctx.fill();
-  ctx.restore();
-  // Undercarriage
-  ctx.fillStyle='#1a1a1a'; ctx.beginPath(); ctx.roundRect(2,134,164,10,3); ctx.fill();
-  ctx.fillStyle='#2a2a2a'; ctx.beginPath(); ctx.roundRect(165,138,36,6,3); ctx.fill();
-  // Drive wheels
-  drawCleanWheel(ctx,32,148,16,wheelRot);
-  drawCleanWheel(ctx,82,148,16,wheelRot);
-  drawCleanWheel(ctx,132,148,14,wheelRot);
-  // Drive rod
-  ctx.strokeStyle='#333'; ctx.lineWidth=3.5;
-  ctx.beginPath(); ctx.moveTo(32,148); ctx.lineTo(132,148); ctx.stroke();
-  ctx.fillStyle='#555'; ctx.beginPath(); ctx.arc(57,148,4,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle='#555'; ctx.beginPath(); ctx.arc(107,148,4,0,Math.PI*2); ctx.fill();
-
-  // === WAGON 1 ===
-  drawCleanWagon(ctx, 204, 22, 202, 108, wheelRot);
-
-  // === WAGON 2 ===
-  drawCleanWagon(ctx, 412, 24, 200, 104, wheelRot);
-
-  // === STEAM ===
-  if(speed>0.5) drawCleanSteam(ctx,t);
-
-  ctx.restore();
-}
-
-function drawCleanWindow(ctx,x,y,w,h){
-  ctx.fillStyle='#1a3050'; ctx.beginPath(); ctx.roundRect(x,y,w,h,4); ctx.fill();
-  ctx.fillStyle='#1e3d6e'; ctx.beginPath(); ctx.roundRect(x+2,y+2,w-4,h-4,3); ctx.fill();
-  ctx.fillStyle='rgba(140,190,240,.18)';
-  ctx.beginPath(); ctx.moveTo(x+3,y+3); ctx.lineTo(x+w*0.48,y+3); ctx.lineTo(x+3,y+h*0.52); ctx.closePath(); ctx.fill();
-  ctx.strokeStyle='#0f1e30'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.roundRect(x,y,w,h,4); ctx.stroke();
-}
-
-function drawCleanWagon(ctx,x,y,w,h,wheelRot){
-  // Body
-  ctx.fillStyle='#E85D04'; ctx.beginPath(); ctx.roundRect(x,y,w,h,5); ctx.fill();
-  ctx.fillStyle='rgba(255,255,255,.07)'; ctx.beginPath(); ctx.roundRect(x+2,y,w-4,12,4); ctx.fill();
-  // Bottom band
-  ctx.fillStyle='#003DA5'; ctx.fillRect(x,y+h-18,w,18);
-  ctx.fillStyle='rgba(255,136,0,.6)'; ctx.fillRect(x,y+h-20,w,3);
-  // Stripes
-  ctx.fillStyle='#003DA5'; ctx.fillRect(x,y+h,w,6);
-  ctx.fillStyle='#fff';    ctx.fillRect(x,y+h+6,w,3.5);
-  ctx.fillStyle='#AE1C28'; ctx.fillRect(x,y+h+9.5,w,3);
-  // Roof
-  ctx.fillStyle='#A03800'; ctx.beginPath(); ctx.roundRect(x+2,y-8,w-4,10,3); ctx.fill();
-  // Windows — 4 evenly spaced, no people, no flags
-  var nw=4, ww=36, wh=28, gap=(w-nw*ww)/(nw+1);
-  for(var i=0;i<nw;i++){
-    var wx=x+gap+i*(ww+gap);
-    drawCleanWindow(ctx,wx,y+8,ww,wh);
-  }
-  // Undercarriage + wheels
-  ctx.fillStyle='#1a1a1a'; ctx.beginPath(); ctx.roundRect(x+2,y+h+12.5,w-4,9,2); ctx.fill();
-  [x+24, x+66, x+w-66, x+w-24].forEach(function(wx){
-    drawCleanWheel(ctx,wx,y+h+22,12,wheelRot);
-  });
-}
-
-function drawCleanWheel(ctx,x,y,r,rot){
-  ctx.fillStyle='#1a1a1a'; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
-  ctx.strokeStyle='#484848'; ctx.lineWidth=1.5; ctx.stroke();
-  ctx.strokeStyle='rgba(80,80,80,.65)'; ctx.lineWidth=1.4;
-  for(var s=0;s<4;s++){
-    var a=rot+s*Math.PI/2;
-    ctx.beginPath();
-    ctx.moveTo(x+Math.cos(a)*r*0.22,y+Math.sin(a)*r*0.22);
-    ctx.lineTo(x+Math.cos(a)*(r-1.5),y+Math.sin(a)*(r-1.5)); ctx.stroke();
-  }
-  ctx.fillStyle='#585858'; ctx.beginPath(); ctx.arc(x,y,r*0.28,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle='#999';    ctx.beginPath(); ctx.arc(x,y,r*0.1,0,Math.PI*2); ctx.fill();
-}
-
-function drawCleanSteam(ctx,t){
-  for(var i=0;i<4;i++){
-    var age=(t*1.8+i*0.45)%1.8;
-    var ox=-5+Math.sin(age*2.5)*5;
-    var oy=-22-age*30;
-    var r=5+age*11;
-    ctx.save(); ctx.globalAlpha=Math.max(0,0.5-age*0.3);
-    ctx.fillStyle='#f0f0ec'; ctx.beginPath(); ctx.arc(ox,oy,r,0,Math.PI*2); ctx.fill();
-    ctx.restore();
-  }
-}
-
-
-function drawCleanWindow(ctx,x,y,w,h){
-  // Frame
-  ctx.fillStyle='#1a3050';
-  ctx.beginPath(); ctx.roundRect(x,y,w,h,4); ctx.fill();
-  // Glass
-  ctx.fillStyle='#1e3d6e';
-  ctx.beginPath(); ctx.roundRect(x+2,y+2,w-4,h-4,3); ctx.fill();
-  // Highlight
-  ctx.fillStyle='rgba(140,190,240,.22)';
-  ctx.beginPath();
-  ctx.moveTo(x+3,y+3); ctx.lineTo(x+w*0.5,y+3); ctx.lineTo(x+3,y+h*0.55); ctx.closePath();
-  ctx.fill();
-  // Frame border
-  ctx.strokeStyle='#0f1f30'; ctx.lineWidth=1.5;
-  ctx.beginPath(); ctx.roundRect(x,y,w,h,4); ctx.stroke();
-}
-
-function drawCleanWagon(ctx,x,y,w,h,wheelRot,hasBand){
-  // Body
-  ctx.fillStyle='#E85D04';
-  ctx.beginPath(); ctx.roundRect(x,y,w,h,5); ctx.fill();
-  // Top highlight
-  ctx.fillStyle='#FF8822';
-  ctx.beginPath(); ctx.roundRect(x+2,y,w-4,14,4); ctx.fill();
-  // Bottom shadow
-  ctx.fillStyle='#B84000';
-  ctx.beginPath(); ctx.roundRect(x,y+h-22,w,22,4); ctx.fill();
-
-  if(hasBand){
-    // WK blue band
-    ctx.fillStyle='#003DA5';
-    ctx.beginPath(); ctx.roundRect(x,y+h-20,w,20,3); ctx.fill();
-    ctx.fillStyle='#FF8800'; ctx.fillRect(x,y+h-22,w,3);
-  }
-
-  // Stripes
-  ctx.fillStyle='#003DA5'; ctx.fillRect(x,y+h,w,6);
-  ctx.fillStyle='#fff';    ctx.fillRect(x,y+h+6,w,3.5);
-  ctx.fillStyle='#AE1C28'; ctx.fillRect(x,y+h+9.5,w,3);
-
-  // Roof
-  ctx.fillStyle='#A03800';
-  ctx.beginPath(); ctx.roundRect(x+2,y-8,w-4,10,3); ctx.fill();
-
-  // Flags on roof
-  drawCleanFlag(ctx,x+22,y-8);
-  drawCleanFlag(ctx,x+w-36,y-8);
-
-  // Windows — evenly spaced
-  var numW=4, ww=34, wh=28, gap=(w-numW*ww)/(numW+1);
-  for(var i=0;i<numW;i++){
-    var wx=x+gap+i*(ww+gap);
-    drawCleanWindow(ctx,wx,y+8,ww,wh);
-    // Person head
-    ctx.fillStyle='#FF7A00';
-    ctx.beginPath(); ctx.arc(wx+ww/2,y+16,5,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#F0C080';
-    ctx.beginPath(); ctx.arc(wx+ww/2,y+13,3,0,Math.PI*2); ctx.fill();
-    // Flag out of window 2
-    if(i===1){
-      ctx.strokeStyle='#ccc'; ctx.lineWidth=1.2;
-      ctx.beginPath(); ctx.moveTo(wx+ww-2,y+10); ctx.lineTo(wx+ww-2,y-2); ctx.stroke();
-      ctx.fillStyle='#AE1C28'; ctx.fillRect(wx+ww-2,y-2,13,3);
-      ctx.fillStyle='#fff';    ctx.fillRect(wx+ww-2,y+1,13,3);
-      ctx.fillStyle='#003DA5'; ctx.fillRect(wx+ww-2,y+4,13,3);
-    }
-  }
-
-  // Undercarriage
-  ctx.fillStyle='#1a1a1a';
-  ctx.beginPath(); ctx.roundRect(x+2,y+h+12.5,w-4,9,2); ctx.fill();
-
-  // Wheels
-  var wx1=x+24,wx2=x+64,wx3=x+w-64,wx4=x+w-24;
-  [wx1,wx2,wx3,wx4].forEach(function(wx){
-    drawCleanWheel(ctx,wx,y+h+21.5,12,wheelRot);
-  });
-}
-
-function drawCleanWheel(ctx,x,y,r,rot){
-  // Outer rim
-  ctx.fillStyle='#1a1a1a';
-  ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
-  ctx.strokeStyle='#555'; ctx.lineWidth=1.5; ctx.stroke();
-  // Spokes — just 4, clean
-  ctx.strokeStyle='rgba(90,90,90,.7)'; ctx.lineWidth=1.5;
-  for(var s=0;s<4;s++){
-    var a=rot+s*Math.PI/2;
-    ctx.beginPath();
-    ctx.moveTo(x+Math.cos(a)*r*0.25,y+Math.sin(a)*r*0.25);
-    ctx.lineTo(x+Math.cos(a)*(r-1.5),y+Math.sin(a)*(r-1.5));
-    ctx.stroke();
-  }
-  // Hub
-  ctx.fillStyle='#666';
-  ctx.beginPath(); ctx.arc(x,y,r*0.3,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle='#aaa';
-  ctx.beginPath(); ctx.arc(x,y,r*0.12,0,Math.PI*2); ctx.fill();
-}
-
-function drawCleanFlag(ctx,x,y){
-  ctx.strokeStyle='#bbb'; ctx.lineWidth=1.3;
-  ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x,y-14); ctx.stroke();
-  ctx.fillStyle='#AE1C28'; ctx.fillRect(x,y-14,14,4);
-  ctx.fillStyle='#fff';    ctx.fillRect(x,y-10,14,4);
-  ctx.fillStyle='#003DA5'; ctx.fillRect(x,y-6, 14,4);
-}
-
-function drawCleanPanto(ctx,x1,y1,x2,y2){
-  var mx=(x1+x2)/2, ty=Math.min(y1,y2)-16;
-  ctx.strokeStyle='#aaa'; ctx.lineWidth=1.8; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(mx,ty); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(x2,y2); ctx.lineTo(mx,ty); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(mx-6,ty); ctx.lineTo(mx-6,ty-5); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(mx+6,ty); ctx.lineTo(mx+6,ty-5); ctx.stroke();
-  ctx.strokeStyle='#ccc'; ctx.lineWidth=1.4;
-  ctx.beginPath(); ctx.moveTo(mx-6,ty-5); ctx.lineTo(mx+6,ty-5); ctx.stroke();
-}
-
-function drawCleanSteam(ctx,t){
-  for(var i=0;i<4;i++){
-    var age=(t*1.8+i*0.45)%1.8;
-    var ox=-5+Math.sin(age*2.5)*6;
-    var oy=-20-age*32;
-    var r=5+age*12;
-    ctx.save();
-    ctx.globalAlpha=Math.max(0,0.55-age*0.32);
-    ctx.fillStyle='#f0f0ec';
-    ctx.beginPath(); ctx.arc(ox,oy,r,0,Math.PI*2); ctx.fill();
-    ctx.restore();
-  }
-}
-
-
-function drawWindow(ctx,x,y,w,h,fill){
-  ctx.fillStyle=fill; ctx.beginPath(); ctx.roundRect(x,y,w,h,3); ctx.fill();
-  ctx.strokeStyle='#111'; ctx.lineWidth=2; ctx.stroke();
-  // Reflection
-  ctx.save(); ctx.globalAlpha=0.22;
-  ctx.fillStyle='#88bbdd';
-  ctx.beginPath(); ctx.moveTo(x+2,y+2); ctx.lineTo(x+w*0.45,y+2); ctx.lineTo(x+2,y+h*0.55); ctx.closePath(); ctx.fill();
-  ctx.restore();
-}
-
-
-function drawSteam(ctx,t){
-  for(var i=0;i<5;i++){
-    var age=(t*2+i*0.4)%2;
-    var sx=-10+Math.sin(age*3)*8;
-    var sy=-20-age*30;
-    var r=6+age*14;
-    ctx.save();
-    ctx.globalAlpha=Math.max(0,(0.7-age*0.4));
-    ctx.fillStyle='#f0f0e8';
-    ctx.beginPath(); ctx.arc(sx,sy,r,0,Math.PI*2); ctx.fill();
-    ctx.restore();
-  }
-}
-
-function drawConfettiCanvas(ctx,W,H,t,particles){
-  particles.forEach(function(p){
-    ctx.save();
-    ctx.globalAlpha=Math.max(0,1-p.age*0.7);
-    ctx.translate(p.x,p.y);
-    ctx.rotate(p.rot);
-    ctx.fillStyle=p.color;
-    ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
-    ctx.restore();
-    p.x+=p.vx; p.y+=p.vy; p.vy+=0.15; p.rot+=p.vr; p.age+=0.016;
-  });
-}
-
-function spawnParticles(){
-  var colors=['#E85D04','#fbbf24','#fff','#003DA5','#22c55e','#AE1C28','#FF9500'];
-  var parts=[];
-  for(var i=0;i<80;i++){
-    parts.push({
-      x:Math.random()*window.innerWidth,
-      y:-10-Math.random()*100,
-      vx:(Math.random()-0.5)*4,
-      vy:1+Math.random()*3,
-      vr:(Math.random()-0.5)*0.2,
-      rot:Math.random()*Math.PI*2,
-      w:6+Math.random()*10,
-      h:4+Math.random()*6,
-      color:colors[Math.floor(Math.random()*colors.length)],
-      age:0
-    });
-  }
-  return parts;
-}
-
-// ── Main animation loops ──
-function playGoal(halteNum, winst, isFinal, cb){
-  var c=initCanvas(), ctx=c.ctx, W=c.W, H=c.H;
-  var board=document.getElementById('anim-board');
-  var derail=document.getElementById('derail-screen');
-  derail.classList.remove('show');
-  document.getElementById('ab-top').textContent='Halte '+halteNum+(isFinal?' 🏆':'')+' ✓';
-  document.getElementById('ab-score').innerHTML='<span>+€'+winst.toFixed(2)+'</span>';
-  document.getElementById('ab-bottom').textContent=isFinal?'🏆 Schiphol bereikt!':'Volgende halte!';
-
-  var overlay=document.getElementById('wk-overlay');
-  overlay.classList.add('active');
-  animStartTime=Date.now();
-  ANIM.skipCalled=false;
-
-  var particles=[];
-  var trainX=-620*(H/500); // start off-screen left
-  var targetX=W/2-300*(H/500);
-  var phase='enter'; // enter → stop → board → leave → done
-  var phaseStart=animStartTime;
-
-  function frame(){
-    if(ANIM.skipCalled) return;
-    var now=Date.now(), elapsed=(now-animStartTime)/1000;
-    var dt=16;
-    ctx.clearRect(0,0,W,H);
-    var scrollOffset=elapsed*180;
-
-    // Draw scene
-    drawSky(ctx,W,H,elapsed);
-    drawSun(ctx,W,H);
-    drawClouds(ctx,W,H,scrollOffset);
-    drawFarBg(ctx,W,H,scrollOffset);
-    drawMidGround(ctx,W,H,scrollOffset);
-    drawOHW(ctx,W,H,scrollOffset);
-    drawSleepers(ctx,W,H,scrollOffset);
-    drawTrack(ctx,W,H);
-    drawForeground(ctx,W,H);
-
-    var speed=0;
-    if(phase==='enter'){
-      var prog=Math.min(1,(now-phaseStart)/900);
-      trainX = -620*(H/500) + (targetX+620*(H/500))*easeOut(prog);
-      speed = prog<1 ? 8*(1-prog*0.5) : 0;
-      if(prog>=1){ phase='stop'; phaseStart=now; }
-    } else if(phase==='stop'){
-      trainX=targetX; speed=0;
-      if(now-phaseStart>300){ phase='board'; phaseStart=now; board.classList.add('show'); particles=spawnParticles(); }
-    } else if(phase==='board'){
-      trainX=targetX; speed=0;
-      drawConfettiCanvas(ctx,W,H,elapsed,particles);
-      if(now-phaseStart>1800){ phase='leave'; phaseStart=now; board.classList.remove('show'); }
-    } else if(phase==='leave'){
-      var prog=Math.min(1,(now-phaseStart)/700);
-      trainX=targetX+(W+620*(H/500))*easeIn(prog);
-      speed=4+prog*8;
-      if(prog>=1){ phase='done'; }
-    } else if(phase==='done'){
-      overlay.classList.remove('active');
-      cb(); return;
-    }
-
-    drawTrain(ctx,W,H,trainX,speed);
-    animRAF=requestAnimationFrame(frame);
-  }
-  cancelAnimationFrame(animRAF);
-  animRAF=requestAnimationFrame(frame);
-
-  animTimeout=setTimeout(function(){
-    if(!ANIM.skipCalled){ closeOverlay(); cb(); }
-  },4500);
-}
-
-function playDerail(stationName, cb){
-  var c=initCanvas(), ctx=c.ctx, W=c.W, H=c.H;
-  var overlay=document.getElementById('wk-overlay');
-  var derail=document.getElementById('derail-screen');
-  document.getElementById('anim-board').classList.remove('show');
-  document.getElementById('derail-sub').textContent='Verlies bij '+stationName;
-  overlay.classList.add('active');
-  animStartTime=Date.now();
-  ANIM.skipCalled=false;
-
-  var trainX=-620*(H/500);
-  var targetX=W/2-300*(H/500);
-  var phase='enter';
-  var phaseStart=animStartTime;
-  var shakeAmt=0;
-
-  function frame(){
-    if(ANIM.skipCalled) return;
-    var now=Date.now(), elapsed=(now-animStartTime)/1000;
-    ctx.clearRect(0,0,W,H);
-    var scrollOffset=elapsed*180;
-
-    drawSky(ctx,W,H,elapsed);
-    drawSun(ctx,W,H);
-    drawClouds(ctx,W,H,scrollOffset);
-    drawFarBg(ctx,W,H,scrollOffset);
-    drawMidGround(ctx,W,H,scrollOffset);
-    drawOHW(ctx,W,H,scrollOffset);
-    drawSleepers(ctx,W,H,scrollOffset);
-    drawTrack(ctx,W,H);
-    drawForeground(ctx,W,H);
-
-    // Red overlay
-    if(phase==='derail'||phase==='show'){
-      var red=Math.min(0.55,(now-phaseStart)/800*0.55);
-      ctx.fillStyle='rgba(180,0,0,'+red+')';
-      ctx.fillRect(0,0,W,H);
-    }
-
-    var speed=0;
-    if(phase==='enter'){
-      var prog=Math.min(1,(now-phaseStart)/900);
-      trainX=-620*(H/500)+(targetX+620*(H/500))*easeOut(prog);
-      speed=8*(1-prog*0.5);
-      if(prog>=1){ phase='derail'; phaseStart=now; }
-    } else if(phase==='derail'){
-      shakeAmt=Math.min(8,(now-phaseStart)/100*8);
-      trainX=targetX+Math.sin((now-phaseStart)*0.04)*shakeAmt;
-      if(now-phaseStart>600){ phase='show'; phaseStart=now; derail.classList.add('show'); }
-    } else if(phase==='show'){
-      trainX=targetX+Math.sin((now-phaseStart)*0.02)*3;
-      if(now-phaseStart>2000){ phase='done'; }
-    } else if(phase==='done'){
-      overlay.classList.remove('active');
-      derail.classList.remove('show');
-      cb(); return;
-    }
-
-    drawTrain(ctx,W,H,trainX,speed);
-    animRAF=requestAnimationFrame(frame);
-  }
-  cancelAnimationFrame(animRAF);
-  animRAF=requestAnimationFrame(frame);
-
-  animTimeout=setTimeout(function(){
-    if(!ANIM.skipCalled){ closeOverlay(); derail.classList.remove('show'); cb(); }
-  },4000);
-}
-
-function easeOut(t){ return 1-Math.pow(1-t,3); }
-function easeIn(t){ return t*t*t; }
-
-function closeOverlay(){
-  ANIM.skipCalled=true;
-  cancelAnimationFrame(animRAF);
-  clearTimeout(animTimeout);
-  var overlay=document.getElementById('wk-overlay');
-  overlay.classList.remove('active');
-  document.getElementById('anim-board').classList.remove('show');
-  document.getElementById('derail-screen').classList.remove('show');
-}
-
-function spawnConfetti(){ return spawnParticles(); }
-
-
-
-function showResult(){
-  var won = J.result==='won';
-  var saved = loadSaved();
-  saved.unshift({haltes:J.haltes,budget:J.budget,result:J.result,finalProfit:J.finalProfit,stops:J.stops,startedAt:J.startedAt});
-  if(saved.length>10) saved.pop();
-  saveSaved(saved);
-  localStorage.removeItem(LS_J);
-  show('result');
-  document.getElementById('res-icon').textContent = won?'🏆':'💥';
-  document.getElementById('res-title').textContent = won?'Rotterdam bereikt!':'Ontspoord!';
-  document.getElementById('res-title').className = 'res-title '+(won?'won':'lost');
-  var profit = won?J.finalProfit:-J.budget;
-  document.getElementById('res-amt').textContent=(profit>=0?'+':'')+'€'+profit.toFixed(2);
-  document.getElementById('res-amt').className='res-amt '+(won?'won':'lost');
-  document.getElementById('res-sub').textContent = won
-    ? 'Trein van Wezep naar Schiphol via '+J.stops.length+' haltes. Daarna vliegen naar het WK! Start: €'+J.budget+'.'
-    : 'Ontspoord bij '+J.stops[J.stops.length-1].station+' (halte '+J.current+' van '+J.haltes+').';
-  document.getElementById('result-hist').innerHTML = J.stops.map(function(s){
-    return '<div class="hi-row"><div class="hi-left"><div class="hi-match">'+s.station+'</div><div class="hi-meta">Halte '+s.halte+' · @'+s.odds+' · €'+s.inzet.toFixed(2)+'</div></div><span class="badge '+(s.won?'bwin':'blos')+'">'+(s.won?'+€'+s.winst.toFixed(2):'Verloren')+'</span></div>';
-  }).join('');
-}
-
-function newJourney(){ J=null; show('setup'); renderSaved(); }
-
-function cashOut(){
-  if(!confirm('Uitstappen en €'+J.inzet.toFixed(2)+' cashen?')) return;
-  // Save as won at current halte
-  J.finished=true; J.result='won'; J.finalProfit=J.inzet - J.budget; J.finalPot=J.inzet;
-  J.cashedOut=true; J.cashedAtHalte=J.current;
-  var saved=loadSaved();
-  saved.unshift({haltes:J.haltes,budget:J.budget,result:J.result,finalProfit:J.finalProfit,finalPot:J.inzet,stops:J.stops,startedAt:J.startedAt,cashedOut:true,cashedAtHalte:J.current});
-  if(saved.length>10) saved.pop();
-  saveSaved(saved);
-  localStorage.removeItem(LS_J);
-  show('result');
-  document.getElementById('res-icon').textContent='💰';
-  document.getElementById('res-title').textContent='Uitgestapt!';
-  document.getElementById('res-title').className='res-title won';
-  document.getElementById('res-amt').textContent='+€'+J.finalProfit.toFixed(2);
-  document.getElementById('res-amt').className='res-amt won';
-  document.getElementById('res-sub').textContent='Je stapte uit bij halte '+J.current+' van de '+J.haltes+' met een pot van €'+J.inzet.toFixed(2)+'. Start was €'+J.budget+'.';
-  document.getElementById('result-hist').innerHTML = J.stops.map(function(s){
-    return '<div class="hi-row"><div class="hi-left"><div class="hi-match">'+s.station+'</div><div class="hi-meta">Halte '+s.halte+' · @'+s.odds+' · €'+s.inzet.toFixed(2)+' → €'+(s.pot||0).toFixed(2)+'</div></div><span class="badge '+(s.won?'bwin':'blos')+'">'+(s.won?'€'+s.pot.toFixed(2):'Verloren')+'</span></div>';
-  }).join('');
-  toast('💰 Gecasht: €'+J.inzet.toFixed(2),'win');
-}
-
-function abandonJourney(){
-  if(!confirm('Rit afbreken zonder te cashen?')) return;
-  J=null; localStorage.removeItem(LS_J);
-  show('setup'); renderSaved(); toast('Rit afgebroken','');
-}
-
-function toast(msg,type){
-  var el=document.getElementById('toast');
-  el.textContent=msg; el.className='toast show'+(type?' '+type:'');
-  clearTimeout(tt); tt=setTimeout(function(){el.classList.remove('show');},2800);
-}
-
-// ── Ticket UI ──
-// Trein rijdt altijd naar Schiphol — eindbestemming is WK-stad (vlucht)
-var ticketDests = [
-  {code:'DAL', name:'Dallas',        haltes:4,  stad:'AT&T Stadium',       vlucht:'KL 0601'},
-  {code:'HOU', name:'Houston',       haltes:6,  stad:'NRG Stadium',        vlucht:'KL 0635'},
-  {code:'KC',  name:'Kansas City',   haltes:8,  stad:'Arrowhead Stadium',  vlucht:'KL 0641'},
-  {code:'NYC', name:'New York',      haltes:10, stad:'MetLife Stadium',    vlucht:'KL 0641'},
-  {code:'MIA', name:'Miami',         haltes:11, stad:'Hard Rock Stadium',  vlucht:'KL 0675'},
-];
-var selDestIdx = 0; // default Dallas (eerste NL wedstrijd)
-var ticketClass = 1;
+function saveSaved(a){localStorage.setItem(LS_S,JSON.stringify(a));}
 
 function buildTicketDests(){
-  var el = document.getElementById('ticket-destinations');
-  el.innerHTML = ticketDests.map(function(d, i){
-    var sel = i === selDestIdx ? ' sel' : '';
-    var nl = (d.code==='DAL'||d.code==='HOU'||d.code==='KC') ? '<div class="ticket-dest-nl">🇳🇱 NL speelt hier</div>' : '';
-    return '<div class="ticket-dest'+sel+'" data-haltes="'+d.haltes+'" onclick="selDest('+i+')">'
+  var el=document.getElementById('ticket-destinations');
+  el.innerHTML=ticketDests.map(function(d,i){
+    var sel=i===selDestIdx?' sel':'';
+    return '<div class="ticket-dest'+sel+'" data-haltes="'+d.haltes+'" data-route="'+d.route+'" onclick="selDest('+i+')">'
       +'<div class="ticket-dest-check"></div>'
       +'<div class="ticket-dest-code">'+d.code+'</div>'
       +'<div class="ticket-dest-name">'+d.name+'</div>'
-      +'<div class="ticket-dest-stops">'+d.vlucht+' · '+d.stad+'</div>'
-      +nl
+      +'<div class="ticket-dest-stops">'+d.haltes+' haltes</div>'
       +'</div>';
   }).join('');
   updateTicketMeta();
 }
 
 function selDest(i){
-  selDestIdx = i;
-  document.querySelectorAll('.ticket-dest').forEach(function(el, j){
-    el.classList.toggle('sel', j === i);
-  });
+  selDestIdx=i;
+  document.querySelectorAll('.ticket-dest').forEach(function(el,j){el.classList.toggle('sel',j===i);});
+  var d=ticketDests[i];
+  if(d&&ROUTES[d.route]) ROUTE=ROUTES[d.route];
   updateTicketMeta();
 }
 
-function selClass(c){
-  ticketClass = c;
-  document.getElementById('cls1').classList.toggle('sel', c===1);
-  document.getElementById('cls2').classList.toggle('sel', c===2);
-}
-
 function adjustBudget(delta){
-  var inp = document.getElementById('cfg-budget');
-  var val = (parseFloat(inp.value)||0) + delta;
-  if(val < 5) val = 5;
-  inp.value = val;
+  var inp=document.getElementById('cfg-budget');
+  var val=(parseFloat(inp.value)||0)+delta;
+  if(val<5)val=5;
+  inp.value=val;
 }
-
-function syncBudgetDisplay(){ updateTicketMeta(); }
 
 function updateTicketMeta(){
-  var d = ticketDests[selDestIdx];
-  var now = new Date();
-  var dateStr = now.toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});
-  var timeStr = now.toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'});
-  var te = document.getElementById('ticket-date');
-  var tv = document.getElementById('ticket-time');
-  var th = document.getElementById('ticket-haltes-disp');
-  if(te) te.textContent = dateStr;
-  if(tv) tv.textContent = timeStr;
-  if(th) th.textContent = d ? d.haltes : '—';
+  var d=ticketDests[selDestIdx];
+  var now=new Date();
+  var de=document.getElementById('ticket-date');
+  var te=document.getElementById('ticket-time');
+  var he=document.getElementById('ticket-haltes-disp');
+  if(de)de.textContent=now.toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});
+  if(te)te.textContent=now.toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'});
+  if(he)he.textContent=d?d.haltes:'—';
+}
+
+function init(){
+  J=loadJ();
+  if(J&&!J.finished){
+    ROUTE=ROUTES[J.routeKey]||ROUTES.amsterdam;
+    show('active'); initMap(); renderTrack(); renderStats(); renderTip(); renderHistory(); renderUitstap();
+  } else { show('setup'); buildTicketDests(); updateTicketMeta(); renderSaved(); }
+}
+
+function show(v){['setup','active','result'].forEach(function(x){document.getElementById('view-'+x).style.display=x===v?'block':'none';});}
+
+function startTrain(){
+  var budget=parseFloat(document.getElementById('cfg-budget').value);
+  var destEl=document.querySelector('.ticket-dest.sel');
+  if(!budget||budget<1){toast('Vul geldig budget in','loss');return;}
+  if(!destEl){toast('Kies een bestemming','loss');return;}
+  var haltes=parseInt(destEl.getAttribute('data-haltes'));
+  var routeKey=destEl.getAttribute('data-route');
+  if(routeKey&&ROUTES[routeKey])ROUTE=ROUTES[routeKey];
+  J={id:Date.now(),budget:budget,haltes:haltes,routeKey:routeKey,
+    stations:pickRoute(haltes),current:0,inzet:budget,stops:[],
+    finished:false,startedAt:new Date().toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})};
+  saveJ();show('active');leafMap=null;
+  initMap();renderTrack();renderStats();renderTip();renderHistory();renderUitstap();
+  toast('🚂 Op naar '+J.stations[J.stations.length-1].name+'!','');
+}
+
+function pickRoute(n){
+  var r=ROUTE;
+  if(n>=r.length)return r.slice();
+  var result=[r[0]];
+  var step=(r.length-1)/(n-1);
+  for(var i=1;i<n-1;i++)result.push(r[Math.round(i*step)]);
+  result.push(r[r.length-1]);
+  return result.filter(function(s,i,a){return a.findIndex(function(x){return x.name===s.name;})===i;});
+}
+
+function initMap(){
+  setTimeout(function(){
+    var el=document.getElementById('routemap');
+    if(!el||!J)return;
+    if(leafMap){leafMap.remove();leafMap=null;}
+    var stations=J.stations;
+    var lats=stations.map(function(s){return s.lat;});
+    var lngs=stations.map(function(s){return s.lng;});
+    var cLat=lats.reduce(function(a,b){return a+b;},0)/lats.length;
+    var cLng=lngs.reduce(function(a,b){return a+b;},0)/lngs.length;
+    leafMap=L.map('routemap',{zoomControl:false,attributionControl:false}).setView([cLat,cLng],5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18}).addTo(leafMap);
+    var allCoords=stations.map(function(s){return[s.lat,s.lng];});
+    L.polyline(allCoords,{color:'#ccc',weight:4,dashArray:'6 5'}).addTo(leafMap);
+    if(J.current>0){
+      var doneCoords=stations.slice(0,J.current+1).map(function(s){return[s.lat,s.lng];});
+      L.polyline(doneCoords,{color:'#E85D04',weight:5}).addTo(leafMap);
+    }
+    stations.forEach(function(s,i){
+      var isDone=i<J.current,isActive=i===J.current&&!J.finished,isEnd=i===stations.length-1;
+      var color=isDone?'#16a34a':isActive?'#E85D04':'#aaa';
+      var r=isEnd?10:isActive?9:7;
+      L.circleMarker([s.lat,s.lng],{radius:r,fillColor:color,color:'#fff',weight:2,fillOpacity:1}).addTo(leafMap);
+      L.marker([s.lat,s.lng],{icon:L.divIcon({className:'',html:'<div class="station-lbl" style="border-color:'+color+';margin-left:10px;margin-top:-24px">'+(isEnd?'🏁 ':'')+s.short+'</div>',iconSize:[0,0],iconAnchor:[0,0]})}).addTo(leafMap);
+    });
+    if(J.current<stations.length){
+      var cur=stations[J.current];
+      L.marker([cur.lat,cur.lng],{icon:L.divIcon({className:'',html:'<div style="font-size:22px;margin-left:-11px;margin-top:-30px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))">🚂</div>',iconSize:[0,0],iconAnchor:[0,0]})}).addTo(leafMap);
+    }
+    leafMap.fitBounds(L.latLngBounds(allCoords),{padding:[28,28]});
+    document.getElementById('route-label').textContent='Route — Wezep → '+J.stations[J.stations.length-1].name;
+  },100);
+}
+
+function renderTrack(){
+  var stations=J.stations,total=J.haltes,done=J.current;
+  var SW=56,GAP=28,totalW=stations.length*SW+(stations.length-1)*GAP;
+  var html='';
+  stations.forEach(function(s,i){
+    var isEnd=i===stations.length-1,isDone=i<done,isActive=i===done&&!J.finished;
+    var stop=J.stops[i-1],isFailed=stop&&!stop.won;
+    var cls='st-dot'+(isEnd?' end':'')+(isDone&&!isFailed?' done':'')+(isFailed?' failed':'')+(isActive?' active':'')+(isEnd&&J.result==='won'?' done':'');
+    var label=isEnd?'🏁':i===0?'🚉':i;
+    var amtHtml='';
+    if(stop){amtHtml='<div class="st-amt '+(stop.won?'won':'lost')+'">'+(stop.won?'+€'+stop.pot.toFixed(0):'✕')+'</div>';}
+    else if(isActive){amtHtml='<div class="st-amt cur">€'+J.inzet.toFixed(0)+'</div>';}
+    var spacer=i<stations.length-1?'<div style="width:'+GAP+'px;flex-shrink:0"></div>':'';
+    html+='<div class="st"><div class="'+cls+'">'+label+'</div><div class="st-name">'+(isEnd?'Eind':s.short)+'</div>'+amtHtml+'</div>'+spacer;
+  });
+  document.getElementById('track-stations').innerHTML=html;
+  document.getElementById('track-stations').style.width=totalW+'px';
+  document.getElementById('track-row').style.minWidth=totalW+'px';
+  var railTotal=totalW-SW;
+  document.getElementById('track-line-bg').style.left=(SW/2)+'px';
+  document.getElementById('track-line-bg').style.right=(SW/2)+'px';
+  document.getElementById('track-done').style.left=(SW/2)+'px';
+  document.getElementById('track-done').style.width=(railTotal*done/(stations.length-1))+'px';
+  document.getElementById('train-pos').style.left=(done*(SW+GAP)+SW/2)+'px';
+}
+
+function renderStats(){
+  document.getElementById('s-inzet').textContent='€'+J.inzet.toFixed(2);
+  document.getElementById('s-halte').textContent=(J.current+1)+'/'+J.haltes;
+  document.getElementById('cur-h-num').textContent=J.current+1;
+  document.getElementById('betdisp').textContent='€'+J.inzet.toFixed(2);
+  var profit=J.inzet-J.budget;
+  var el=document.getElementById('s-winst');
+  el.textContent=(profit>=0?'+':'')+'€'+profit.toFixed(0);
+  el.className='stat-val'+(profit>0?' pos':profit<0?' neg':'');
+}
+
+function renderUitstap(){
+  var card=document.getElementById('uitstap-card');
+  var abtn=document.getElementById('abandon-btn');
+  if(J.current>0&&!J.finished){
+    card.style.display='block'; abtn.style.display='none';
+    document.getElementById('cash-out-amt').textContent='€'+J.inzet.toFixed(2);
+    var p=J.inzet-J.budget;
+    var pel=document.getElementById('cash-out-profit');
+    pel.textContent=(p>=0?'+':'')+'€'+p.toFixed(2);
+    pel.style.color=p>=0?'var(--gr)':'var(--re)';
+  } else { card.style.display='none'; abtn.style.display='block'; }
+}
+
+function renderTip(){
+  var s=J.stations[J.current],next=J.stations[J.current+1];
+  document.getElementById('tipbar').innerHTML='Halte <strong>'+(J.current+1)+'</strong> — <strong>'+(s?s.name:'')+'</strong>. Inzet: <strong>€'+J.inzet.toFixed(2)+'</strong>.'+(next?' Bij winst → '+next.name+'.':'');
+}
+
+function renderHistory(){
+  document.getElementById('hcount').textContent=J.stops.length;
+  var el=document.getElementById('hlist');
+  if(!J.stops.length){el.innerHTML='<div class="empty">Nog geen haltes</div>';return;}
+  el.innerHTML=J.stops.slice().reverse().map(function(s){
+    return'<div class="hi-row"><div class="hi-left"><div class="hi-match">'+s.station+'<span style="color:var(--g3);font-weight:400;margin-left:6px">@'+s.odds+'</span></div><div class="hi-meta">Halte '+s.halte+' · €'+s.inzet.toFixed(2)+(s.won?' → €'+s.pot.toFixed(2):'')+' · '+s.ts+'</div></div><span class="badge '+(s.won?'bwin':'blos')+'">'+(s.won?'€'+s.pot.toFixed(2):'Verloren')+'</span></div>';
+  }).join('');
+}
+
+function renderSaved(){
+  var saved=loadSaved(),sec=document.getElementById('saved-section');
+  if(!saved.length){sec.style.display='none';return;}
+  sec.style.display='block';
+  document.getElementById('saved-list').innerHTML=saved.map(function(j){
+    var won=j.result==='won';var profit=won?j.finalProfit:-j.budget;
+    return'<div class="saved-row"><div><div style="font-size:13px;font-weight:600">'+j.dest+' · €'+j.budget+' start</div><div style="font-size:11px;color:var(--g3);margin-top:2px">'+j.startedAt+'</div></div><span class="badge '+(won?'bwin':'blos')+'">'+(profit>=0?'+':'')+'€'+profit.toFixed(2)+'</span></div>';
+  }).join('');
+}
+
+function recordResult(won){
+  var odds=parseFloat(document.getElementById('odds-inp').value);
+  if(isNaN(odds)||odds<1.01){toast('Vul geldige odds in','loss');return;}
+  var halteNum=J.current+1,inzet=J.inzet;
+  var station=J.stations[J.current]||{name:'Halte '+halteNum};
+  var pot=won?parseFloat((inzet*odds).toFixed(2)):0;
+  var winst=won?parseFloat((inzet*(odds-1)).toFixed(2)):0;
+  J.stops.push({halte:halteNum,station:station.name,inzet:inzet,odds:odds,won:won,winst:winst,pot:pot,
+    ts:new Date().toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})});
+  J.current++;
+  if(!won){
+    J.finished=true;J.result='lost';J.finalProfit=-J.budget;saveJ();
+    playDerail(station.name,function(){showResult();});return;
+  }
+  if(J.current>=J.haltes){
+    J.finished=true;J.result='won';J.finalProfit=pot-J.budget;J.finalPot=pot;saveJ();
+    playGoal(halteNum,pot,true,function(){showResult();});return;
+  }
+  J.inzet=pot;saveJ();
+  document.getElementById('odds-inp').value='';
+  playGoal(halteNum,pot,false,function(){
+    initMap();renderTrack();renderStats();renderTip();renderHistory();renderUitstap();
+  });
+}
+
+function cashOut(){
+  if(!confirm('Uitstappen en €'+J.inzet.toFixed(2)+' cashen?'))return;
+  J.finished=true;J.result='won';J.finalProfit=J.inzet-J.budget;J.finalPot=J.inzet;J.cashedOut=true;
+  var saved=loadSaved();
+  saved.unshift({dest:J.stations[J.stations.length-1].name,haltes:J.haltes,budget:J.budget,result:'won',finalProfit:J.finalProfit,stops:J.stops,startedAt:J.startedAt});
+  if(saved.length>10)saved.pop();saveSaved(saved);localStorage.removeItem(LS_J);
+  show('result');
+  document.getElementById('res-icon').textContent='💰';
+  document.getElementById('res-title').textContent='Uitgestapt!';
+  document.getElementById('res-title').className='res-title won';
+  document.getElementById('res-amt').textContent='+€'+J.finalProfit.toFixed(2);
+  document.getElementById('res-amt').className='res-amt won';
+  document.getElementById('res-sub').textContent='Uitgestapt bij halte '+J.current+' van '+J.haltes+'. Pot: €'+J.inzet.toFixed(2)+'. Start: €'+J.budget+'.';
+  buildResultHist();
+  toast('💰 Gecasht: €'+J.inzet.toFixed(2),'win');
+}
+
+function showResult(){
+  var won=J.result==='won';
+  var saved=loadSaved();
+  saved.unshift({dest:J.stations[J.stations.length-1].name,haltes:J.haltes,budget:J.budget,result:J.result,finalProfit:J.finalProfit||(won?J.inzet-J.budget:-J.budget),stops:J.stops,startedAt:J.startedAt});
+  if(saved.length>10)saved.pop();saveSaved(saved);localStorage.removeItem(LS_J);
+  show('result');
+  document.getElementById('res-icon').textContent=won?'🏆':'💥';
+  document.getElementById('res-title').textContent=won?J.stations[J.stations.length-1].name+' bereikt!':'Ontspoord!';
+  document.getElementById('res-title').className='res-title '+(won?'won':'lost');
+  var profit=won?(J.finalPot||J.inzet)-J.budget:-J.budget;
+  document.getElementById('res-amt').textContent=(profit>=0?'+':'')+'€'+profit.toFixed(2);
+  document.getElementById('res-amt').className='res-amt '+(won?'won':'lost');
+  document.getElementById('res-sub').textContent=won
+    ?'Trein reed van Wezep naar '+J.stations[J.stations.length-1].name+' via '+J.stops.length+' haltes. Start: €'+J.budget+'.'
+    :'Ontspoord bij '+(J.stops.length?J.stops[J.stops.length-1].station:'halte '+J.current)+'.';
+  buildResultHist();
+}
+
+function buildResultHist(){
+  document.getElementById('result-hist').innerHTML=J.stops.map(function(s){
+    return'<div class="hi-row"><div class="hi-left"><div class="hi-match">'+s.station+'</div><div class="hi-meta">Halte '+s.halte+' · @'+s.odds+' · €'+s.inzet.toFixed(2)+(s.won?' → €'+s.pot.toFixed(2):'')+' </div></div><span class="badge '+(s.won?'bwin':'blos')+'">'+(s.won?'€'+s.pot.toFixed(2):'Verloren')+'</span></div>';
+  }).join('');
+}
+
+function newJourney(){J=null;show('setup');buildTicketDests();updateTicketMeta();renderSaved();}
+function abandonJourney(){if(!confirm('Rit afbreken?'))return;J=null;localStorage.removeItem(LS_J);show('setup');buildTicketDests();renderSaved();toast('Rit afgebroken','');}
+
+// ── CANVAS ANIMATION ──
+function initCanvas(){var cv=document.getElementById('anim-canvas');cv.width=window.innerWidth;cv.height=window.innerHeight;return{cv:cv,ctx:cv.getContext('2d'),W:cv.width,H:cv.height};}
+function easeOut(t){return 1-Math.pow(1-t,3);}
+function easeIn(t){return t*t*t;}
+
+function playGoal(halteNum,pot,isFinal,cb){
+  var c=initCanvas(),ctx=c.ctx,W=c.W,H=c.H;
+  document.getElementById('derail-screen').classList.remove('show');
+  document.getElementById('ab-top').textContent='Halte '+halteNum+(isFinal?' 🏆':'')+' ✓';
+  document.getElementById('ab-score').innerHTML='<span>€'+pot.toFixed(2)+'</span>';
+  document.getElementById('ab-bottom').textContent=isFinal?'🏁 Eindstation bereikt!':'Volgende halte!';
+  var overlay=document.getElementById('wk-overlay');
+  overlay.classList.add('active');
+  animStartTime=Date.now();ANIM.skipCalled=false;
+  var particles=spawnParticles(W);
+  var trainX=-680*(H/480),targetX=W/2-320*(H/480),phase='enter',phaseStart=animStartTime;
+  var board=document.getElementById('anim-board');
+  function frame(){
+    if(ANIM.skipCalled)return;
+    var now=Date.now(),elapsed=(now-animStartTime)/1000;
+    ctx.clearRect(0,0,W,H);
+    drawScene(ctx,W,H,elapsed);
+    var speed=0;
+    if(phase==='enter'){
+      var p=Math.min(1,(now-phaseStart)/900);trainX=-680*(H/480)+(targetX+680*(H/480))*easeOut(p);speed=8*(1-p*0.5);
+      if(p>=1){phase='stop';phaseStart=now;}
+    } else if(phase==='stop'){
+      trainX=targetX;if(now-phaseStart>250){phase='board';phaseStart=now;board.classList.add('show');}
+    } else if(phase==='board'){
+      trainX=targetX;
+      drawConfetti(ctx,particles);
+      if(now-phaseStart>1800){phase='leave';phaseStart=now;board.classList.remove('show');}
+    } else if(phase==='leave'){
+      var p=Math.min(1,(now-phaseStart)/650);trainX=targetX+(W+680*(H/480))*easeIn(p);speed=4+p*8;
+      if(p>=1){overlay.classList.remove('active');cb();return;}
+    }
+    drawTrain(ctx,W,H,trainX,speed);
+    animRAF=requestAnimationFrame(frame);
+  }
+  cancelAnimationFrame(animRAF);animRAF=requestAnimationFrame(frame);
+  animTimeout=setTimeout(function(){if(!ANIM.skipCalled){closeOverlay();cb();}},4500);
+}
+
+function playDerail(stationName,cb){
+  var c=initCanvas(),ctx=c.ctx,W=c.W,H=c.H;
+  var overlay=document.getElementById('wk-overlay'),derail=document.getElementById('derail-screen');
+  document.getElementById('anim-board').classList.remove('show');
+  document.getElementById('derail-sub').textContent='Verlies bij '+stationName;
+  overlay.classList.add('active');animStartTime=Date.now();ANIM.skipCalled=false;
+  var trainX=-680*(H/480),targetX=W/2-320*(H/480),phase='enter',phaseStart=animStartTime;
+  function frame(){
+    if(ANIM.skipCalled)return;
+    var now=Date.now(),elapsed=(now-animStartTime)/1000;
+    ctx.clearRect(0,0,W,H);
+    drawScene(ctx,W,H,elapsed);
+    if(phase==='shake'||phase==='show'){var red=Math.min(0.5,(now-phaseStart)/600*0.5);ctx.fillStyle='rgba(180,0,0,'+red+')';ctx.fillRect(0,0,W,H);}
+    var speed=0;
+    if(phase==='enter'){
+      var p=Math.min(1,(now-phaseStart)/900);trainX=-680*(H/480)+(targetX+680*(H/480))*easeOut(p);speed=8*(1-p*0.4);
+      if(p>=1){phase='shake';phaseStart=now;}
+    } else if(phase==='shake'){
+      trainX=targetX+Math.sin((now-phaseStart)*0.04)*8*(1-(now-phaseStart)/600);
+      if(now-phaseStart>600){phase='show';phaseStart=now;derail.classList.add('show');}
+    } else if(phase==='show'){
+      trainX=targetX+Math.sin((now-phaseStart)*0.015)*3;
+      if(now-phaseStart>2000){overlay.classList.remove('active');derail.classList.remove('show');cb();return;}
+    }
+    drawTrain(ctx,W,H,trainX,speed);
+    animRAF=requestAnimationFrame(frame);
+  }
+  cancelAnimationFrame(animRAF);animRAF=requestAnimationFrame(frame);
+  animTimeout=setTimeout(function(){if(!ANIM.skipCalled){closeOverlay();derail.classList.remove('show');cb();}},4200);
+}
+
+function closeOverlay(){
+  ANIM.skipCalled=true;cancelAnimationFrame(animRAF);clearTimeout(animTimeout);
+  var overlay=document.getElementById('wk-overlay');overlay.classList.remove('active');
+  document.getElementById('anim-board').classList.remove('show');
+  document.getElementById('derail-screen').classList.remove('show');
+}
+
+// ── Scene ──
+function drawScene(ctx,W,H,t){
+  var scroll=t*160;
+  // Sky
+  var sg=ctx.createLinearGradient(0,0,0,H*0.62);sg.addColorStop(0,'#3a80c0');sg.addColorStop(1,'#7ec8e3');
+  ctx.fillStyle=sg;ctx.fillRect(0,0,W,H*0.62);
+  // Sun
+  ctx.save();ctx.shadowColor='rgba(255,220,50,.35)';ctx.shadowBlur=35;ctx.fillStyle='#FFE066';ctx.beginPath();ctx.arc(W*0.84,H*0.1,28,0,Math.PI*2);ctx.fill();ctx.restore();
+  // Clouds
+  [[0.06,0.06,70,24],[0.22,0.04,100,32],[0.45,0.08,80,26],[0.65,0.03,120,38],[0.85,0.07,75,24]].forEach(function(c){
+    var x=((c[0]*W-scroll*0.12)%(W*1.3)+W*1.3)%(W*1.3)-60;
+    drawCloud(ctx,x,c[1]*H,c[2],c[3]);
+  });
+  // Far ground
+  var fg=ctx.createLinearGradient(0,H*0.58,0,H*0.72);fg.addColorStop(0,'#62b830');fg.addColorStop(1,'#4a9020');
+  ctx.fillStyle=fg;ctx.fillRect(0,H*0.58,W,H*0.15);
+  // Windmill
+  var wmx=((W*0.1-scroll*0.06)%(W*1.4)+W*1.4)%(W*1.4)-40;
+  drawWindmill(ctx,wmx,H*0.62,t,0.5);
+  var wmx2=((W*0.65-scroll*0.06)%(W*1.4)+W*1.4)%(W*1.4)-40;
+  drawWindmill(ctx,wmx2,H*0.64,t,0.38);
+  // Trees + houses
+  for(var i=0;i<7;i++){var tx=((W*(0.12+i*0.15)-scroll*0.1)%(W*1.5)+W*1.5)%(W*1.5)-20;if(i%3===0)drawHouse(ctx,tx,H*0.63,0.42+i%2*0.08);else drawTree(ctx,tx,H*0.65,0.45+i%3*0.06);}
+  // Mid grass
+  var mg=ctx.createLinearGradient(0,H*0.68,0,H*0.8);mg.addColorStop(0,'#52a826');mg.addColorStop(1,'#3a7818');
+  ctx.fillStyle=mg;ctx.fillRect(0,H*0.68,W,H*0.13);
+  // Canal
+  ctx.fillStyle='#4a88ae';ctx.fillRect(0,H*0.72,W*0.18,H*0.04);
+  // Road
+  ctx.fillStyle='#9a9a9a';ctx.fillRect(W*0.82,H*0.68,W*0.18,H*0.13);
+  ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=2;ctx.setLineDash([10,8]);
+  ctx.beginPath();ctx.moveTo(W*0.9,H*0.68);ctx.lineTo(W*0.9,H*0.81);ctx.stroke();ctx.setLineDash([]);
+  // OHW poles
+  var ps=W*0.26;for(var p=0;p<5;p++){var px=((p*ps-scroll*0.45)%(W*1.3)+W*1.3)%(W*1.3)-20;if(px>-5&&px<W+5){ctx.fillStyle='#666';ctx.fillRect(px-2.5,H*0.38,5,H*0.44);ctx.fillStyle='#777';ctx.fillRect(px-14,H*0.37,28,5);}}
+  // Wire
+  ctx.strokeStyle='rgba(180,180,180,.65)';ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(0,H*0.385);ctx.lineTo(W,H*0.385);ctx.stroke();
+  // Sleepers
+  var sp=50,sc=Math.ceil(W/sp)+3,sx=-(scroll*0.45%sp);
+  for(var si=0;si<sc;si++){var sxx=sx+si*sp;ctx.fillStyle='#5c3810';ctx.fillRect(sxx-10,H*0.78,20,H*0.09);}
+  // Rails
+  ctx.fillStyle='#7a7a7a';ctx.fillRect(0,H*0.79,W,5);ctx.fillRect(0,H*0.83,W,5);
+  // Foreground
+  var fg2=ctx.createLinearGradient(0,H*0.88,0,H);fg2.addColorStop(0,'#4a8a22');fg2.addColorStop(1,'#2d6010');
+  ctx.fillStyle=fg2;ctx.beginPath();ctx.moveTo(0,H*0.88);ctx.bezierCurveTo(W*0.3,H*0.85,W*0.6,H*0.9,W,H*0.87);ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();ctx.fill();
+}
+
+function drawCloud(ctx,x,y,rx,ry){
+  ctx.save();ctx.globalAlpha=0.88;ctx.fillStyle='#fff';
+  ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.ellipse(x-rx*0.35,y+ry*0.15,rx*0.55,ry*0.6,0,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.ellipse(x+rx*0.38,y+ry*0.1,rx*0.5,ry*0.55,0,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+}
+
+function drawWindmill(ctx,x,y,t,s){
+  ctx.save();ctx.translate(x,y);ctx.scale(s,s);
+  ctx.fillStyle='#c8a060';ctx.beginPath();ctx.moveTo(-7,0);ctx.lineTo(-4,-70);ctx.lineTo(4,-70);ctx.lineTo(7,0);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#8b6020';ctx.fillRect(-10,-78,20,10);
+  var ba=t*0.9;ctx.strokeStyle='#6b4010';ctx.lineWidth=3.5;ctx.lineCap='round';
+  for(var b=0;b<4;b++){var a=ba+b*Math.PI/2;ctx.beginPath();ctx.moveTo(0,-74);ctx.lineTo(Math.cos(a)*34,Math.sin(a)*34-74);ctx.stroke();
+    ctx.save();ctx.globalAlpha=0.7;ctx.fillStyle='#8b5018';ctx.beginPath();ctx.moveTo(0,-74);ctx.lineTo(Math.cos(a)*34,Math.sin(a)*34-74);ctx.lineTo(Math.cos(a+0.4)*26,Math.sin(a+0.4)*26-74);ctx.closePath();ctx.fill();ctx.restore();}
+  ctx.restore();
+}
+
+function drawTree(ctx,x,y,s){
+  ctx.save();ctx.translate(x,y);ctx.scale(s,s);
+  ctx.fillStyle='#5c3010';ctx.fillRect(-4,0,8,18);
+  ctx.fillStyle='#2a6a14';ctx.beginPath();ctx.arc(0,-12,18,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(-6,-20,12,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(6,-18,13,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+}
+
+function drawHouse(ctx,x,y,s){
+  ctx.save();ctx.translate(x,y);ctx.scale(s,s);
+  ctx.fillStyle='#c88060';ctx.fillRect(-18,-35,36,35);
+  ctx.fillStyle='#8b4010';ctx.beginPath();ctx.moveTo(-22,-35);ctx.lineTo(22,-35);ctx.lineTo(0,-58);ctx.closePath();ctx.fill();
+  ctx.fillStyle='rgba(255,210,100,.5)';ctx.fillRect(-8,-25,10,14);
+  ctx.restore();
+}
+
+// ── Train ──
+function drawTrain(ctx,W,H,trainX,speed){
+  var sc=H/480;
+  ctx.save();ctx.translate(trainX,H*0.73);
+  if(speed>2){ctx.save();ctx.globalAlpha=0.1;for(var m=1;m<=3;m++){ctx.translate(-speed*m*0.9,0);drawTrainShapes(ctx,sc,0);}ctx.restore();}
+  drawTrainShapes(ctx,sc,speed);
+  ctx.restore();
+}
+
+function drawTrainShapes(ctx,sc,speed){
+  var t=animStartTime?(Date.now()-animStartTime)/1000:0;
+  var wr=speed>0?t*speed*3.5:0;
+  ctx.save();ctx.scale(sc,sc);
+  // Shadow
+  ctx.save();ctx.globalAlpha=0.14;ctx.beginPath();ctx.ellipse(300,158,320,10,0,0,Math.PI*2);ctx.fillStyle='#000';ctx.fill();ctx.restore();
+  // Loco body
+  ctx.fillStyle='#E85D04';ctx.beginPath();ctx.roundRect(0,20,168,108,7);ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.07)';ctx.beginPath();ctx.roundRect(2,20,164,13,6);ctx.fill();
+  ctx.fillStyle='#B84000';ctx.beginPath();ctx.roundRect(0,102,168,26,4);ctx.fill();
+  // Nose
+  ctx.fillStyle='#C44A00';ctx.beginPath();ctx.moveTo(168,20);ctx.lineTo(194,30);ctx.lineTo(194,116);ctx.lineTo(168,128);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#1a1a1a';ctx.beginPath();ctx.moveTo(190,28);ctx.lineTo(200,32);ctx.lineTo(200,114);ctx.lineTo(190,118);ctx.closePath();ctx.fill();
+  // Windows
+  cw(ctx,10,28,48,36);cw(ctx,66,28,48,36);cw(ctx,122,30,36,32);
+  // Stripes
+  ctx.fillStyle='#003DA5';ctx.fillRect(0,120,168,6);
+  ctx.fillStyle='#fff';ctx.fillRect(0,126,168,4);
+  ctx.fillStyle='#AE1C28';ctx.fillRect(0,130,168,4);
+  // Roof
+  ctx.fillStyle='#A03800';ctx.beginPath();ctx.roundRect(2,12,164,10,3);ctx.fill();
+  // Panto
+  cp(ctx,42,12,88,12);
+  // Lights
+  ctx.fillStyle='#FFFBD0';ctx.beginPath();ctx.roundRect(194,44,9,8,2);ctx.fill();
+  ctx.fillStyle='#FF2020';ctx.beginPath();ctx.roundRect(194,58,9,7,2);ctx.fill();
+  ctx.save();ctx.globalAlpha=0.25;var gl=ctx.createRadialGradient(198,48,0,198,48,20);gl.addColorStop(0,'#FFFBD0');gl.addColorStop(1,'transparent');ctx.fillStyle=gl;ctx.beginPath();ctx.arc(198,48,20,0,Math.PI*2);ctx.fill();ctx.restore();
+  // Undercarriage + wheels
+  ctx.fillStyle='#1a1a1a';ctx.beginPath();ctx.roundRect(2,134,164,10,3);ctx.fill();
+  ctx.fillStyle='#2a2a2a';ctx.beginPath();ctx.roundRect(165,138,36,6,3);ctx.fill();
+  cw2(ctx,32,148,16,wr);cw2(ctx,82,148,16,wr);cw2(ctx,132,148,14,wr);
+  ctx.strokeStyle='#333';ctx.lineWidth=3.5;ctx.beginPath();ctx.moveTo(32,148);ctx.lineTo(132,148);ctx.stroke();
+  ctx.fillStyle='#555';ctx.beginPath();ctx.arc(57,148,4,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(107,148,4,0,Math.PI*2);ctx.fill();
+  // Wagon 1
+  dw(ctx,204,22,202,108,wr);
+  // Wagon 2
+  dw(ctx,412,24,200,104,wr);
+  // Steam
+  if(speed>0.5){for(var i=0;i<4;i++){var age=(t*1.8+i*0.45)%1.8;var ox=-5+Math.sin(age*2.5)*5,oy=-22-age*30,r=5+age*11;ctx.save();ctx.globalAlpha=Math.max(0,0.5-age*0.3);ctx.fillStyle='#f0f0ec';ctx.beginPath();ctx.arc(ox,oy,r,0,Math.PI*2);ctx.fill();ctx.restore();}}
+  ctx.restore();
+}
+
+function cw(ctx,x,y,w,h){
+  ctx.fillStyle='#1a3050';ctx.beginPath();ctx.roundRect(x,y,w,h,4);ctx.fill();
+  ctx.fillStyle='#1e3d6e';ctx.beginPath();ctx.roundRect(x+2,y+2,w-4,h-4,3);ctx.fill();
+  ctx.fillStyle='rgba(140,190,240,.18)';ctx.beginPath();ctx.moveTo(x+3,y+3);ctx.lineTo(x+w*0.48,y+3);ctx.lineTo(x+3,y+h*0.52);ctx.closePath();ctx.fill();
+  ctx.strokeStyle='#0f1e30';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(x,y,w,h,4);ctx.stroke();
+}
+
+function cw2(ctx,x,y,r,rot){
+  ctx.fillStyle='#1a1a1a';ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#484848';ctx.lineWidth=1.5;ctx.stroke();
+  ctx.strokeStyle='rgba(80,80,80,.65)';ctx.lineWidth=1.4;
+  for(var s=0;s<4;s++){var a=rot+s*Math.PI/2;ctx.beginPath();ctx.moveTo(x+Math.cos(a)*r*0.22,y+Math.sin(a)*r*0.22);ctx.lineTo(x+Math.cos(a)*(r-1.5),y+Math.sin(a)*(r-1.5));ctx.stroke();}
+  ctx.fillStyle='#585858';ctx.beginPath();ctx.arc(x,y,r*0.28,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#999';ctx.beginPath();ctx.arc(x,y,r*0.1,0,Math.PI*2);ctx.fill();
+}
+
+function cp(ctx,x1,y1,x2,y2){
+  var mx=(x1+x2)/2,ty=Math.min(y1,y2)-14;
+  ctx.strokeStyle='#aaa';ctx.lineWidth=1.6;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(mx,ty);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(mx,ty);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(mx-5,ty);ctx.lineTo(mx-5,ty-5);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(mx+5,ty);ctx.lineTo(mx+5,ty-5);ctx.stroke();
+  ctx.strokeStyle='#ccc';ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(mx-5,ty-5);ctx.lineTo(mx+5,ty-5);ctx.stroke();
+}
+
+function dw(ctx,x,y,w,h,wr){
+  ctx.fillStyle='#E85D04';ctx.beginPath();ctx.roundRect(x,y,w,h,5);ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.07)';ctx.beginPath();ctx.roundRect(x+2,y,w-4,12,4);ctx.fill();
+  ctx.fillStyle='#003DA5';ctx.fillRect(x,y+h-18,w,18);
+  ctx.fillStyle='rgba(255,136,0,.5)';ctx.fillRect(x,y+h-20,w,3);
+  ctx.fillStyle='#003DA5';ctx.fillRect(x,y+h,w,6);
+  ctx.fillStyle='#fff';ctx.fillRect(x,y+h+6,w,3.5);
+  ctx.fillStyle='#AE1C28';ctx.fillRect(x,y+h+9.5,w,3);
+  ctx.fillStyle='#A03800';ctx.beginPath();ctx.roundRect(x+2,y-8,w-4,10,3);ctx.fill();
+  cp(ctx,x+w*0.35,y-8,x+w*0.65,y-8);
+  var nw=4,ww=Math.floor((w-40)/4),wh=28,gap=(w-nw*ww)/(nw+1);
+  for(var i=0;i<nw;i++){cw(ctx,x+gap+i*(ww+gap),y+8,ww,wh);}
+  ctx.fillStyle='#1a1a1a';ctx.beginPath();ctx.roundRect(x+2,y+h+12.5,w-4,9,2);ctx.fill();
+  [x+24,x+64,x+w-64,x+w-24].forEach(function(wx){cw2(ctx,wx,y+h+22,12,wr);});
+}
+
+function spawnParticles(W){
+  var colors=['#E85D04','#fbbf24','#fff','#003DA5','#22c55e','#AE1C28'],parts=[];
+  for(var i=0;i<70;i++){parts.push({x:Math.random()*W,y:-10-Math.random()*80,vx:(Math.random()-0.5)*3.5,vy:1+Math.random()*2.5,vr:(Math.random()-0.5)*0.18,rot:Math.random()*Math.PI*2,w:5+Math.random()*9,h:4+Math.random()*6,color:colors[Math.floor(Math.random()*colors.length)],age:0});}
+  return parts;
+}
+
+function drawConfetti(ctx,particles){
+  particles.forEach(function(p){
+    ctx.save();ctx.globalAlpha=Math.max(0,1-p.age*0.65);ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();
+    p.x+=p.vx;p.y+=p.vy;p.vy+=0.12;p.rot+=p.vr;p.age+=0.016;
+  });
+}
+
+function toast(msg,type){
+  var el=document.getElementById('toast');el.textContent=msg;el.className='toast show'+(type?' '+type:'');
+  clearTimeout(tt);tt=setTimeout(function(){el.classList.remove('show');},2800);
 }
 
 init();
-buildTicketDests();
-// set date/time on load
-updateTicketMeta();
 </script>
 </body>
 </html>
