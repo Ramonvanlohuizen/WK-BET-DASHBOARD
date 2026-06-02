@@ -73,7 +73,8 @@ main{padding:0;max-width:480px;margin:0 auto}
 .ticket-dest.sel .ticket-dest-check:after{content:'✓';color:#fff;font-size:9px;font-weight:700;line-height:1}
 .ticket-dest-code{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--bk);letter-spacing:.04em}
 .ticket-dest-name{font-size:11px;font-weight:600;color:var(--g2);margin-top:1px}
-.ticket-dest-stops{font-size:10px;color:var(--g3);margin-top:2px}
+.ticket-dest-stops{font-size:9px;color:var(--g3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ticket-dest-nl{font-size:9px;font-weight:700;color:var(--or);margin-top:2px;letter-spacing:.02em}
 .ticket-budget-row{display:flex;align-items:center;gap:12px;margin-bottom:4px}
 .ticket-budget-btn{width:38px;height:38px;border-radius:50%;background:var(--or);border:none;color:#fff;font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1}
 .ticket-budget-btn:active{opacity:.82}
@@ -165,62 +166,10 @@ main{padding:0;max-width:480px;margin:0 auto}
 .res-sub{font-size:13px;color:var(--g2);margin-bottom:22px;line-height:1.6}
 .btn-new{background:var(--or);border:none;border-radius:var(--r);color:var(--wh);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;padding:13px 28px;text-transform:uppercase}
 
-/* WK Train Animation overlay */
-.wk-overlay{position:fixed;inset:0;z-index:999;display:none;overflow:hidden;background:#87CEEB}
+/* WK Canvas Animation */
+.wk-overlay{position:fixed;inset:0;z-index:999;display:none;overflow:hidden;background:#000}
 .wk-overlay.active{display:block}
-
-/* Sky */
-.sky-layer{position:absolute;inset:0;background:linear-gradient(180deg,#5ba3d4 0%,#87CEEB 60%,#a8d8ea 100%)}
-/* Clouds */
-.cloud{position:absolute;background:#fff;border-radius:50px;opacity:.85}
-@keyframes cloudMove{from{transform:translateX(110vw)}to{transform:translateX(-300px)}}
-/* Sun */
-.sun{position:absolute;top:8%;right:15%;width:52px;height:52px;background:radial-gradient(circle,#fffde7,#ffd54f);border-radius:50%;box-shadow:0 0 30px rgba(255,213,79,.6)}
-/* Dutch polder landscape */
-.landscape{position:absolute;bottom:0;left:0;right:0;height:38%}
-.grass{position:absolute;bottom:0;left:0;right:0;height:100%;background:linear-gradient(180deg,#5a9e3a 0%,#4a8a2a 100%)}
-/* Water canal */
-.canal{position:absolute;bottom:35%;left:0;right:0;height:18px;background:linear-gradient(180deg,#6ab4d8,#4a9ac0)}
-/* Road */
-.road{position:absolute;bottom:28%;left:0;right:0;height:10px;background:#888}
-.road:after{content:'';position:absolute;top:50%;left:0;right:0;height:2px;background:repeating-linear-gradient(90deg,#fff 0,#fff 20px,transparent 20px,transparent 40px)}
-/* Windmill */
-.windmill{position:absolute;bottom:calc(42% - 2px)}
-.wm-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:22px;height:60px;background:#c8a876;clip-path:polygon(30% 0%,70% 0%,85% 100%,15% 100%)}
-.wm-cap{position:absolute;bottom:58px;left:50%;transform:translateX(-50%);width:26px;height:14px;background:#7a5c3a;border-radius:3px 3px 0 0}
-@keyframes spinBlade{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
-.wm-blades{position:absolute;bottom:62px;left:50%;width:50px;height:50px;animation:spinBlade 3s linear infinite}
-.wm-blade{position:absolute;top:50%;left:50%;width:22px;height:5px;background:#5a3e1e;border-radius:2px;transform-origin:0 50%}
-/* Houses */
-.house{position:absolute;bottom:calc(42% - 2px)}
-.h-body{position:absolute;bottom:0;background:#c8826a}
-.h-roof{position:absolute;background:#8b4513}
-/* Cows */
-.cow{position:absolute;font-size:16px}
-/* Scroll layers */
-@keyframes scrollFar{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes scrollMid{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes scrollNear{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.scroll-far{animation:scrollFar 12s linear infinite}
-.scroll-mid{animation:scrollMid 7s linear infinite}
-.scroll-near{animation:scrollNear 4s linear infinite}
-/* Rail */
-.rail-layer{position:absolute;bottom:15%;left:0;right:0;height:28px}
-.rail-top,.rail-bot{position:absolute;left:0;right:0;height:5px;background:#6b6b6b;border-radius:2px}
-.rail-top{top:0}.rail-bot{bottom:0}
-.sleeper-row{position:absolute;inset:0;overflow:hidden}
-@keyframes sleepersMove{from{background-position:0 0}to{background-position:-60px 0}}
-.sleeper-row{background:repeating-linear-gradient(90deg,#5a3e1e 0px,#5a3e1e 18px,transparent 18px,transparent 60px);background-size:60px 100%;animation:sleepersMove .4s linear infinite}
-/* TRAIN */
-.train-scene{position:absolute;bottom:calc(18% + 14px);left:0;right:100%;width:640px;transition:none}
-@keyframes trainEnter{0%{left:-680px;transform:none}100%{left:50%;transform:translateX(-50%)}}
-@keyframes trainLeave{0%{left:50%;transform:translateX(-50%)}100%{left:calc(100vw + 680px);transform:none}}
-.train-scene.entering{animation:trainEnter .9s cubic-bezier(.2,0,.4,1) forwards}
-.train-scene.leaving{animation:trainLeave .7s cubic-bezier(.6,0,1,1) forwards}
-.train-scene.stopped{left:50%;transform:translateX(-50%);transition:none}
-/* Overhead wires */
-.wire-layer{position:absolute;bottom:calc(18% + 80px);left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,rgba(100,100,100,.5) 0,rgba(100,100,100,.5) 1px,transparent 1px,transparent 120px)}
-.pole{position:absolute;bottom:18%;width:3px;background:#666}
+#anim-canvas{position:absolute;inset:0;width:100%;height:100%}
 /* Scoreboard */
 .anim-board{position:absolute;top:6%;left:50%;transform:translateX(-50%);background:rgba(0,0,20,.88);border:2px solid rgba(255,165,0,.6);border-radius:8px;padding:10px 22px;text-align:center;opacity:0;transition:opacity .4s;min-width:200px;z-index:20}
 .anim-board.show{opacity:1}
@@ -300,7 +249,7 @@ main{padding:0;max-width:480px;margin:0 auto}
 
         <div class="ticket-arrow-row">
           <div class="ticket-train-line"></div>
-          <div class="ticket-train-icon">🚂</div>
+          <div class="ticket-train-icon">🚂✈️</div>
           <div class="ticket-train-line"></div>
         </div>
 
@@ -391,7 +340,7 @@ main{padding:0;max-width:480px;margin:0 auto}
       <div class="stat-tile"><div class="stat-lbl">Winst</div><div class="stat-val pos" id="s-winst">€0</div></div>
     </div>
 
-    <div class="sec-label">Route — Wezep naar Rotterdam</div>
+    <div class="sec-label">Route — Trein + vlucht naar WK 2026</div>
     <div class="map-wrap"><div id="routemap"></div></div>
 
     <div class="track-wrap">
@@ -458,301 +407,14 @@ main{padding:0;max-width:480px;margin:0 auto}
   </div>
 </main>
 
-<!-- WK Train Animation Overlay -->
+<!-- WK Canvas Animation Overlay -->
 <div class="wk-overlay" id="wk-overlay">
-  <!-- Sky -->
-  <div class="sky-layer"></div>
-  <div class="sun"></div>
-  <!-- Clouds (built by JS) -->
-  <div id="cloud-layer" style="position:absolute;inset:0;pointer-events:none"></div>
-  <!-- Far background (windmills, houses) -->
-  <div style="position:absolute;bottom:42%;left:0;width:200%;height:120px;overflow:hidden">
-    <div class="scroll-far" id="bg-far" style="width:200%;height:100%;position:relative"></div>
-  </div>
-  <!-- Mid layer cows + road features -->
-  <div style="position:absolute;bottom:28%;left:0;width:200%;height:60px;overflow:hidden">
-    <div class="scroll-mid" id="bg-mid" style="width:200%;height:100%;position:relative"></div>
-  </div>
-  <!-- Flag wavers near road -->
-  <div id="flag-wavers" style="position:absolute;bottom:0;left:0;right:0;height:50%"></div>
-  <!-- Ground -->
-  <div class="landscape">
-    <div class="grass"></div>
-    <div class="canal"></div>
-    <div class="road"></div>
-  </div>
-  <!-- Overhead wire poles -->
-  <div class="wire-layer"></div>
-  <!-- Rail -->
-  <div class="rail-layer">
-    <div class="sleeper-row"></div>
-    <div class="rail-top"></div>
-    <div class="rail-bot"></div>
-  </div>
-  <!-- THE TRAIN -->
-  <div class="train-scene" id="train-scene">
-    <svg id="train-svg" viewBox="0 0 580 100" width="580" height="100" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FF8820"/>
-      <stop offset="100%" stop-color="#D94F00"/>
-    </linearGradient>
-    <linearGradient id="lg2" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#555"/>
-      <stop offset="100%" stop-color="#1a1a1a"/>
-    </linearGradient>
-  </defs>
-
-  <!-- ══ LOCOMOTIVE ══ -->
-  <rect x="2" y="14" width="150" height="72" rx="5" fill="url(#lg1)"/>
-  <!-- highlight top -->
-  <rect x="4" y="14" width="146" height="12" rx="4" fill="#FF9933" opacity=".4"/>
-  <!-- shadow bottom -->
-  <rect x="2" y="68" width="150" height="18" rx="0" fill="#000" opacity=".18"/>
-  <!-- Front nose -->
-  <path d="M152 14 L176 24 L176 78 L152 86 Z" fill="#C04400"/>
-  <path d="M172 22 L180 26 L180 76 L172 84 Z" fill="#222"/>
-  <!-- Front lights -->
-  <rect x="178" y="36" width="8" height="6" rx="1" fill="#FFFBD0"/>
-  <rect x="178" y="50" width="8" height="5" rx="1" fill="#FF2222" opacity=".85"/>
-  <!-- Cab windows -->
-  <rect x="12" y="22" width="42" height="30" rx="3" fill="#1C3A60"/>
-  <rect x="62" y="22" width="42" height="30" rx="3" fill="#1C3A60"/>
-  <rect x="114" y="24" width="32" height="26" rx="3" fill="#1C3A60"/>
-  <!-- Window frames -->
-  <rect x="12" y="22" width="42" height="30" rx="3" fill="none" stroke="#111" stroke-width="2"/>
-  <rect x="62" y="22" width="42" height="30" rx="3" fill="none" stroke="#111" stroke-width="2"/>
-  <rect x="114" y="24" width="32" height="26" rx="3" fill="none" stroke="#111" stroke-width="1.5"/>
-  <!-- Window sky reflection -->
-  <polygon points="14,24 28,24 14,40" fill="#5599CC" opacity=".28"/>
-  <polygon points="64,24 78,24 64,40" fill="#5599CC" opacity=".28"/>
-  <polygon points="116,26 126,26 116,38" fill="#5599CC" opacity=".22"/>
-  <!-- KNVB Lion (clean, no text) -->
-  <ellipse cx="37" cy="62" rx="18" ry="16" fill="#FF9500"/>
-  <ellipse cx="37" cy="59" rx="13" ry="12" fill="#D94F00"/>
-  <!-- Mane -->
-  <polygon points="19,53 23,46 27,54" fill="#FF9500"/>
-  <polygon points="24,47 29,41 31,50" fill="#FF9500"/>
-  <polygon points="31,42 37,38 37,47" fill="#FF9500"/>
-  <polygon points="43,42 49,39 48,48" fill="#FF9500"/>
-  <polygon points="50,47 55,43 54,52" fill="#FF9500"/>
-  <polygon points="53,55 58,52 56,61" fill="#FF9500"/>
-  <!-- Eyes -->
-  <circle cx="31" cy="58" r="3" fill="#111"/>
-  <circle cx="43" cy="58" r="3" fill="#111"/>
-  <circle cx="31.8" cy="57.2" r="1" fill="#fff" opacity=".6"/>
-  <circle cx="43.8" cy="57.2" r="1" fill="#fff" opacity=".6"/>
-  <!-- Nose/mouth -->
-  <ellipse cx="37" cy="64" rx="5" ry="3" fill="#A03000"/>
-  <path d="M33 66 Q37 70 41 66" fill="none" stroke="#7A2000" stroke-width="1.4"/>
-  <!-- NS circle (clean, no text overlap) -->
-  <circle cx="118" cy="64" r="8" fill="#fff" opacity=".92"/>
-  <rect x="113" y="60" width="10" height="3" rx=".5" fill="#003DA5"/>
-  <rect x="113" y="65" width="10" height="3" rx=".5" fill="#AE1C28"/>
-  <!-- Bottom stripes -->
-  <rect x="2" y="82" width="150" height="5" fill="#003DA5"/>
-  <rect x="2" y="87" width="150" height="3" fill="#fff"/>
-  <rect x="2" y="90" width="150" height="3" fill="#AE1C28"/>
-  <!-- Roof -->
-  <rect x="4" y="8" width="146" height="8" rx="3" fill="#B04000"/>
-  <!-- Pantograph -->
-  <line x1="38" y1="8" x2="30" y2="-2" stroke="#888" stroke-width="1.5"/>
-  <line x1="30" y1="-2" x2="68" y2="-2" stroke="#888" stroke-width="1.5"/>
-  <line x1="68" y1="-2" x2="74" y2="8" stroke="#888" stroke-width="1.5"/>
-  <line x1="30" y1="-2" x2="30" y2="-5" stroke="#aaa" stroke-width="1.8"/>
-  <line x1="68" y1="-2" x2="68" y2="-5" stroke="#aaa" stroke-width="1.8"/>
-  <line x1="30" y1="-5" x2="68" y2="-5" stroke="#ddd" stroke-width="1.2"/>
-  <!-- NL flags on roof -->
-  <line x1="28" y1="8" x2="28" y2="-4" stroke="#bbb" stroke-width="1.2"/>
-  <rect x="28" y="-4" width="13" height="3" fill="#AE1C28"/>
-  <rect x="28" y="-1" width="13" height="3" fill="#fff"/>
-  <rect x="28" y="2" width="13" height="3" fill="#003DA5"/>
-  <line x1="100" y1="8" x2="100" y2="-4" stroke="#bbb" stroke-width="1.2"/>
-  <rect x="100" y="-4" width="13" height="3" fill="#AE1C28"/>
-  <rect x="100" y="-1" width="13" height="3" fill="#fff"/>
-  <rect x="100" y="2" width="13" height="3" fill="#003DA5"/>
-  <!-- Number plate -->
-  <rect x="6" y="76" width="24" height="8" rx="1" fill="#111"/>
-  <rect x="8" y="77.5" width="20" height="5" rx=".5" fill="#222"/>
-  <!-- Undercarriage -->
-  <rect x="4" y="93" width="146" height="8" rx="2" fill="#1a1a1a"/>
-  <!-- Coupling -->
-  <rect x="150" y="97" width="36" height="5" rx="2" fill="#333"/>
-  <!-- Wheels with spokes -->
-  <circle cx="28" cy="104" r="11" fill="url(#lg2)" stroke="#555" stroke-width="1.2"/>
-  <circle cx="28" cy="104" r="4.5" fill="#777"/>
-  <circle cx="28" cy="104" r="2" fill="#aaa"/>
-  <line x1="28" y1="93" x2="28" y2="115" stroke="#555" stroke-width=".8" opacity=".5"/>
-  <line x1="17" y1="104" x2="39" y2="104" stroke="#555" stroke-width=".8" opacity=".5"/>
-  <circle cx="75" cy="104" r="11" fill="url(#lg2)" stroke="#555" stroke-width="1.2"/>
-  <circle cx="75" cy="104" r="4.5" fill="#777"/>
-  <circle cx="75" cy="104" r="2" fill="#aaa"/>
-  <circle cx="120" cy="104" r="11" fill="url(#lg2)" stroke="#555" stroke-width="1.2"/>
-  <circle cx="120" cy="104" r="4.5" fill="#777"/>
-  <circle cx="120" cy="104" r="2" fill="#aaa"/>
-  <!-- Drive rods -->
-  <line x1="28" y1="104" x2="75" y2="104" stroke="#444" stroke-width="2.5"/>
-  <line x1="75" y1="104" x2="120" y2="104" stroke="#444" stroke-width="2.5"/>
-  <circle cx="51" cy="104" r="2.5" fill="#666"/>
-  <circle cx="97" cy="104" r="2.5" fill="#666"/>
-
-  <!-- ══ WAGON 1 ══ -->
-  <rect x="190" y="16" width="186" height="70" rx="4" fill="url(#lg1)"/>
-  <rect x="192" y="16" width="182" height="10" rx="3" fill="#FF9933" opacity=".35"/>
-  <rect x="190" y="68" width="186" height="18" rx="0" fill="#000" opacity=".15"/>
-  <!-- WK TREIN band -->
-  <rect x="190" y="68" width="186" height="20" fill="#003DA5"/>
-  <!-- Orange accent line above blue -->
-  <rect x="190" y="66" width="186" height="3" fill="#FF9933"/>
-  <!-- Bottom stripes -->
-  <rect x="190" y="83" width="186" height="4.5" fill="#003DA5"/>
-  <rect x="190" y="87.5" width="186" height="3" fill="#fff"/>
-  <rect x="190" y="90.5" width="186" height="2.5" fill="#AE1C28"/>
-  <!-- Roof -->
-  <rect x="192" y="10" width="182" height="8" rx="2" fill="#B04000"/>
-  <!-- NL flags roof -->
-  <line x1="215" y1="10" x2="215" y2="0" stroke="#bbb" stroke-width="1.2"/>
-  <rect x="215" y="0" width="13" height="3" fill="#AE1C28"/>
-  <rect x="215" y="3" width="13" height="3" fill="#fff"/>
-  <rect x="215" y="6" width="13" height="3" fill="#003DA5"/>
-  <line x1="330" y1="10" x2="330" y2="0" stroke="#bbb" stroke-width="1.2"/>
-  <rect x="330" y="0" width="13" height="3" fill="#AE1C28"/>
-  <rect x="330" y="3" width="13" height="3" fill="#fff"/>
-  <rect x="330" y="6" width="13" height="3" fill="#003DA5"/>
-  <!-- Windows -->
-  <rect x="198" y="24" width="34" height="28" rx="3" fill="#1C3A60" stroke="#111" stroke-width="1.5"/>
-  <rect x="240" y="24" width="34" height="28" rx="3" fill="#1C3A60" stroke="#111" stroke-width="1.5"/>
-  <rect x="282" y="24" width="34" height="28" rx="3" fill="#1C3A60" stroke="#111" stroke-width="1.5"/>
-  <rect x="324" y="24" width="34" height="28" rx="3" fill="#1C3A60" stroke="#111" stroke-width="1.5"/>
-  <!-- Reflections -->
-  <polygon points="200,26 212,26 200,40" fill="#5599CC" opacity=".22"/>
-  <polygon points="242,26 254,26 242,40" fill="#5599CC" opacity=".22"/>
-  <polygon points="284,26 296,26 284,40" fill="#5599CC" opacity=".22"/>
-  <polygon points="326,26 338,26 326,40" fill="#5599CC" opacity=".22"/>
-  <!-- People window 1 -->
-  <circle cx="210" cy="34" r="5.5" fill="#FF7A00"/>
-  <circle cx="210" cy="31" r="3" fill="#F0C080"/>
-  <rect x="206" y="39" width="9" height="8" rx="2" fill="#FF7A00"/>
-  <!-- People window 2 — flag waver -->
-  <circle cx="252" cy="34" r="5.5" fill="#FF7A00"/>
-  <circle cx="252" cy="31" r="3" fill="#F0C080"/>
-  <rect x="248" y="39" width="9" height="8" rx="2" fill="#FF7A00"/>
-  <line x1="260" y1="28" x2="260" y2="18" stroke="#aaa" stroke-width="1.2"/>
-  <rect x="260" y="18" width="13" height="3" fill="#AE1C28"/>
-  <rect x="260" y="21" width="13" height="3" fill="#fff"/>
-  <rect x="260" y="24" width="13" height="3" fill="#003DA5"/>
-  <!-- People window 3 -->
-  <circle cx="294" cy="34" r="5.5" fill="#FF7A00"/>
-  <circle cx="294" cy="31" r="3" fill="#F0C080"/>
-  <rect x="290" y="39" width="9" height="8" rx="2" fill="#FF7A00"/>
-  <!-- People window 4 — flag waver -->
-  <circle cx="336" cy="33" r="5.5" fill="#FF7A00"/>
-  <circle cx="336" cy="30" r="3" fill="#F0C080"/>
-  <rect x="332" y="38" width="9" height="8" rx="2" fill="#FF7A00"/>
-  <line x1="344" y1="27" x2="344" y2="17" stroke="#aaa" stroke-width="1.2"/>
-  <rect x="344" y="17" width="13" height="3" fill="#AE1C28"/>
-  <rect x="344" y="20" width="13" height="3" fill="#fff"/>
-  <rect x="344" y="23" width="13" height="3" fill="#003DA5"/>
-  <!-- Undercarriage + wheels -->
-  <rect x="192" y="93" width="182" height="7" rx="2" fill="#1a1a1a"/>
-  <circle cx="220" cy="104" r="10" fill="url(#lg2)" stroke="#555" stroke-width="1.2"/>
-  <circle cx="220" cy="104" r="4" fill="#777"/>
-  <circle cx="220" cy="104" r="2" fill="#aaa"/>
-  <circle cx="258" cy="104" r="10" fill="url(#lg2)" stroke="#555" stroke-width="1.2"/>
-  <circle cx="258" cy="104" r="4" fill="#777"/>
-  <circle cx="258" cy="104" r="2" fill="#aaa"/>
-  <circle cx="312" cy="104" r="10" fill="url(#lg2)" stroke="#555" stroke-width="1.2"/>
-  <circle cx="312" cy="104" r="4" fill="#777"/>
-  <circle cx="312" cy="104" r="2" fill="#aaa"/>
-  <circle cx="352" cy="104" r="10" fill="url(#lg2)" stroke="#555" stroke-width="1.2"/>
-  <circle cx="352" cy="104" r="4" fill="#777"/>
-  <circle cx="352" cy="104" r="2" fill="#aaa"/>
-
-  <!-- ══ WAGON 2 ══ -->
-  <rect x="380" y="18" width="196" height="68" rx="4" fill="url(#lg1)"/>
-  <rect x="382" y="18" width="192" height="10" rx="3" fill="#FF9933" opacity=".3"/>
-  <rect x="380" y="68" width="196" height="18" rx="0" fill="#000" opacity=".13"/>
-  <rect x="380" y="80" width="196" height="4" fill="#003DA5"/>
-  <rect x="380" y="84" width="196" height="2.5" fill="#fff"/>
-  <rect x="380" y="86.5" width="196" height="2.5" fill="#AE1C28"/>
-  <!-- Roof -->
-  <rect x="382" y="12" width="192" height="8" rx="2" fill="#B04000"/>
-  <!-- Pantograph wagon 2 -->
-  <line x1="450" y1="12" x2="443" y2="2" stroke="#888" stroke-width="1.4"/>
-  <line x1="443" y1="2" x2="475" y2="2" stroke="#888" stroke-width="1.4"/>
-  <line x1="475" y1="2" x2="480" y2="12" stroke="#888" stroke-width="1.4"/>
-  <line x1="443" y1="2" x2="443" y2="-1" stroke="#aaa" stroke-width="1.6"/>
-  <line x1="475" y1="2" x2="475" y2="-1" stroke="#aaa" stroke-width="1.6"/>
-  <line x1="443" y1="-1" x2="475" y2="-1" stroke="#ddd" stroke-width="1.1"/>
-  <!-- NL flags roof wagon 2 -->
-  <line x1="405" y1="12" x2="405" y2="2" stroke="#bbb" stroke-width="1.2"/>
-  <rect x="405" y="2" width="13" height="3" fill="#AE1C28"/>
-  <rect x="405" y="5" width="13" height="3" fill="#fff"/>
-  <rect x="405" y="8" width="13" height="3" fill="#003DA5"/>
-  <line x1="530" y1="12" x2="530" y2="2" stroke="#bbb" stroke-width="1.2"/>
-  <rect x="530" y="2" width="13" height="3" fill="#AE1C28"/>
-  <rect x="530" y="5" width="13" height="3" fill="#fff"/>
-  <rect x="530" y="8" width="13" height="3" fill="#003DA5"/>
-  <!-- Windows wagon 2 -->
-  <rect x="388" y="26" width="30" height="26" rx="3" fill="#1C3A60" stroke="#111" stroke-width="1.5"/>
-  <rect x="425" y="26" width="30" height="26" rx="3" fill="#1C3A60" stroke="#111" stroke-width="1.5"/>
-  <rect x="462" y="26" width="30" height="26" rx="3" fill="#1C3A60" stroke="#111" stroke-width="1.5"/>
-  <rect x="499" y="26" width="30" height="26" rx="3" fill="#1C3A60" stroke="#111" stroke-width="1.5"/>
-  <rect x="536" y="26" width="30" height="26" rx="3" fill="#1C3A60" stroke="#111" stroke-width="1.5"/>
-  <!-- Reflections -->
-  <polygon points="390,28 400,28 390,40" fill="#5599CC" opacity=".2"/>
-  <polygon points="427,28 437,28 427,40" fill="#5599CC" opacity=".2"/>
-  <polygon points="464,28 474,28 464,40" fill="#5599CC" opacity=".2"/>
-  <polygon points="501,28 511,28 501,40" fill="#5599CC" opacity=".2"/>
-  <polygon points="538,28 548,28 538,40" fill="#5599CC" opacity=".2"/>
-  <!-- People wagon 2 -->
-  <circle cx="398" cy="35" r="5" fill="#FF7A00"/>
-  <circle cx="398" cy="32" r="2.8" fill="#F0C080"/>
-  <rect x="394" y="40" width="8" height="8" rx="2" fill="#FF7A00"/>
-  <circle cx="435" cy="35" r="5" fill="#FF7A00"/>
-  <circle cx="435" cy="32" r="2.8" fill="#F0C080"/>
-  <rect x="431" y="40" width="8" height="8" rx="2" fill="#FF7A00"/>
-  <line x1="443" y1="30" x2="443" y2="20" stroke="#aaa" stroke-width="1.2"/>
-  <rect x="443" y="20" width="12" height="3" fill="#AE1C28"/>
-  <rect x="443" y="23" width="12" height="3" fill="#fff"/>
-  <rect x="443" y="26" width="12" height="3" fill="#003DA5"/>
-  <circle cx="472" cy="35" r="5" fill="#FF7A00"/>
-  <circle cx="472" cy="32" r="2.8" fill="#F0C080"/>
-  <rect x="468" y="40" width="8" height="8" rx="2" fill="#FF7A00"/>
-  <circle cx="509" cy="35" r="5" fill="#FF7A00"/>
-  <rect x="505" y="40" width="8" height="8" rx="2" fill="#FF7A00"/>
-  <circle cx="546" cy="34" r="5" fill="#FF7A00"/>
-  <rect x="542" y="39" width="8" height="8" rx="2" fill="#FF7A00"/>
-  <!-- Undercarriage + wheels wagon 2 -->
-  <rect x="382" y="89" width="192" height="7" rx="2" fill="#1a1a1a"/>
-  <circle cx="408" cy="100" r="10" fill="url(#lg2)" stroke="#555" stroke-width="1.2"/>
-  <circle cx="408" cy="100" r="4" fill="#777"/>
-  <circle cx="408" cy="100" r="2" fill="#aaa"/>
-  <circle cx="446" cy="100" r="10" fill="url(#lg2)" stroke="#555" stroke-width="1.2"/>
-  <circle cx="446" cy="100" r="4" fill="#777"/>
-  <circle cx="446" cy="100" r="2" fill="#aaa"/>
-  <circle cx="496" cy="100" r="10" fill="url(#lg2)" stroke="#555" stroke-width="1.2"/>
-  <circle cx="496" cy="100" r="4" fill="#777"/>
-  <circle cx="496" cy="100" r="2" fill="#aaa"/>
-  <circle cx="545" cy="100" r="10" fill="url(#lg2)" stroke="#555" stroke-width="1.2"/>
-  <circle cx="545" cy="100" r="4" fill="#777"/>
-  <circle cx="545" cy="100" r="2" fill="#aaa"/>
-
-  <!-- STEAM -->
-  <g id="steam-group">
-    <circle id="st1" cx="8" cy="6" r="7" fill="#f0f0ea" opacity="0"/>
-    <circle id="st2" cx="-2" cy="-4" r="9" fill="#e8e8e2" opacity="0"/>
-    <circle id="st3" cx="10" cy="-12" r="8" fill="#f0f0ea" opacity="0"/>
-  </g>
-</svg>
-  </div>
-  <!-- Scoreboard -->
+  <canvas id="anim-canvas"></canvas>
   <div class="anim-board" id="anim-board">
     <div class="ab-top" id="ab-top">Halte 1 ✓</div>
     <div class="ab-score" id="ab-score"><span>+€0</span></div>
     <div class="ab-bottom" id="ab-bottom">Volgende halte!</div>
   </div>
-  <!-- Derail -->
   <div class="derail-screen" id="derail-screen">
     <div class="derail-icon">💥</div>
     <div class="derail-title">Ontspoord!</div>
@@ -766,18 +428,16 @@ main{padding:0;max-width:480px;margin:0 auto}
 
 <script>
 // Real NS intercity route Wezep → Rotterdam
+// Echte NS intercity route: Wezep → Schiphol Airport
 var ROUTE = [
-  {name:'Wezep',        short:'Wezep',    lat:52.4538, lng:6.0017},
-  {name:'Zwolle',       short:'Zwolle',   lat:52.5053, lng:6.0906},
-  {name:'Amersfoort',   short:'Amersft.', lat:52.1531, lng:5.3764},
-  {name:'Hilversum',    short:'Hilvers.', lat:52.2281, lng:5.1800},
-  {name:'Utrecht C.',   short:'Utrecht',  lat:52.0894, lng:5.1108},
-  {name:'Woerden',      short:'Woerden',  lat:52.0842, lng:4.8869},
-  {name:'Gouda',        short:'Gouda',    lat:52.0178, lng:4.7058},
-  {name:'Den Haag C.',  short:'Den Haag', lat:52.0808, lng:4.3244},
-  {name:'Delft',        short:'Delft',    lat:52.0064, lng:4.3558},
-  {name:'Schiedam C.',  short:'Schiedam', lat:51.9167, lng:4.4000},
-  {name:'Rotterdam C.', short:"R'dam C.", lat:51.9225, lng:4.4689}
+  {name:'Wezep',          short:'Wezep',    lat:52.4538, lng:6.0017},
+  {name:'Zwolle',         short:'Zwolle',   lat:52.5053, lng:6.0906},
+  {name:'Amersfoort',     short:'Amersft.', lat:52.1531, lng:5.3764},
+  {name:'Hilversum',      short:'Hilvers.', lat:52.2281, lng:5.1800},
+  {name:'Utrecht C.',     short:'Utrecht',  lat:52.0894, lng:5.1108},
+  {name:'Amsterdam C.',   short:'AMS C.',   lat:52.3791, lng:4.8997},
+  {name:'Amsterdam Sloterdijk', short:'Sloter.', lat:52.3888, lng:4.8371},
+  {name:'Schiphol ✈️',    short:'Schiphol', lat:52.3105, lng:4.7683},
 ];
 
 var LS_J = 'wk2026_trein_v3';
@@ -849,7 +509,7 @@ function startTrain(){
   renderStats();
   renderTip();
   renderHistory();
-  toast('🚂 Wezep → Rotterdam!','');
+  toast('🚂 Wezep → Schiphol → WK!','');
 }
 
 function initMap(){
@@ -1056,150 +716,730 @@ function recordResult(won){
   });
 }
 
-// ── TRAIN ANIMATIONS ──
-function buildScene(){
-  // Clouds
-  var cl = document.getElementById('cloud-layer');
-  cl.innerHTML='';
-  var clouds=[{w:80,h:30,t:'12%',d:'18s'},{w:120,h:40,t:'8%',d:'26s'},{w:60,h:22,t:'18%',d:'14s'},{w:100,h:35,t:'6%',d:'22s'}];
-  clouds.forEach(function(c,i){
-    var div=document.createElement('div');
-    div.className='cloud';
-    div.style.cssText='width:'+c.w+'px;height:'+c.h+'px;top:'+c.t+';left:'+(10+i*25)+'%;animation:cloudMove '+c.d+' linear infinite;animation-delay:'+(i*-4)+'s';
-    cl.appendChild(div);
+// ── CANVAS ANIMATION ENGINE ──
+var animRAF = null, animTimeout = null, animStartTime = 0;
+var ANIM = { phase:'idle', t:0, skipCalled:false };
+
+function initCanvas(){
+  var cv = document.getElementById('anim-canvas');
+  var W = window.innerWidth, H = window.innerHeight;
+  cv.width = W; cv.height = H;
+  return {cv:cv, ctx:cv.getContext('2d'), W:W, H:H};
+}
+
+// ── Scene drawing helpers ──
+function drawSky(ctx, W, H, t){
+  // Animated sky gradient
+  var g = ctx.createLinearGradient(0,0,0,H*0.65);
+  g.addColorStop(0,'#2a6aaa');
+  g.addColorStop(1,'#87CEEB');
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,W,H*0.65);
+}
+
+function drawSun(ctx, W, H){
+  ctx.save();
+  ctx.shadowColor='rgba(255,220,50,.4)';
+  ctx.shadowBlur=40;
+  ctx.beginPath();
+  ctx.arc(W*0.82, H*0.12, 32, 0, Math.PI*2);
+  ctx.fillStyle='#FFE066';
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawClouds(ctx, W, H, offset){
+  var clouds=[
+    {x:0.08,y:0.07,rx:80,ry:28,s:0.6},
+    {x:0.22,y:0.05,rx:110,ry:36,s:0.8},
+    {x:0.42,y:0.09,rx:90,ry:30,s:0.65},
+    {x:0.62,y:0.04,rx:130,ry:40,s:0.9},
+    {x:0.78,y:0.08,rx:85,ry:28,s:0.7},
+    {x:1.05,y:0.06,rx:95,ry:32,s:0.75},
+    {x:1.22,y:0.10,rx:70,ry:24,s:0.6},
+  ];
+  clouds.forEach(function(c){
+    var x = ((c.x*W - offset*0.15) % (W*1.4) + W*1.4) % (W*1.4) - W*0.1;
+    var y = c.y*H;
+    ctx.save();
+    ctx.globalAlpha = 0.88*c.s+0.1;
+    ctx.shadowColor='rgba(255,255,255,.3)';
+    ctx.shadowBlur=8;
+    drawCloud(ctx,x,y,c.rx,c.ry);
+    ctx.restore();
   });
-  // Far bg: windmills + houses
-  var far=document.getElementById('bg-far');
-  far.innerHTML='';
-  var items='';
-  for(var i=0;i<8;i++){
-    var left=(i/8)*100+'%';
-    if(i%3===0){
-      // windmill
-      items+='<div style="position:absolute;left:'+left+';bottom:0;width:50px;height:100px"><div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:16px;height:55px;background:#c8a876;clip-path:polygon(30% 0%,70% 0%,85% 100%,15% 100%)"></div><div style="position:absolute;bottom:53px;left:50%;transform:translateX(-50%);width:20px;height:10px;background:#7a5c3a;border-radius:2px 2px 0 0"></div><div style="position:absolute;bottom:55px;left:50%;width:44px;height:44px;animation:spinBlade '+(2+Math.random())+'s linear infinite;transform-origin:0 50%;margin-left:-22px"><div style="position:absolute;top:50%;left:50%;width:20px;height:4px;background:#5a3e1e;border-radius:1px;transform-origin:0 50%;transform:translate(0,-50%) rotate(0deg)"></div><div style="position:absolute;top:50%;left:50%;width:20px;height:4px;background:#5a3e1e;border-radius:1px;transform-origin:0 50%;transform:translate(0,-50%) rotate(90deg)"></div><div style="position:absolute;top:50%;left:50%;width:20px;height:4px;background:#5a3e1e;border-radius:1px;transform-origin:0 50%;transform:translate(0,-50%) rotate(180deg)"></div><div style="position:absolute;top:50%;left:50%;width:20px;height:4px;background:#5a3e1e;border-radius:1px;transform-origin:0 50%;transform:translate(0,-50%) rotate(270deg)"></div></div></div>';
-    } else {
-      // house
-      var hw=30+Math.random()*20,hh=35+Math.random()*15;
-      items+='<div style="position:absolute;left:'+left+';bottom:0;width:'+hw+'px"><div style="position:absolute;bottom:0;width:100%;height:'+hh+'px;background:#c8826a"></div><div style="position:absolute;bottom:'+hh+'px;left:-4px;right:-4px;height:'+(hh*0.5)+'px;background:#8b4513;clip-path:polygon(50% 0%,100% 100%,0% 100%)"></div><div style="position:absolute;bottom:4px;left:30%;width:35%;height:40%;background:#ffd54f;opacity:.5"></div></div>';
+}
+
+function drawCloud(ctx,x,y,rx,ry){
+  ctx.beginPath();
+  ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2); ctx.fillStyle='#fff'; ctx.fill();
+  ctx.beginPath(); ctx.ellipse(x-rx*0.35,y+ry*0.2,rx*0.55,ry*0.65,0,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(x+rx*0.35,y+ry*0.15,rx*0.5,ry*0.6,0,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(x+rx*0.1,y-ry*0.3,rx*0.4,ry*0.5,0,0,Math.PI*2); ctx.fill();
+}
+
+function drawFarBg(ctx, W, H, offset){
+  // Far fields gradient
+  var g = ctx.createLinearGradient(0,H*0.58,0,H*0.72);
+  g.addColorStop(0,'#6abf3a'); g.addColorStop(1,'#4a9020');
+  ctx.fillStyle=g; ctx.fillRect(0,H*0.58,W,H*0.15);
+  // Windmill (far, slow parallax)
+  var wmx = ((W*0.12 - offset*0.08)%(W*1.5)+W*1.5)%(W*1.5)-50;
+  drawWindmill(ctx, wmx, H*0.62, 0.55);
+  var wmx2 = ((W*0.7 - offset*0.08)%(W*1.5)+W*1.5)%(W*1.5)-50;
+  drawWindmill(ctx, wmx2, H*0.64, 0.4);
+  // Houses
+  for(var i=0;i<4;i++){
+    var hx = ((W*(0.25+i*0.22) - offset*0.1)%(W*1.5)+W*1.5)%(W*1.5)-30;
+    drawHouse(ctx, hx, H*0.63, 0.45+i%2*0.1);
+  }
+  // Trees row
+  for(var j=0;j<8;j++){
+    var tx = ((W*(0.18+j*0.13) - offset*0.12)%(W*1.5)+W*1.5)%(W*1.5)-20;
+    drawTree(ctx, tx, H*0.65, 0.5+j%3*0.08);
+  }
+}
+
+function drawWindmill(ctx,x,y,s){
+  ctx.save(); ctx.translate(x,y); ctx.scale(s,s);
+  // Tower
+  ctx.beginPath(); ctx.moveTo(-8,0); ctx.lineTo(-5,-80); ctx.lineTo(5,-80); ctx.lineTo(8,0); ctx.closePath();
+  ctx.fillStyle='#c8a060'; ctx.fill();
+  // Cap
+  ctx.fillStyle='#8b6020';
+  ctx.fillRect(-12,-90,24,12);
+  // Blades
+  ctx.strokeStyle='#6b4010'; ctx.lineWidth=4; ctx.lineCap='round';
+  var bladeAngle = animStartTime ? (Date.now()-animStartTime)*0.002 : 0;
+  for(var b=0;b<4;b++){
+    var a=bladeAngle+b*Math.PI/2;
+    ctx.beginPath(); ctx.moveTo(0,-84); ctx.lineTo(Math.cos(a)*38,Math.sin(a)*38-84); ctx.stroke();
+    // Blade sail
+    ctx.save(); ctx.globalAlpha=0.7;
+    ctx.beginPath(); ctx.moveTo(0,-84);
+    ctx.lineTo(Math.cos(a)*38,Math.sin(a)*38-84);
+    ctx.lineTo(Math.cos(a+0.4)*30,Math.sin(a+0.4)*30-84);
+    ctx.closePath(); ctx.fillStyle='#8b5018'; ctx.fill();
+    ctx.restore();
+  }
+  ctx.restore();
+}
+
+function drawHouse(ctx,x,y,s){
+  ctx.save(); ctx.translate(x,y); ctx.scale(s,s);
+  ctx.fillStyle='#c88060'; ctx.fillRect(-18,-35,36,35);
+  ctx.beginPath(); ctx.moveTo(-22,-35); ctx.lineTo(22,-35); ctx.lineTo(0,-58); ctx.closePath();
+  ctx.fillStyle='#8b4010'; ctx.fill();
+  ctx.fillStyle='rgba(255,210,100,.5)'; ctx.fillRect(-8,-25,10,14);
+  ctx.fillRect(4,-25,8,10);
+  ctx.restore();
+}
+
+function drawTree(ctx,x,y,s){
+  ctx.save(); ctx.translate(x,y); ctx.scale(s,s);
+  ctx.fillStyle='#5c3010'; ctx.fillRect(-4,0,8,18);
+  ctx.beginPath(); ctx.arc(0,-12,18,0,Math.PI*2);
+  ctx.fillStyle='#2a6a14'; ctx.fill();
+  ctx.beginPath(); ctx.arc(-6,-20,12,0,Math.PI*2);
+  ctx.fill();
+  ctx.beginPath(); ctx.arc(6,-18,13,0,Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawMidGround(ctx,W,H,offset){
+  // Green grass bank
+  var g=ctx.createLinearGradient(0,H*0.67,0,H*0.78);
+  g.addColorStop(0,'#5aaa2e'); g.addColorStop(1,'#3d8018');
+  ctx.fillStyle=g; ctx.fillRect(0,H*0.67,W,H*0.12);
+  // Canal
+  ctx.fillStyle='#4a8ab0';
+  ctx.fillRect(0,H*0.72,W*0.22,H*0.04);
+  ctx.beginPath(); ctx.moveTo(0,H*0.72); ctx.quadraticCurveTo(W*0.11,H*0.70,W*0.22,H*0.72);
+  ctx.strokeStyle='#6aadd8'; ctx.lineWidth=2; ctx.stroke();
+  // Road/path right side
+  ctx.fillStyle='#999';
+  ctx.fillRect(W*0.82,H*0.67,W*0.18,H*0.12);
+  ctx.strokeStyle='rgba(255,255,255,.4)'; ctx.lineWidth=2; ctx.setLineDash([12,8]);
+  ctx.beginPath(); ctx.moveTo(W*0.9,H*0.67); ctx.lineTo(W*0.9,H*0.79); ctx.stroke();
+  ctx.setLineDash([]);
+  // Cows
+  var cowPositions=[0.38,0.52,0.65];
+  cowPositions.forEach(function(p){
+    var cx=((p*W - offset*0.3)%(W*1.2)+W*1.2)%(W*1.2)-40;
+    if(cx>-20&&cx<W+20) drawCow(ctx,cx,H*0.7);
+  });
+  // Flag wavers on road
+  for(var i=0;i<3;i++){
+    var fx=((W*(0.84+i*0.05) - offset*0.4)%(W*1.3)+W*1.3)%(W*1.3);
+    if(fx>W*0.75&&fx<W) drawFlagWaver(ctx,fx,H*0.73);
+  }
+}
+
+function drawCow(ctx,x,y){
+  ctx.save(); ctx.translate(x,y);
+  ctx.fillStyle='#f5f5f5';
+  ctx.beginPath(); ctx.ellipse(0,0,16,9,0,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(-12,-4,7,6,0,0,Math.PI*2); ctx.fill();
+  // Spots
+  ctx.fillStyle='rgba(30,30,30,.25)';
+  ctx.beginPath(); ctx.ellipse(3,-1,5,4,0.3,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(-4,2,4,3,-0.2,0,Math.PI*2); ctx.fill();
+  // Legs
+  ctx.strokeStyle='#ddd'; ctx.lineWidth=3;
+  [-8,-3,3,8].forEach(function(lx){
+    ctx.beginPath(); ctx.moveTo(lx,7); ctx.lineTo(lx,15); ctx.stroke();
+  });
+  ctx.restore();
+}
+
+function drawFlagWaver(ctx,x,y){
+  ctx.save(); ctx.translate(x,y);
+  ctx.fillStyle='#E85D04';
+  ctx.beginPath(); ctx.arc(0,-18,6,0,Math.PI*2); ctx.fill();
+  ctx.fillRect(-4,-12,8,12);
+  // Flag
+  var wave=Math.sin(Date.now()*0.008)*0.3;
+  ctx.strokeStyle='#ccc'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(3,-20); ctx.lineTo(3,-32); ctx.stroke();
+  ctx.fillStyle='#AE1C28'; ctx.fillRect(3,-32,14,4);
+  ctx.fillStyle='#fff'; ctx.fillRect(3,-28,14,4);
+  ctx.fillStyle='#003DA5'; ctx.fillRect(3,-24,14,4);
+  ctx.restore();
+}
+
+function drawOHW(ctx,W,H,offset){
+  // Overhead wire
+  ctx.strokeStyle='rgba(180,180,180,.7)'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(0,H*0.38); ctx.lineTo(W,H*0.38); ctx.stroke();
+  ctx.strokeStyle='rgba(200,200,200,.4)'; ctx.lineWidth=0.8;
+  ctx.beginPath(); ctx.moveTo(0,H*0.385); ctx.lineTo(W,H*0.385); ctx.stroke();
+  // Poles
+  var poleSpacing = W*0.28;
+  for(var p=0;p<5;p++){
+    var px = ((p*poleSpacing - offset*0.5)%(W*1.4)+W*1.4)%(W*1.4)-30;
+    if(px>-10&&px<W+10){
+      ctx.fillStyle='#666';
+      ctx.fillRect(px-3,H*0.38,5,H*0.42);
+      // Cross arm
+      ctx.fillStyle='#777';
+      ctx.fillRect(px-14,H*0.375,28,5);
+      ctx.beginPath();
+      ctx.moveTo(px-12,H*0.38); ctx.lineTo(px-3,H*0.42);
+      ctx.moveTo(px+12,H*0.38); ctx.lineTo(px+3,H*0.42);
+      ctx.strokeStyle='#888'; ctx.lineWidth=1.5; ctx.stroke();
     }
   }
-  far.innerHTML = items+items; // doubled for seamless loop
+}
 
-  // Flag wavers
-  var fw=document.getElementById('flag-wavers');
-  fw.innerHTML='';
-  for(var j=0;j<6;j++){
-    var x=5+j*16;
-    fw.innerHTML+='<div class="flagwaver" style="left:'+x+'%"><span>🏳️</span></div>'.replace('🏳️','🇳🇱');
+function drawTrack(ctx,W,H){
+  var railY1 = H*0.80, railY2 = H*0.84;
+  // Ballast
+  var bg=ctx.createLinearGradient(0,H*0.78,0,H*0.88);
+  bg.addColorStop(0,'#b0a090'); bg.addColorStop(1,'#8a7a6a');
+  ctx.fillStyle=bg; ctx.fillRect(0,H*0.78,W,H*0.1);
+  // Rails
+  ctx.fillStyle='#7a7a7a';
+  ctx.fillRect(0,railY1,W,6);
+  ctx.fillRect(0,railY2,W,6);
+  ctx.fillStyle='#5a5a5a';
+  ctx.fillRect(0,railY1+1,W,2);
+  ctx.fillRect(0,railY2+1,W,2);
+}
+
+function drawSleepers(ctx,W,H,offset){
+  var sleeperSpacing=52, railY=H*0.80;
+  var count=Math.ceil(W/sleeperSpacing)+3;
+  var startX=-(offset*0.5%sleeperSpacing);
+  for(var i=0;i<count;i++){
+    var sx=startX+i*sleeperSpacing;
+    ctx.fillStyle='#5c3810';
+    ctx.fillRect(sx-11,railY-4,22,H*0.09);
+    // Grain lines
+    ctx.strokeStyle='rgba(0,0,0,.1)'; ctx.lineWidth=0.8;
+    ctx.beginPath(); ctx.moveTo(sx-9,railY); ctx.lineTo(sx-9,railY+H*0.07); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(sx,railY); ctx.lineTo(sx,railY+H*0.07); ctx.stroke();
   }
 }
 
+function drawForeground(ctx,W,H){
+  var g=ctx.createLinearGradient(0,H*0.88,0,H);
+  g.addColorStop(0,'#4a8a22'); g.addColorStop(1,'#2d6010');
+  ctx.fillStyle=g;
+  ctx.beginPath();
+  ctx.moveTo(0,H*0.88);
+  ctx.bezierCurveTo(W*0.25,H*0.85,W*0.5,H*0.9,W*0.75,H*0.87);
+  ctx.bezierCurveTo(W*0.88,H*0.86,W*0.95,H*0.88,W,H*0.88);
+  ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath();
+  ctx.fill();
+}
+
+function drawTrain(ctx,W,H,trainX,speed){
+  ctx.save();
+  ctx.translate(trainX, H*0.72);
+  // Motion blur shadow
+  if(speed>3){
+    ctx.save();
+    ctx.globalAlpha=0.12;
+    for(var mb=1;mb<=4;mb++){
+      ctx.translate(-speed*mb*0.8,0);
+      drawTrainBody(ctx,W,H,0);
+    }
+    ctx.restore();
+  }
+  drawTrainBody(ctx,W,H,speed);
+  ctx.restore();
+}
+
+function drawTrainBody(ctx,W,H,speed){
+  var scale = H/500;
+  ctx.save();
+  ctx.scale(scale,scale);
+  var t = animStartTime ? (Date.now()-animStartTime)/1000 : 0;
+  var wheelRot = speed>0 ? t*speed*4 : 0;
+
+  // === LOCO ===
+  // Shadow
+  ctx.save(); ctx.globalAlpha=0.25;
+  ctx.fillStyle='#000';
+  ctx.beginPath(); ctx.ellipse(90,130,130,12,0,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+  // Body
+  var lg=ctx.createLinearGradient(0,20,0,120);
+  lg.addColorStop(0,'#FF8822'); lg.addColorStop(0.6,'#E85D04'); lg.addColorStop(1,'#B84000');
+  ctx.fillStyle=lg;
+  ctx.beginPath(); ctx.roundRect(0,20,160,100,6); ctx.fill();
+  // Highlight
+  ctx.fillStyle='rgba(255,255,255,.12)';
+  ctx.beginPath(); ctx.roundRect(2,21,156,18,4); ctx.fill();
+  // Nose
+  ctx.fillStyle='#C04400';
+  ctx.beginPath(); ctx.moveTo(160,20); ctx.lineTo(190,32); ctx.lineTo(190,108); ctx.lineTo(160,120); ctx.closePath(); ctx.fill();
+  ctx.fillStyle='#282828';
+  ctx.beginPath(); ctx.moveTo(186,30); ctx.lineTo(196,34); ctx.lineTo(196,106); ctx.lineTo(186,118); ctx.closePath(); ctx.fill();
+  // Cab windows
+  drawWindow(ctx,12,28,48,38,'#1C3558');
+  drawWindow(ctx,68,28,48,38,'#1C3558');
+  drawWindow(ctx,126,30,30,32,'#1C3558');
+  // Lion emblem
+  drawLion(ctx,18,70,52,50);
+  // NS badge
+  ctx.beginPath(); ctx.arc(138,88,12,0,Math.PI*2); ctx.fillStyle='#fff'; ctx.fill();
+  ctx.fillStyle='#003DA5'; ctx.fillRect(128,83,20,5);
+  ctx.fillStyle='#AE1C28'; ctx.fillRect(128,90,20,5);
+  // Bottom stripes
+  ctx.fillStyle='#003DA5'; ctx.fillRect(0,112,160,6);
+  ctx.fillStyle='#fff'; ctx.fillRect(0,118,160,3.5);
+  ctx.fillStyle='#AE1C28'; ctx.fillRect(0,121.5,160,3);
+  // Roof
+  ctx.fillStyle='#A03800'; ctx.beginPath(); ctx.roundRect(2,12,156,10,3); ctx.fill();
+  // Pantograph
+  drawPantograph(ctx,45,12,80,12);
+  // Flags on roof
+  drawFlag(ctx,30,12); drawFlag(ctx,110,12);
+  // Front lights
+  ctx.fillStyle='#FFFBD0'; ctx.beginPath(); ctx.roundRect(190,46,10,8,2); ctx.fill();
+  ctx.fillStyle='rgba(255,248,180,.5)';
+  var glowG=ctx.createRadialGradient(200,50,0,200,50,18);
+  glowG.addColorStop(0,'rgba(255,248,180,.4)'); glowG.addColorStop(1,'rgba(255,248,180,0)');
+  ctx.fillStyle=glowG; ctx.beginPath(); ctx.arc(200,50,18,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#FF2222'; ctx.beginPath(); ctx.roundRect(190,62,10,7,1); ctx.fill();
+  // Number plate
+  ctx.fillStyle='#111'; ctx.beginPath(); ctx.roundRect(4,106,30,10,1); ctx.fill();
+  // Undercarriage
+  ctx.fillStyle='#1a1a1a'; ctx.beginPath(); ctx.roundRect(2,124,156,10,2); ctx.fill();
+  // Coupling rod
+  ctx.fillStyle='#333'; ctx.beginPath(); ctx.roundRect(158,128,40,7,2); ctx.fill();
+  // Drive wheels with rotation
+  drawDriveWheel(ctx,32,144,16,wheelRot);
+  drawDriveWheel(ctx,82,144,16,wheelRot);
+  drawDriveWheel(ctx,132,144,14,wheelRot);
+  // Drive rod
+  ctx.strokeStyle='#444'; ctx.lineWidth=4;
+  ctx.beginPath(); ctx.moveTo(32,144); ctx.lineTo(132,144); ctx.stroke();
+  ctx.fillStyle='#666';
+  ctx.beginPath(); ctx.arc(57,144,4,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(107,144,4,0,Math.PI*2); ctx.fill();
+
+  // === WAGON 1 ===
+  var w1x=198;
+  var wg=ctx.createLinearGradient(0,22,0,122);
+  wg.addColorStop(0,'#FF8822'); wg.addColorStop(1,'#D94F00');
+  ctx.fillStyle=wg; ctx.beginPath(); ctx.roundRect(w1x,22,200,98,4); ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.1)'; ctx.beginPath(); ctx.roundRect(w1x+2,23,196,14,3); ctx.fill();
+  // Blue WK TREIN band
+  ctx.fillStyle='#003DA5'; ctx.fillRect(w1x,96,200,24);
+  ctx.fillStyle='#FF8800'; ctx.fillRect(w1x,93,200,5);
+  // Bottom stripes
+  ctx.fillStyle='#003DA5'; ctx.fillRect(w1x,116,200,5.5);
+  ctx.fillStyle='#fff'; ctx.fillRect(w1x,121.5,200,3.5);
+  ctx.fillStyle='#AE1C28'; ctx.fillRect(w1x,125,200,3);
+  // Roof
+  ctx.fillStyle='#A03800'; ctx.beginPath(); ctx.roundRect(w1x+2,14,196,10,2); ctx.fill();
+  // Flags
+  drawFlag(ctx,w1x+28,14); drawFlag(ctx,w1x+150,14);
+  // Windows
+  [w1x+12,w1x+58,w1x+104,w1x+150].forEach(function(wx){
+    drawWindow(ctx,wx,30,40,34,'#1C3558');
+    // Person
+    drawPerson(ctx,wx+20,42,wheelRot);
+  });
+  // Flag waver at window 2
+  drawFlagOutWindow(ctx,w1x+74,28);
+  // Undercarriage
+  ctx.fillStyle='#1a1a1a'; ctx.beginPath(); ctx.roundRect(w1x+2,128,196,8,2); ctx.fill();
+  [w1x+28,w1x+68,w1x+128,w1x+168].forEach(function(wx){
+    drawWheel(ctx,wx,144,13,wheelRot);
+  });
+
+  // === WAGON 2 ===
+  var w2x=404;
+  ctx.fillStyle=wg; ctx.beginPath(); ctx.roundRect(w2x,24,210,94,4); ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.08)'; ctx.beginPath(); ctx.roundRect(w2x+2,25,206,12,3); ctx.fill();
+  // Bottom stripes
+  ctx.fillStyle='#003DA5'; ctx.fillRect(w2x,112,210,5);
+  ctx.fillStyle='#fff'; ctx.fillRect(w2x,117,210,3);
+  ctx.fillStyle='#AE1C28'; ctx.fillRect(w2x,120,210,2.5);
+  // Roof
+  ctx.fillStyle='#A03800'; ctx.beginPath(); ctx.roundRect(w2x+2,16,206,10,2); ctx.fill();
+  drawPantograph(ctx,w2x+65,16,w2x+100,16);
+  drawFlag(ctx,w2x+30,16); drawFlag(ctx,w2x+160,16);
+  // Windows
+  [w2x+12,w2x+54,w2x+96,w2x+138,w2x+178].forEach(function(wx){
+    drawWindow(ctx,wx,32,36,30,'#1C3558');
+    drawPerson(ctx,wx+18,40,wheelRot+1);
+  });
+  drawFlagOutWindow(ctx,w2x+70,30);
+  // Undercarriage
+  ctx.fillStyle='#1a1a1a'; ctx.beginPath(); ctx.roundRect(w2x+2,126,206,8,2); ctx.fill();
+  [w2x+28,w2x+68,w2x+128,w2x+172].forEach(function(wx){
+    drawWheel(ctx,wx,142,12,wheelRot);
+  });
+
+  // Steam puffs
+  if(speed>1) drawSteam(ctx,t);
+
+  ctx.restore();
+}
+
+function drawWindow(ctx,x,y,w,h,fill){
+  ctx.fillStyle=fill; ctx.beginPath(); ctx.roundRect(x,y,w,h,3); ctx.fill();
+  ctx.strokeStyle='#111'; ctx.lineWidth=2; ctx.stroke();
+  // Reflection
+  ctx.save(); ctx.globalAlpha=0.22;
+  ctx.fillStyle='#88bbdd';
+  ctx.beginPath(); ctx.moveTo(x+2,y+2); ctx.lineTo(x+w*0.45,y+2); ctx.lineTo(x+2,y+h*0.55); ctx.closePath(); ctx.fill();
+  ctx.restore();
+}
+
+function drawPerson(ctx,x,y,t){
+  // Bob animation
+  var bob = Math.sin(t*2+x)*0.8;
+  ctx.save(); ctx.translate(x,y+bob);
+  ctx.fillStyle='#FF7A00';
+  ctx.beginPath(); ctx.arc(0,-8,6,0,Math.PI*2); ctx.fill();
+  ctx.fillRect(-5,-4,10,10);
+  ctx.fillStyle='#F0C080';
+  ctx.beginPath(); ctx.arc(0,-12,3.5,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+}
+
+function drawFlagOutWindow(ctx,x,y){
+  ctx.strokeStyle='#bbb'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x,-12); ctx.stroke();
+  ctx.fillStyle='#AE1C28'; ctx.fillRect(x,-12,16,4);
+  ctx.fillStyle='#fff'; ctx.fillRect(x,-8,16,4);
+  ctx.fillStyle='#003DA5'; ctx.fillRect(x,-4,16,4);
+}
+
+function drawFlag(ctx,x,y){
+  ctx.strokeStyle='#ccc'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x,y-14); ctx.stroke();
+  ctx.fillStyle='#AE1C28'; ctx.fillRect(x,y-14,16,4);
+  ctx.fillStyle='#fff'; ctx.fillRect(x,y-10,16,4);
+  ctx.fillStyle='#003DA5'; ctx.fillRect(x,y-6,16,4);
+}
+
+function drawPantograph(ctx,x1,y1,x2,y2){
+  ctx.strokeStyle='#999'; ctx.lineWidth=2;
+  var mx=(x1+x2)/2, my=Math.min(y1,y2)-16;
+  ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(mx,my); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x2,y2); ctx.lineTo(mx,my); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(mx-4,my); ctx.lineTo(mx-4,my-5); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(mx+4,my); ctx.lineTo(mx+4,my-5); ctx.stroke();
+  ctx.strokeStyle='#ddd'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(mx-4,my-5); ctx.lineTo(mx+4,my-5); ctx.stroke();
+}
+
+function drawDriveWheel(ctx,x,y,r,rot){
+  // Wheel
+  var wg=ctx.createRadialGradient(x-r*0.3,y-r*0.3,0,x,y,r);
+  wg.addColorStop(0,'#555'); wg.addColorStop(1,'#1a1a1a');
+  ctx.fillStyle=wg; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle='#666'; ctx.lineWidth=1.5; ctx.stroke();
+  // Spokes
+  ctx.strokeStyle='rgba(100,100,100,.6)'; ctx.lineWidth=1.5;
+  for(var s=0;s<6;s++){
+    var a=rot+s*Math.PI/3;
+    ctx.beginPath(); ctx.moveTo(x+Math.cos(a)*r*0.3,y+Math.sin(a)*r*0.3);
+    ctx.lineTo(x+Math.cos(a)*(r-2),y+Math.sin(a)*(r-2)); ctx.stroke();
+  }
+  // Hub
+  ctx.fillStyle='#888'; ctx.beginPath(); ctx.arc(x,y,r*0.28,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#bbb'; ctx.beginPath(); ctx.arc(x,y,r*0.12,0,Math.PI*2); ctx.fill();
+}
+
+function drawWheel(ctx,x,y,r,rot){
+  var wg=ctx.createRadialGradient(x-r*0.3,y-r*0.3,0,x,y,r);
+  wg.addColorStop(0,'#555'); wg.addColorStop(1,'#1a1a1a');
+  ctx.fillStyle=wg; ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle='#666'; ctx.lineWidth=1.2; ctx.stroke();
+  ctx.strokeStyle='rgba(100,100,100,.5)'; ctx.lineWidth=1.2;
+  for(var s=0;s<4;s++){
+    var a=rot+s*Math.PI/2;
+    ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+Math.cos(a)*(r-1),y+Math.sin(a)*(r-1)); ctx.stroke();
+  }
+  ctx.fillStyle='#888'; ctx.beginPath(); ctx.arc(x,y,r*0.3,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#bbb'; ctx.beginPath(); ctx.arc(x,y,r*0.12,0,Math.PI*2); ctx.fill();
+}
+
+function drawLion(ctx,x,y,w,h){
+  ctx.save(); ctx.translate(x+w/2,y+h/2);
+  // Mane
+  ctx.fillStyle='#FF9500';
+  ctx.beginPath(); ctx.arc(0,0,w*0.5,0,Math.PI*2); ctx.fill();
+  // Body
+  ctx.fillStyle='#D05000';
+  ctx.beginPath(); ctx.arc(0,-2,w*0.36,0,Math.PI*2); ctx.fill();
+  // Mane spikes
+  ctx.fillStyle='#FF9500';
+  for(var i=0;i<8;i++){
+    var a=i*Math.PI/4;
+    ctx.beginPath();
+    ctx.moveTo(Math.cos(a)*w*0.28,Math.sin(a)*w*0.28);
+    ctx.lineTo(Math.cos(a-0.25)*w*0.48,Math.sin(a-0.25)*w*0.48);
+    ctx.lineTo(Math.cos(a+0.25)*w*0.48,Math.sin(a+0.25)*w*0.48);
+    ctx.closePath(); ctx.fill();
+  }
+  // Eyes
+  ctx.fillStyle='#111';
+  ctx.beginPath(); ctx.arc(-w*0.1,-4,2.5,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(w*0.1,-4,2.5,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.6)';
+  ctx.beginPath(); ctx.arc(-w*0.08,-5,0.9,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(w*0.12,-5,0.9,0,Math.PI*2); ctx.fill();
+  // Mouth
+  ctx.fillStyle='#903000'; ctx.beginPath(); ctx.ellipse(0,2,5,3,0,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle='#6a1800'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(-4,4); ctx.quadraticCurveTo(0,8,4,4); ctx.stroke();
+  ctx.restore();
+}
+
+function drawSteam(ctx,t){
+  for(var i=0;i<5;i++){
+    var age=(t*2+i*0.4)%2;
+    var sx=-10+Math.sin(age*3)*8;
+    var sy=-20-age*30;
+    var r=6+age*14;
+    ctx.save();
+    ctx.globalAlpha=Math.max(0,(0.7-age*0.4));
+    ctx.fillStyle='#f0f0e8';
+    ctx.beginPath(); ctx.arc(sx,sy,r,0,Math.PI*2); ctx.fill();
+    ctx.restore();
+  }
+}
+
+function drawConfettiCanvas(ctx,W,H,t,particles){
+  particles.forEach(function(p){
+    ctx.save();
+    ctx.globalAlpha=Math.max(0,1-p.age*0.7);
+    ctx.translate(p.x,p.y);
+    ctx.rotate(p.rot);
+    ctx.fillStyle=p.color;
+    ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+    ctx.restore();
+    p.x+=p.vx; p.y+=p.vy; p.vy+=0.15; p.rot+=p.vr; p.age+=0.016;
+  });
+}
+
+function spawnParticles(){
+  var colors=['#E85D04','#fbbf24','#fff','#003DA5','#22c55e','#AE1C28','#FF9500'];
+  var parts=[];
+  for(var i=0;i<80;i++){
+    parts.push({
+      x:Math.random()*window.innerWidth,
+      y:-10-Math.random()*100,
+      vx:(Math.random()-0.5)*4,
+      vy:1+Math.random()*3,
+      vr:(Math.random()-0.5)*0.2,
+      rot:Math.random()*Math.PI*2,
+      w:6+Math.random()*10,
+      h:4+Math.random()*6,
+      color:colors[Math.floor(Math.random()*colors.length)],
+      age:0
+    });
+  }
+  return parts;
+}
+
+// ── Main animation loops ──
 function playGoal(halteNum, winst, isFinal, cb){
-  var overlay=document.getElementById('wk-overlay');
+  var c=initCanvas(), ctx=c.ctx, W=c.W, H=c.H;
   var board=document.getElementById('anim-board');
-  var trainScene=document.getElementById('train-scene');
   var derail=document.getElementById('derail-screen');
   derail.classList.remove('show');
-
   document.getElementById('ab-top').textContent='Halte '+halteNum+(isFinal?' 🏆':'')+' ✓';
   document.getElementById('ab-score').innerHTML='<span>+€'+winst.toFixed(2)+'</span>';
-  document.getElementById('ab-bottom').textContent=isFinal?'🏆 Rotterdam bereikt!':'Volgende halte!';
+  document.getElementById('ab-bottom').textContent=isFinal?'🏆 Schiphol bereikt!':'Volgende halte!';
 
-  buildScene();
-  spawnConfetti();
+  var overlay=document.getElementById('wk-overlay');
   overlay.classList.add('active');
+  animStartTime=Date.now();
+  ANIM.skipCalled=false;
 
-  // Train enters from left
-  trainScene.className='train-scene entering';
+  var particles=[];
+  var trainX=-620*(H/500); // start off-screen left
+  var targetX=W/2-300*(H/500);
+  var phase='enter'; // enter → stop → board → leave → done
+  var phaseStart=animStartTime;
 
-  // Train stops, show scoreboard
-  setTimeout(function(){
-    trainScene.className='train-scene stopped';
-    board.classList.add('show');
-    animateSteam();
-  }, 950);
+  function frame(){
+    if(ANIM.skipCalled) return;
+    var now=Date.now(), elapsed=(now-animStartTime)/1000;
+    var dt=16;
+    ctx.clearRect(0,0,W,H);
+    var scrollOffset=elapsed*180;
 
-  // After pause, train leaves to right
-  setTimeout(function(){
-    board.classList.remove('show');
-    trainScene.className='train-scene leaving';
-  }, 2600);
+    // Draw scene
+    drawSky(ctx,W,H,elapsed);
+    drawSun(ctx,W,H);
+    drawClouds(ctx,W,H,scrollOffset);
+    drawFarBg(ctx,W,H,scrollOffset);
+    drawMidGround(ctx,W,H,scrollOffset);
+    drawOHW(ctx,W,H,scrollOffset);
+    drawSleepers(ctx,W,H,scrollOffset);
+    drawTrack(ctx,W,H);
+    drawForeground(ctx,W,H);
 
-  var t=setTimeout(function(){
-    overlay.classList.remove('active');
-    trainScene.className='train-scene';
-    cb();
-  }, 3400);
-  animTimeout=t;
-}
+    var speed=0;
+    if(phase==='enter'){
+      var prog=Math.min(1,(now-phaseStart)/900);
+      trainX = -620*(H/500) + (targetX+620*(H/500))*easeOut(prog);
+      speed = prog<1 ? 8*(1-prog*0.5) : 0;
+      if(prog>=1){ phase='stop'; phaseStart=now; }
+    } else if(phase==='stop'){
+      trainX=targetX; speed=0;
+      if(now-phaseStart>300){ phase='board'; phaseStart=now; board.classList.add('show'); particles=spawnParticles(); }
+    } else if(phase==='board'){
+      trainX=targetX; speed=0;
+      drawConfettiCanvas(ctx,W,H,elapsed,particles);
+      if(now-phaseStart>1800){ phase='leave'; phaseStart=now; board.classList.remove('show'); }
+    } else if(phase==='leave'){
+      var prog=Math.min(1,(now-phaseStart)/700);
+      trainX=targetX+(W+620*(H/500))*easeIn(prog);
+      speed=4+prog*8;
+      if(prog>=1){ phase='done'; }
+    } else if(phase==='done'){
+      overlay.classList.remove('active');
+      cb(); return;
+    }
 
-function animateSteam(){
-  var st1=document.getElementById('st1');
-  var st2=document.getElementById('st2');
-  var st3=document.getElementById('st3');
-  if(!st1) return;
-  var t=0;
-  function puff(){
-    st1.style.opacity='.6'; st2.style.opacity='.4'; st3.style.opacity='.3';
-    setTimeout(function(){st1.style.opacity='0';st2.style.opacity='0';st3.style.opacity='0';},400);
+    drawTrain(ctx,W,H,trainX,speed);
+    animRAF=requestAnimationFrame(frame);
   }
-  var iv=setInterval(puff,500);
-  setTimeout(function(){clearInterval(iv);},2000);
+  cancelAnimationFrame(animRAF);
+  animRAF=requestAnimationFrame(frame);
+
+  animTimeout=setTimeout(function(){
+    if(!ANIM.skipCalled){ closeOverlay(); cb(); }
+  },4500);
 }
 
 function playDerail(stationName, cb){
+  var c=initCanvas(), ctx=c.ctx, W=c.W, H=c.H;
   var overlay=document.getElementById('wk-overlay');
   var derail=document.getElementById('derail-screen');
-  var board=document.getElementById('anim-board');
-  var trainScene=document.getElementById('train-scene');
-  board.classList.remove('show');
+  document.getElementById('anim-board').classList.remove('show');
   document.getElementById('derail-sub').textContent='Verlies bij '+stationName;
-
-  buildScene();
   overlay.classList.add('active');
-  overlay.style.filter='grayscale(80%) brightness(.6)';
-  trainScene.className='train-scene entering';
+  animStartTime=Date.now();
+  ANIM.skipCalled=false;
 
-  setTimeout(function(){
-    trainScene.className='train-scene stopped';
-    trainScene.style.transform='translateX(-50%) rotate(4deg) translateY(10px)';trainScene.style.transition='transform .4s ease';
-    derail.classList.add('show');
-  }, 900);
+  var trainX=-620*(H/500);
+  var targetX=W/2-300*(H/500);
+  var phase='enter';
+  var phaseStart=animStartTime;
+  var shakeAmt=0;
 
-  var t=setTimeout(function(){
-    derail.classList.remove('show');
-    overlay.classList.remove('active');
-    overlay.style.filter='';
-    trainScene.style.transform='';
-    trainScene.className='train-scene';
-    cb();
-  }, 3400);
-  animTimeout=t;
+  function frame(){
+    if(ANIM.skipCalled) return;
+    var now=Date.now(), elapsed=(now-animStartTime)/1000;
+    ctx.clearRect(0,0,W,H);
+    var scrollOffset=elapsed*180;
+
+    drawSky(ctx,W,H,elapsed);
+    drawSun(ctx,W,H);
+    drawClouds(ctx,W,H,scrollOffset);
+    drawFarBg(ctx,W,H,scrollOffset);
+    drawMidGround(ctx,W,H,scrollOffset);
+    drawOHW(ctx,W,H,scrollOffset);
+    drawSleepers(ctx,W,H,scrollOffset);
+    drawTrack(ctx,W,H);
+    drawForeground(ctx,W,H);
+
+    // Red overlay
+    if(phase==='derail'||phase==='show'){
+      var red=Math.min(0.55,(now-phaseStart)/800*0.55);
+      ctx.fillStyle='rgba(180,0,0,'+red+')';
+      ctx.fillRect(0,0,W,H);
+    }
+
+    var speed=0;
+    if(phase==='enter'){
+      var prog=Math.min(1,(now-phaseStart)/900);
+      trainX=-620*(H/500)+(targetX+620*(H/500))*easeOut(prog);
+      speed=8*(1-prog*0.5);
+      if(prog>=1){ phase='derail'; phaseStart=now; }
+    } else if(phase==='derail'){
+      shakeAmt=Math.min(8,(now-phaseStart)/100*8);
+      trainX=targetX+Math.sin((now-phaseStart)*0.04)*shakeAmt;
+      if(now-phaseStart>600){ phase='show'; phaseStart=now; derail.classList.add('show'); }
+    } else if(phase==='show'){
+      trainX=targetX+Math.sin((now-phaseStart)*0.02)*3;
+      if(now-phaseStart>2000){ phase='done'; }
+    } else if(phase==='done'){
+      overlay.classList.remove('active');
+      derail.classList.remove('show');
+      cb(); return;
+    }
+
+    drawTrain(ctx,W,H,trainX,speed);
+    animRAF=requestAnimationFrame(frame);
+  }
+  cancelAnimationFrame(animRAF);
+  animRAF=requestAnimationFrame(frame);
+
+  animTimeout=setTimeout(function(){
+    if(!ANIM.skipCalled){ closeOverlay(); derail.classList.remove('show'); cb(); }
+  },4000);
 }
 
+function easeOut(t){ return 1-Math.pow(1-t,3); }
+function easeIn(t){ return t*t*t; }
+
 function closeOverlay(){
+  ANIM.skipCalled=true;
+  cancelAnimationFrame(animRAF);
   clearTimeout(animTimeout);
   var overlay=document.getElementById('wk-overlay');
   overlay.classList.remove('active');
-  overlay.style.filter='';
-  document.getElementById('derail-screen').classList.remove('show');
   document.getElementById('anim-board').classList.remove('show');
-  document.getElementById('train-scene').className='train-scene';
-  document.getElementById('train-scene').style.transform='';
+  document.getElementById('derail-screen').classList.remove('show');
 }
 
-function spawnConfetti(){
-  var el=document.getElementById('conf-layer');
-  el.innerHTML='';
-  var colors=['#E85D04','#fbbf24','#fff','#003da5','#22c55e','#ae1c28'];
-  for(var i=0;i<55;i++){
-    var d=document.createElement('div');
-    d.className='conf';
-    var c=colors[Math.floor(Math.random()*colors.length)];
-    d.style.cssText='left:'+Math.random()*100+'%;width:'+(4+Math.random()*7)+'px;height:'+(8+Math.random()*14)+'px;background:'+c+';animation-duration:'+(1.4+Math.random()*2)+'s;animation-delay:'+(Math.random()*1.2)+'s;transform:rotate('+(Math.random()*360)+'deg)';
-    el.appendChild(d);
-  }
-}
+function spawnConfetti(){ return spawnParticles(); }
+
+
 
 function showResult(){
   var won = J.result==='won';
@@ -1216,7 +1456,7 @@ function showResult(){
   document.getElementById('res-amt').textContent=(profit>=0?'+':'')+'€'+profit.toFixed(2);
   document.getElementById('res-amt').className='res-amt '+(won?'won':'lost');
   document.getElementById('res-sub').textContent = won
-    ? 'Trein reed van Wezep naar '+J.stations[J.stations.length-1].name+' via '+J.stops.length+' haltes. Start: €'+J.budget+'.'
+    ? 'Trein van Wezep naar Schiphol via '+J.stops.length+' haltes. Daarna vliegen naar het WK! Start: €'+J.budget+'.'
     : 'Ontspoord bij '+J.stops[J.stops.length-1].station+' (halte '+J.current+' van '+J.haltes+').';
   document.getElementById('result-hist').innerHTML = J.stops.map(function(s){
     return '<div class="hi-row"><div class="hi-left"><div class="hi-match">'+s.station+'</div><div class="hi-meta">Halte '+s.halte+' · @'+s.odds+' · €'+s.inzet.toFixed(2)+'</div></div><span class="badge '+(s.won?'bwin':'blos')+'">'+(s.won?'+€'+s.winst.toFixed(2):'Verloren')+'</span></div>';
@@ -1261,29 +1501,28 @@ function toast(msg,type){
 }
 
 // ── Ticket UI ──
+// Trein rijdt altijd naar Schiphol — eindbestemming is WK-stad (vlucht)
 var ticketDests = [
-  {code:'NKK', name:'Nijkerk',      haltes:3},
-  {code:'AMF', name:'Amersfoort',   haltes:4},
-  {code:'HVS', name:'Hilversum',    haltes:5},
-  {code:'UT',  name:'Utrecht C.',   haltes:6},
-  {code:'GDA', name:'Gouda',        haltes:7},
-  {code:'DH',  name:'Den Haag',     haltes:8},
-  {code:'DL',  name:'Delft',        haltes:9},
-  {code:'SCH', name:'Schiedam',     haltes:10},
-  {code:'RTD', name:"R'dam C.",     haltes:11},
+  {code:'DAL', name:'Dallas',        haltes:4,  stad:'AT&T Stadium',       vlucht:'KL 0601'},
+  {code:'HOU', name:'Houston',       haltes:6,  stad:'NRG Stadium',        vlucht:'KL 0635'},
+  {code:'KC',  name:'Kansas City',   haltes:8,  stad:'Arrowhead Stadium',  vlucht:'KL 0641'},
+  {code:'NYC', name:'New York',      haltes:10, stad:'MetLife Stadium',    vlucht:'KL 0641'},
+  {code:'MIA', name:'Miami',         haltes:11, stad:'Hard Rock Stadium',  vlucht:'KL 0675'},
 ];
-var selDestIdx = 8; // default Rotterdam
+var selDestIdx = 0; // default Dallas (eerste NL wedstrijd)
 var ticketClass = 1;
 
 function buildTicketDests(){
   var el = document.getElementById('ticket-destinations');
   el.innerHTML = ticketDests.map(function(d, i){
     var sel = i === selDestIdx ? ' sel' : '';
+    var nl = (d.code==='DAL'||d.code==='HOU'||d.code==='KC') ? '<div class="ticket-dest-nl">🇳🇱 NL speelt hier</div>' : '';
     return '<div class="ticket-dest'+sel+'" data-haltes="'+d.haltes+'" onclick="selDest('+i+')">'
       +'<div class="ticket-dest-check"></div>'
       +'<div class="ticket-dest-code">'+d.code+'</div>'
       +'<div class="ticket-dest-name">'+d.name+'</div>'
-      +'<div class="ticket-dest-stops">'+d.haltes+' haltes</div>'
+      +'<div class="ticket-dest-stops">'+d.vlucht+' · '+d.stad+'</div>'
+      +nl
       +'</div>';
   }).join('');
   updateTicketMeta();
