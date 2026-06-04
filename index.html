@@ -460,7 +460,12 @@ async function deleteEntry(idx){
 function recalc(){
   let cum=0;S.history.forEach(h=>{cum+=h.profit;h.cumPnl=cum;});
   S.pnl=S.history.length?S.history[S.history.length-1].cumPnl:0;
-  let step=0;S.history.forEach(h=>{if(h.won&&step<3)step++;else step=0;});
+  // Replay step sequence correctly
+  let step=0;
+  S.history.forEach(h=>{
+    if(h.won && step<3) step++;
+    else step=0; // loss OR completed cycle (step was 3 and won → reset)
+  });
   S.step=step;saveLocal();
 }
 async function resetAll(){
@@ -480,7 +485,22 @@ function render(){
   const pe=document.getElementById('mpnl');pe.textContent=(S.pnl>=0?'+':'')+'€'+S.pnl;pe.className='stat-val'+(S.pnl>0?' pos':S.pnl<0?' neg':'');
   document.getElementById('mcount').textContent=tot;document.getElementById('mpct').textContent=tot?Math.round(wins/tot*100)+'%':'—';
   document.getElementById('betdisp').textContent='€'+bet;
-  for(let i=0;i<4;i++){document.getElementById('sb'+i).className='sb'+(i===S.step?' active':i<S.step?' done':'');document.getElementById('se'+i).textContent='€'+(UNIT*SEQ[i]);}
+  // Count consecutive wins at start of current cycle to determine which boxes are 'done'
+let cycleWins=0;
+// Walk backwards from end of history to find current cycle wins
+for(let ci=S.history.length-1;ci>=0;ci--){
+  if(S.history[ci].won) cycleWins++;
+  else break;
+}
+// cycleWins = how many steps we've won in this cycle (capped at 3)
+cycleWins=Math.min(cycleWins,3);
+for(let i=0;i<4;i++){
+  let cls='sb';
+  if(i===S.step) cls+=' active';
+  else if(i<cycleWins) cls+=' done';
+  document.getElementById('sb'+i).className=cls;
+  document.getElementById('se'+i).textContent='€'+(UNIT*SEQ[i]);
+}
   const next=S.step<3?UNIT*SEQ[S.step+1]:null;
   document.getElementById('tipbar').innerHTML=S.step===3?`Stap 4 (max!): zet <strong>€${bet}</strong> in. Daarna reset de cyclus.`:`Stap ${S.step+1}: zet <strong>€${bet}</strong> in. Winst → stap ${S.step+2} (<strong>€${next}</strong>). Verlies → stap 1.`;
   renderChart();renderCycles();renderHist();
