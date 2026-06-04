@@ -198,6 +198,17 @@ input[type=date]:focus{border-color:var(--or)}
 .toast.show{opacity:1;transform:translateY(0)}
 .toast.win{border-top-color:var(--gr)}
 .toast.loss{border-top-color:var(--re)}
+
+/* Password screen */
+.pw-overlay{position:fixed;inset:0;background:var(--wh);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px}
+.pw-logo{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--bk);margin-bottom:8px}
+.pw-logo span{color:var(--or)}
+.pw-sub{font-size:13px;color:var(--g3);margin-bottom:32px;text-align:center}
+.pw-field{width:100%;max-width:320px;background:var(--wh);border:1.5px solid var(--g5);border-radius:var(--r);color:var(--bk);font-family:'Barlow',sans-serif;font-size:16px;padding:13px 16px;outline:none;margin-bottom:10px;text-align:center;letter-spacing:.08em}
+.pw-field:focus{border-color:var(--or)}
+.pw-btn{width:100%;max-width:320px;background:var(--or);border:none;border-radius:var(--r);color:#fff;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.06em;padding:14px;text-transform:uppercase}
+.pw-btn:active{opacity:.85}
+.pw-err{font-size:12px;color:var(--re);margin-top:6px;height:16px;text-align:center}
 </style>
 </head>
 <body>
@@ -577,6 +588,35 @@ const dd = String(today.getDate()).padStart(2,'0');
 document.getElementById('match-date').value = `${yyyy}-${mm}-${dd}`;
 
 load();renderLegs();
+</script>
+
+<div class="pw-overlay" id="pw-overlay">
+  <div class="pw-logo">WK <span>2026</span> · 1·3·2·6</div>
+  <div class="pw-sub">Voer het wachtwoord in om toegang te krijgen</div>
+  <input type="password" class="pw-field" id="pw-input" placeholder="Wachtwoord" onkeydown="if(event.key==='Enter')checkPw()">
+  <button class="pw-btn" onclick="checkPw()">Inloggen →</button>
+  <div class="pw-err" id="pw-err"></div>
+</div>
+
+<script>
+(function(){
+  var PW = 'Wereldkampioen2026!';
+  var KEY = 'wk2026_auth';
+  if(localStorage.getItem(KEY) === '1'){
+    document.getElementById('pw-overlay').style.display = 'none';
+  }
+  window.checkPw = function(){
+    var val = document.getElementById('pw-input').value;
+    if(val === PW){
+      localStorage.setItem(KEY, '1');
+      document.getElementById('pw-overlay').style.display = 'none';
+    } else {
+      document.getElementById('pw-err').textContent = 'Onjuist wachtwoord, probeer opnieuw.';
+      document.getElementById('pw-input').value = '';
+      document.getElementById('pw-input').focus();
+    }
+  };
+})();
 </script>
 </body>
 </html>
